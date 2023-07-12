@@ -1,0 +1,137 @@
+import React, { useState } from 'react';
+import { TextField } from '@mui/material';
+import { NavLink } from 'react-router-dom';
+import { SIGNIN_ROUTE, SIGNUP_ROUTE } from '../../constants/routes';
+import { makeStyles, Button } from '@material-ui/core';
+import { colors, fonts } from '../../constants/variables';
+
+const Form = () => {
+  const [email, setEmail] = useState('');
+  const classes = useStyles();
+  const classesForMediaQueries = mediaQueries();
+
+  function emailChange(e) {
+    setEmail(e.target.value);
+  }
+  return (
+    <div className={`${classes.form} ${classesForMediaQueries.form}`}>
+      <TextField
+        className={classes.emailAddressFieldStyle}
+        placeholder='Ձեր էլ․ փոստը'
+        value={email}
+        onChange={emailChange}
+        fullWidth
+        margin='normal'
+      />
+      <div className={classes.containerOfSigninAndSignup}>
+        <NavLink to={SIGNIN_ROUTE} className={classes.navLinkStyleForSignIn}>
+          <Button variant='outlined' className={classes.buttonSignIn}>
+            Մուտք
+          </Button>
+        </NavLink>
+        <NavLink to={SIGNUP_ROUTE} className={classes.navLinkStyleForSignUp}>
+          <Button variant='outlined' className={classes.buttonSignUp}>
+            Գրանցում
+          </Button>
+        </NavLink>
+      </div>
+    </div>
+  );
+};
+
+export default Form;
+/*--------------------------------Styles-----------------------------*/
+const useStyles = makeStyles({
+  form: {
+    width: 439,
+    height: 162,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  emailAddressFieldStyle: {
+    width: 439,
+    background: colors.white,
+    borderRadius: 10,
+    color: colors.darkGreen,
+    '& input': {
+      height: '100%',
+      borderRadius: 10,
+    },
+    '& input::placeholder': {
+      color: colors.darkGreen,
+    },
+  },
+
+  navLinkStyleForSignIn: {
+    flex: 1,
+    marginRight: 10,
+    color: colors.white,
+    fontFamily: fonts.armenian,
+    textDecoration: 'none',
+    fontStyle: 'normal',
+    height: 24,
+    fontWeight: 400,
+    fontSize: 18,
+  },
+  navLinkStyleForSignUp: {
+    flex: 1,
+    marginLeft: 10,
+    color: colors.white,
+    fontFamily: fonts.armenian,
+    textDecoration: 'none',
+    fontStyle: 'normal',
+    height: 24,
+    fontWeight: 400,
+    fontSize: 18,
+  },
+  containerOfSigninAndSignup: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  buttonSignIn: {
+    width: '100%',
+    height: 48,
+    color: colors.darkGreen,
+    borderRadius: 10,
+    backgroundColor: colors.white,
+    '&:hover': {
+      color: colors.white,
+    },
+  },
+  buttonSignUp: {
+    width: '100%',
+    height: 48,
+    color: colors.white,
+    backgroundColor: colors.yellow,
+    borderRadius: 10,
+  },
+});
+/*----------------------------------------------media queries---------------------------------------------*/
+const mediaQueries = makeStyles({
+  '@media (max-width: 600px)': {
+    form: {
+      width: 300,
+      height: 100,
+      marginBottom: 50,
+      marginTop: 30,
+    },
+  },
+  '@media (min-width:601px) and (max-width:992px)': {
+    form: {
+      width: 350,
+      height: 120,
+      display: 'flex',
+      flexDirection: 'column',
+      marginBottom: 80,
+      marginTop: 50,
+    },
+  },
+  '@media (min-width:993px) and (max-width:1200px)': {
+    form: {
+      width: 400,
+      height: 150,
+      display: 'flex',
+      flexDirection: 'column',
+    },
+  },
+});

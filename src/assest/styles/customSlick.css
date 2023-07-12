@@ -1,0 +1,33 @@
+.slick-next:before {
+  content: url(../../icons/Caret_Circle_Right.png);
+}
+.slick-prev:before {
+  content: url(../../icons/Caret_Circle_Left.png);
+  margin-left: -50px;
+}
+
+.slick-next,
+.slick-prev {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.slick-initialized .slick-slide .slick-active {
+  display: flex;
+  justify-content: center;
+}
+.makeStyles-cardDiv-70 {
+  display: flex;
+}
+
+@media (min-width: 601px) and (max-width: 651px) {
+  .slick-prev:before {
+    content: url(../../icons/Caret_Circle_Left.png);
+    margin-left: -31px;
+  }
+  .slick-arrow .slick-next {
+    content: url(../../icons/Caret_Circle_Right.png);
+    /* margin-right: -31px; */
+    right: -12px;
+  }
+}
