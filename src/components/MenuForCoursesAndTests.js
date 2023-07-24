@@ -13,6 +13,7 @@ import {
 import { colors, fonts } from '../constants/variables';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { useState } from 'react';
+import { menuListOfSubjects } from './Categories';
 
 function MenuForCoursesAndTests(props) {
   const classes = useStyles();
@@ -43,6 +44,15 @@ function MenuForCoursesAndTests(props) {
           keepMounted
           open={props.open}
           onClose={props.onClose}>
+          {/* {menuListOfSubjects.map((subject) => {
+            return (
+              <MenuItem onClick={props.onClose}>
+                <NavLink exact to={subject.routeOfSubject} className={classes.menuItem}>
+                  {subject.nameOfSubject}
+                </NavLink>
+              </MenuItem>
+            );
+          })} */}
           <MenuItem onClick={handleMenuItemClick}>
             <NavLink to={route} className={classes.menuItem}>
               Մաթեմատիկա

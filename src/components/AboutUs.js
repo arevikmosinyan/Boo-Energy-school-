@@ -1,7 +1,12 @@
 import React from 'react';
+import { Container, Typography } from '@mui/material';
 
 const AboutUs = () => {
-  return <div style={{ fontSize: 50, marginLeft: 30 }}>About us</div>;
+  return (
+    <Container>
+      <Typography>About Us</Typography>
+    </Container>
+  );
 };
 
 export default AboutUs;

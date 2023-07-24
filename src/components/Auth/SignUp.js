@@ -1,5 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import {
+  HOME_ROUTE,
+  RATING_ROUTE,
+  SIGNIN_ROUTE,
+  SIGNUP_ROUTE,
+} from '../../constants/routes';
 import {
   makeStyles,
   Radio,
@@ -14,19 +22,39 @@ import {
   Button,
   MenuItem,
 } from '@material-ui/core';
+
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { colors, fonts } from '../constants/variables';
+import { colors, fonts } from '../../constants/variables';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import {
+  auth,
+  sendEmailVerify,
+  writeUserData,
+  getUserData,
+} from '../../requests/firebase';
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  onAuthStateChanged,
+} from 'firebase/auth';
+import { NavLink } from 'react-router-dom';
 
 const SignUp = () => {
-  const classes = useStyles();
-  const [values, setValues] = useState({
-    password: '',
-    showPassword: false,
-    email: '',
-  });
+  const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  // const [veryfyText,setVeryfyText] = useState('')
+  const [gender, setGender] = useState('');
+  const [role, setRole] = useState('');
+  const [educationCenter, setEducationCenter] = useState('');
   const [country, setCountry] = useState('');
+  const [emailError, setEmailError] = useState('');
+
+  const classes = useStyles();
 
   const emailRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -37,24 +65,23 @@ const SignUp = () => {
   const specialSimbolRegex = /[!@#$%^&*()_+=\-{}[\]|:;"'<>,.?/`~]/;
   const numberRegex = /\d/;
 
-  const includesLatinLetters = latinLettersRegex.test(values.password);
+  const includesLatinLetters = latinLettersRegex.test(password);
   const includesUpperCaseAndLowerCase =
-    upperCaseRegex.test(values.password) &&
-    lowerCaseRegex.test(values.password);
-  const includesSpecialSymbols = specialSimbolRegex.test(values.password);
-  const includesNumber = numberRegex.test(values.password);
+    upperCaseRegex.test(password) && lowerCaseRegex.test(password);
+  const includesSpecialSymbols = specialSimbolRegex.test(password);
+  const includesNumber = numberRegex.test(password);
 
   function onCheckingValidationOfPassword() {
-    if (values.password.length && values.password.length < 8) {
+    if (password.length && password.length < 8) {
       return 'Գաղտնաբառը պետք է ներառի նվազագույնը 8 նիշ';
-    } else if (values.password.length && !includesUpperCaseAndLowerCase) {
+    } else if (password.length && !includesUpperCaseAndLowerCase) {
       if (!includesLatinLetters) {
         return 'գաղտնաբառը պետք է լինի լատինատառ';
       }
       return 'Գաղտնաբառը պետք է ներառի առնվազն մեկ մեծատառ և մեկ փոքրատառ';
-    } else if (values.password.length && !includesSpecialSymbols) {
+    } else if (password.length && !includesSpecialSymbols) {
       return 'Գաղտնաբառը պետք է պարունակի առնվազն մեկ հատուկ սիմվոլ !,@,#,$,%,^,&,*,(),_,+,=,~';
-    } else if (values.password.length && !includesNumber) {
+    } else if (password.length && !includesNumber) {
       return 'գաղտնաբառը պետք է պարունակի առնվազն մեկ թվային արժեք';
     } else {
       return '';
@@ -62,41 +89,66 @@ const SignUp = () => {
   }
 
   function emailValidation() {
-    if (!emailRegex.test(values.email) && values.email.length > 4) {
+    if (!emailRegex.test(email) && email.length > 4) {
       return 'Խնդրում ենք մուտքագրեք վավեր էլ․ հասցե ';
     }
   }
 
-  function handleChangeOfPassword(event) {
-    setValues({
-      ...values,
-      password: event.target.value,
+  const register = async (e) => {
+    e.preventDefault();
+    // let result = await getUserData(name);
+    // if (!result) {}
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        navigate(HOME_ROUTE);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+    sendEmailVerify();
+    writeUserData({
+      name,
+      surname,
+      email,
+      role,
+      gender,
+      country,
+      educationCenter,
     });
-  }
 
-  function handleChangeOfEmail(event) {
-    setValues({
-      ...values,
-      email: event.target.value,
+    // setEmailError(
+    //   'Խնդրում ենք օգտագործել այլ էլ․ փաստի հասցե, նշված հասցեով արդեն կա գրանցված օգտատեր',
+    // );
+  };
+
+  async function sendEmailVerify() {
+    await sendEmailVerification(auth.currentUser).then(() => {
+      alert('check your email');
     });
-  }
-
-  function handleClickShowPassword() {
-    setValues({ ...values, showPassword: !values.showPassword });
-  }
-
-  function handleChangeOfCountry(event) {
-    setCountry(event.target.value);
   }
 
   return (
     <>
       <div className={classes.containerOfSignUp}>
         <ThemeProvider theme={theme}>
+          <div className={classes.wrapperOfnavigateToLoginLink}>
+            <p className={classes.ifYouAreAlreadySignedUpQuestion}>
+              Եթե արդեն գրանցված օգտատեր եք ապա
+            </p>
+            <NavLink to={SIGNIN_ROUTE} className={classes.linkToSignIn}>
+              Մուտք
+            </NavLink>
+            <p className={classes.ifYouAreAlreadySignedUpQuestion}>եթե ոչ՝</p>
+          </div>
+
           <div className={`${classes.header} `}>Գրանցում</div>
-          <p style={{ fontSize: 20 }}>
-            Ուշադրություն, գրանցվելու համար պետք է լրացնել բոլոր տողերը։ Կայքում
-            գրանցվելն անվճար է։
+          <p className={classes.warningText}>
+            Ուշադրությու՛ն, գրանցվելու համար պետք է լրացնել բոլոր տողերը։
+            Կայքում գրանցվելն անվճար է։
           </p>
           <div className={classes.wrapperOfGender}>
             <FormControl
@@ -107,15 +159,20 @@ const SignUp = () => {
                 className={`${classes.labelOfGender}`}>
                 Սեռ
               </FormLabel>
-              <RadioGroup row aria-label='gender' name='gender1'>
+              <RadioGroup
+                row
+                value={gender}
+                onChange={(e) => {
+                  setGender(e.target.value);
+                }}>
                 <FormControlLabel
-                  value='female'
+                  value='Արական'
                   control={<Radio />}
                   label='Արական'
                   className={`${classes.labelOfGender}`}
                 />
                 <FormControlLabel
-                  value='male'
+                  value='Իգական'
                   control={<Radio />}
                   label='Իգական'
                   className={`${classes.labelOfGender}`}
@@ -130,22 +187,25 @@ const SignUp = () => {
               Դերը պորտալում
             </FormLabel>
 
-            <RadioGroup className={classes.radioGroup}>
+            <RadioGroup
+              className={classes.radioGroup}
+              value={role}
+              onChange={(e) => setRole(e.target.value)}>
               <div className={classes.wrapperOfRadios}>
                 <FormControlLabel
-                  value='1'
+                  value='Նախադպրոցական'
                   control={<Radio />}
                   label='Նախադպրոցական'
                   className={`${classes.labelOfGender}`}
                 />
                 <FormControlLabel
-                  value='2'
+                  value='Դպրոցական'
                   control={<Radio />}
                   label='Դպրոցական'
                   className={`${classes.labelOfGender}`}
                 />
                 <FormControlLabel
-                  value='3'
+                  value='Ուսանող'
                   control={<Radio />}
                   label='Ուսանող'
                   className={`${classes.labelOfGender}`}
@@ -153,19 +213,19 @@ const SignUp = () => {
               </div>
               <div className={classes.wrapperOfRadios}>
                 <FormControlLabel
-                  value='4'
+                  value='Դասախոս'
                   control={<Radio />}
                   label='Դասախոս'
                   className={`${classes.labelOfGender}`}
                 />
                 <FormControlLabel
-                  value='5'
+                  value='Ծնող'
                   control={<Radio />}
                   label='Ծնող'
                   className={`${classes.labelOfGender}`}
                 />
                 <FormControlLabel
-                  value='6'
+                  value='Հյուր'
                   control={<Radio />}
                   label='Հյուր'
                   className={`${classes.labelOfGender}`}
@@ -176,51 +236,58 @@ const SignUp = () => {
           <div className={classes.textFields}>
             <div className={classes.wrapperOfEmailAndName}>
               <div className={classes.wrapperOfInputFiledAndInputHeader}>
-                <p className={classes.inputHeader}>Էլ․ փոստ</p>
+                <p className={classes.inputHeader}>Էլ․ փոստ *</p>
                 <TextField
                   InputProps={{
-                    inputProps: { maxLength: 20 },
+                    inputProps: { maxLength: 30 },
                   }}
-                  placeholder='մուտքագրեք Ձեր Էլ․ փոստի հասցեն'
+                  placeholder='Մուտքագրեք Ձեր Էլ․ փոստի հասցեն'
                   variant='outlined'
+                  required
                   className={classes.input}
-                  value={values.email}
-                  onChange={handleChangeOfEmail}
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    // if (emailError) {
+                    //   alert(emailError);
+                    //   setEmailError('');
+                    //                       }
+                  }}
                   helperText={emailValidation()}
                 />
               </div>
               <div className={classes.wrapperOfInputFiledAndInputHeader}>
-                <p className={classes.inputHeader}>Անուն</p>
+                <p className={classes.inputHeader}>Անուն *</p>
                 <TextField
-                  placeholder='մուտքագրեք Ձեր անունը'
+                  placeholder='Մուտքագրեք Ձեր անունը'
                   variant='outlined'
+                  required
                   className={classes.input}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
             </div>
             <div className={classes.wrapperOfPasswordAndSurname}>
               <div className={classes.wrapperOfInputFiledAndInputHeader}>
-                <p className={classes.inputHeader}>Գաղտնաբառ</p>
+                <p className={classes.inputHeader}>Գաղտնաբառ *</p>
                 <FormControl className={classes.input} variant='outlined'>
                   <TextField
                     variant='outlined'
+                    required
                     className={classes.passwordInput}
                     placeholder='Մուտքագրեք Ձեր գաղտնաբառը'
-                    type={values.showPassword ? 'text' : 'password'}
-                    value={values.password}
-                    onChange={handleChangeOfPassword}
+                    type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     helperText={onCheckingValidationOfPassword()}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position='end'>
                           <IconButton
-                            onClick={handleClickShowPassword}
+                            onClick={() => setShowPassword(!showPassword)}
                             edge='end'>
-                            {values.showPassword ? (
-                              <Visibility />
-                            ) : (
-                              <VisibilityOff />
-                            )}
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
                           </IconButton>
                         </InputAdornment>
                       ),
@@ -231,12 +298,15 @@ const SignUp = () => {
               </div>
 
               <div className={classes.wrapperOfInputFiledAndInputHeader}>
-                <p className={classes.inputHeader}>Ազգանուն</p>
+                <p className={classes.inputHeader}>Ազգանուն *</p>
                 <TextField
                   id='outlined-start-adornment'
-                  placeholder='մուտքագրեք Ձեր ազգանունը'
+                  placeholder='Մուտքագրեք Ձեր ազգանունը'
                   variant='outlined'
+                  required
                   className={classes.input}
+                  value={surname}
+                  onChange={(e) => setSurname(e.target.value)}
                 />
               </div>
             </div>
@@ -247,36 +317,79 @@ const SignUp = () => {
             </p>
             <div className={classes.wrapperOfCountriesAndEducationCenters}>
               <div className={classes.wrapperOfCountries}>
-                <p style={{ paddingBottom: 10 }}>Երկիր</p>
+                <p style={{ paddingBottom: 10, color: colors.darkGreen }}>
+                  Երկիր
+                </p>
                 <FormControl variant='outlined' className={classes.formControl}>
                   <Select
+                    className={classes.select}
                     value={country}
-                    onChange={handleChangeOfCountry}
+                    onChange={(e) => setCountry(e.target.value)}
                     displayEmpty
                     inputProps={{ 'aria-label': 'Select country' }}>
-                    <MenuItem value=''>
+                    <MenuItem value='Հայաստան'>
                       <em>Հայաստան</em>
                     </MenuItem>
-                    <MenuItem value={20}>Ռուսաստան</MenuItem>
-                    <MenuItem value={30}>Վրաստան</MenuItem>
+                    <MenuItem value={'Ռուսաստան'}>Ռուսաստան</MenuItem>
+                    <MenuItem value={'Վրաստան'}>Վրաստան</MenuItem>
+                    <MenuItem value={'Իրան'}>Իրան</MenuItem>
+                    <MenuItem value={'Կանադա'}>Կանադա</MenuItem>
+                    <MenuItem value={'Գերմանիա'}>Գերմանիա</MenuItem>
+                    <MenuItem value={'ԱՄՆ'}>ԱՄՆ</MenuItem>
+                    <MenuItem value={'Սիրիա'}>Սիրիա</MenuItem>
+                    <MenuItem value={'Դանիա'}>Դանիա</MenuItem>
                   </Select>
                 </FormControl>
               </div>
               <div className={classes.wrapperOfEducationCenters}>
-                <p style={{ paddingBottom: 10 }}>
+                <p style={{ paddingBottom: 10, color: colors.darkGreen }}>
                   Ոսումնական հաստատության որոնում
                 </p>
                 <FormControl variant='outlined' className={classes.formControl}>
                   <Select
-                    // value={age}
-                    // onChange={handleChangeAge}
+                    className={classes.select}
+                    value={educationCenter}
+                    onChange={(e) => setEducationCenter(e.target.value)}
                     placeholder='Մուտքագրիր ուսումնական հաստատության հասցեն և ․․․'>
-                    {/* <MenuItem value=''>
-                    <em>None</em>
-                  </MenuItem> */}
-                    {/* <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem> */}
+                    <MenuItem value='Երևանի պետական համալսարան (ԵՊՀ)'>
+                      <em> Երևանի պետական համալսարան (ԵՊՀ)</em>
+                    </MenuItem>
+
+                    <MenuItem
+                      value={
+                        'Հայաստանի պետական տնտեսագիտական համալսարան (ՀՊՏՀ)'
+                      }>
+                      Հայաստանի պետական տնտեսագիտական համալսարան (ՀՊՏՀ)
+                    </MenuItem>
+                    <MenuItem value={'Հայաստանի գեղարվեստի պետական ակադեմիա'}>
+                      Հայաստանի գեղարվեստի պետական ակադեմիա
+                    </MenuItem>
+                    <MenuItem
+                      value={'Երևանի թատրոնի և կինոյի պետական ինստիտուտ'}>
+                      Երևանի թատրոնի և կինոյի պետական ինստիտուտ
+                    </MenuItem>
+                    <MenuItem
+                      value={
+                        'Ճարտարապետության և շինարարարության Հայաստանի ազգային համալսարան'
+                      }>
+                      Ճարտարապետության և շինարարարության Հայաստանի ազգային
+                      համալսարան
+                    </MenuItem>
+                    <MenuItem
+                      value={'Հայաստանի ազգային ագրարային համալսարան (ՀԱԱՀ)'}>
+                      Հայաստանի ազգային ագրարային համալսարան (ՀԱԱՀ)
+                    </MenuItem>
+                    <MenuItem
+                      value={'Երևանի պետական բժշկական համալսարան (ԵՊԲՀ)'}>
+                      Երևանի պետական բժշկական համալսարան (ԵՊԲՀ)
+                    </MenuItem>
+                    <MenuItem
+                      value={
+                        'Երևանի Պետական Լեզվաբանական Համալսարան, Վալերի Բրյուսովի անվան, (ԵՊԼՀ)'
+                      }>
+                      Երևանի Պետական Լեզվաբանական Համալսարան, Վալերի Բրյուսովի
+                      անվան, (ԵՊԼՀ)
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -288,8 +401,7 @@ const SignUp = () => {
             type='submit'
             variant='outlined'
             className={classes.buttonSignUp}
-            // onClick={onSubmitForSignUp}
-          >
+            onClick={register}>
             Գրանցում
           </Button>
         </form>
@@ -305,20 +417,44 @@ export default SignUp;
 const useStyles = makeStyles({
   containerOfSignUp: {
     margin: 50,
+    border: `2px solid ${colors.yellow} `,
+    borderRadius: 10,
+    padding: 30,
+  },
+  wrapperOfnavigateToLoginLink: {
+    display: 'flex',
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  ifYouAreAlreadySignedUpQuestion: {
+    color: colors.yellow,
+    fontFamily: fonts.armenian,
+  },
+  linkToSignIn: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    color: colors.darkGreen,
   },
   header: {
     fontSize: 40,
     marginBottom: 20,
     fontFamily: fonts.armenian,
+    color: colors.darkGreen,
+  },
+  warningText: {
+    fontSize: 20,
+    color: colors.yellow,
+    padding: 4,
+    letterSpacing: 2,
   },
   wrapperOfGender: {
     marginTop: 30,
     marginBottom: 30,
   },
   labelOfGender: {
-    color: 'black',
     fontSize: 30,
     paddingBottom: 20,
+    color: colors.darkGreen,
   },
   radio: {
     color: colors.darkGreen,
@@ -335,11 +471,11 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
   },
-  eye: {
-    margin: 0,
+  // eye: {
+  //   margin: 0,
 
-    padding: 0,
-  },
+  //   padding: 0,
+  // },
   wrapperOfPasswordAndSurname: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -353,6 +489,9 @@ const useStyles = makeStyles({
   },
   inputHeader: {
     paddingBottom: 10,
+    color: colors.darkGreen,
+    fontSize: 20,
+    fontWeight: 400,
   },
   input: {
     flex: 1,
@@ -375,7 +514,16 @@ const useStyles = makeStyles({
     fontFamily: fonts.armenian,
     fontWeight: 1000,
     fontSize: 20,
+    color: colors.darkGreen,
   },
+  // select: {
+  //   '& > *': {
+  //     colors: colors.darkGreen,
+  //   },
+  // },
+  // MenuItem: {
+  //   color: colors.darkGreen,
+  // },
   wrapperOfCountriesAndEducationCenters: {
     display: 'flex',
     justifyContent: 'space-around',

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { makeStyles, AppBar, Toolbar, Button } from '@material-ui/core';
 import {
   HOME_ROUTE,
@@ -12,9 +12,12 @@ import {
 } from '../constants/routes';
 import { colors, fonts } from '../constants/variables';
 import Logo from './Logo';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import MenuButtonComponent from './MenuButtonComponent';
 import MenuForCoursesAndTests from './MenuForCoursesAndTests';
+import userContext from '../contexts/userContext';
+import { signOut } from 'firebase/auth';
+import { auth } from '../requests/firebase';
 
 function NavBar() {
   const [anchorEl1, setAnchorEl1] = useState(null);
@@ -22,6 +25,8 @@ function NavBar() {
 
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
+  const user = useContext(userContext);
+  const navigate = useNavigate();
 
   const handleClick1 = (event) => {
     setAnchorEl1(event.currentTarget);
@@ -37,6 +42,17 @@ function NavBar() {
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
+
+  async function logout() {
+    await signOut(auth);
+    // .then(() => {
+    //   navigate(HOME_ROUTE);
+    //   console.log('signOut successfully');
+    // })
+    // .catch((err) => {
+    //   console.log(err.message);
+    // });
+  }
 
   return (
     <AppBar position='static' className={classes.appBarStyle}>
@@ -100,18 +116,32 @@ function NavBar() {
             Մեր մասին
           </NavLink>
         </div>
-        <div className={classes.containerOfSigninAndSignup}>
-          <NavLink to={SIGNIN_ROUTE} className={classes.navLinkStyle}>
-            <Button variant='outlined' className={classes.buttonSignIn}>
-              Մուտք
-            </Button>
-          </NavLink>
-          <NavLink to={SIGNUP_ROUTE} className={classes.navLinkStyle}>
-            <Button variant='outlined' className={classes.buttonSignUp}>
-              Գրանցում
-            </Button>
-          </NavLink>
-        </div>
+
+        {user ? (
+          <div className={classes.containerOfSigninAndSignup}>
+            <NavLink to={HOME_ROUTE} className={classes.navLinkStyle}>
+              <Button
+                variant='outlined'
+                className={classes.buttonSignIn}
+                onClick={logout}>
+                Ելք
+              </Button>
+            </NavLink>
+          </div>
+        ) : (
+          <div className={classes.containerOfSigninAndSignup}>
+            <NavLink to={SIGNIN_ROUTE} className={classes.navLinkStyle}>
+              <Button variant='outlined' className={classes.buttonSignIn}>
+                Մուտք
+              </Button>
+            </NavLink>
+            <NavLink to={SIGNUP_ROUTE} className={classes.navLinkStyle}>
+              <Button variant='outlined' className={classes.buttonSignUp}>
+                Գրանցում
+              </Button>
+            </NavLink>
+          </div>
+        )}
       </Toolbar>
     </AppBar>
   );

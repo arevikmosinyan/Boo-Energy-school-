@@ -11,6 +11,7 @@ import math2 from '../../images/imagesOfMathQuizzes/math2.png';
 import math3 from '../../images/imagesOfMathQuizzes/math3.png';
 import Card from '@material-ui/core/Card';
 import { divisions } from '../Categories';
+import { v4 as uuid } from 'uuid';
 
 const MathematicsQuizzes = () => {
   const classes = useStyles();
@@ -43,16 +44,16 @@ const MathematicsQuizzes = () => {
             </p>
             <Paper
               component='form'
-              className={`${classes.search} ${classesForMediaQueries.search} `}>
+              className={`${classes.searchBar} ${classesForMediaQueries.searchBar} `}>
               <InputBase
-                className={classes.input}
+                className={classes.inputForSearch}
                 placeholder='Որոնել նախընտրելի թեման․․․'
               />
               <IconButton
                 type='submit'
-                className={classes.iconButton}
+                className={classes.searchIconButton}
                 aria-label='search'>
-                <SearchIcon className={classes.searchIcon} />
+                <SearchIcon />
               </IconButton>
             </Paper>
           </div>
@@ -78,7 +79,7 @@ const MathematicsQuizzes = () => {
           className={`${classes.wrapperOfQuizzesCards} ${classesForMediaQueries.wrapperOfQuizzesCards}`}>
           {divisions.map((singleDivision) => {
             return (
-              <div className={classes.cardDiv}>
+              <div key={uuid()} className={classes.cardDiv}>
                 <Card
                   style={{ backgroundColor: singleDivision.color }}
                   className={`${classes.card} ${classesForMediaQueries.card}`}>
@@ -137,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '5px 50px',
     marginTop: 20,
   },
-  search: {
+  searchBar: {
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
@@ -145,12 +146,12 @@ const useStyles = makeStyles((theme) => ({
     background: colors.veryLightGreen,
     borderRadius: 15,
   },
-  input: {
+  inputForSearch: {
     flex: 1,
     fontSize: '100%',
-    paddingLeft: 5,
+    paddingLeft: 30,
   },
-  iconButton: {
+  searchIconButton: {
     width: '50px',
     height: '50px',
   },

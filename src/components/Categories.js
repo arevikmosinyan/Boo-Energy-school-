@@ -2,6 +2,14 @@ import { colors } from '../constants/variables';
 import AdultFemale from '../images/AdultFemale.png';
 import Businessman from '../images/Businessman.png';
 import EnglishBook from '../images/EnglishBook.png';
+import {
+  MATHEMATICSCOURSE_ROUTE,
+  MATHEMATICSQUIZZES_ROUTE,
+  ENGLISH_ROUTE,
+  GRAPHICDESIGN_ROUTE,
+  PROGRAMMING_ROUTE,
+  UIUXDESIGN_ROUTE,
+} from '../constants/routes';
 
 export const coursesToStudy = [
   { title: 'Մաթեմատիկա', color: colors.darkGreen },
@@ -10,6 +18,14 @@ export const coursesToStudy = [
   { title: 'Արվեստ', color: colors.darkGreen },
   { title: 'Մշակույթ', color: colors.lightGreen },
   { title: 'Պատմություն', color: colors.yellow },
+];
+
+export const menuListOfSubjects = [
+  { nameOfSubject: 'Մաթեմատիկա', routeOfSubject: MATHEMATICSCOURSE_ROUTE },
+  { nameOfSubject: 'Անգլերեն', routeOfSubject: ENGLISH_ROUTE },
+  { nameOfSubject: 'Ծրագրավորում', routeOfSubject: PROGRAMMING_ROUTE },
+  { nameOfSubject: 'Գրաֆիկ դիզայն', routeOfSubject: GRAPHICDESIGN_ROUTE },
+  { nameOfSubject: 'UI/UX դիզայն', routeOfSubject: UIUXDESIGN_ROUTE },
 ];
 
 export const popularCoursesList = [
@@ -125,4 +141,8 @@ export const divisions = [
     color: colors.lightGreen,
     classes: [],
   },
+];
+
+export const ratingList = [
+  { nameAndSurname: 'Արման Հովհաննիսյան', value: 2775 },
 ];
