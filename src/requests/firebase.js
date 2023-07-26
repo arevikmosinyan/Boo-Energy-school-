@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, sendEmailVerification } from 'firebase/auth';
-import { getDatabase, ref, set, get } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref, set } from 'firebase/database';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAnJCtbdt-9-6_ZGlurh4Xor3la00DO7iQ',
@@ -13,8 +13,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
 
+export const auth = getAuth(app);
 export const database = getDatabase();
 
 export function writeUserData({
@@ -36,11 +36,3 @@ export function writeUserData({
     educationCenter,
   });
 }
-
-// export async function sendEmailVerify() {
-//   sendEmailVerification(auth.currentUser);
-// }
-// export async function getUserData(name) {
-//   const snapshot = await get(ref(database, `/users/${name}`));
-//   return await snapshot.val();
-// }

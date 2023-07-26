@@ -1,13 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ref, get, query, orderByChild, equalTo } from 'firebase/database';
 
-import {
-  HOME_ROUTE,
-  RATING_ROUTE,
-  SIGNIN_ROUTE,
-  SIGNUP_ROUTE,
-} from '../../constants/routes';
+import { HOME_ROUTE, SIGNIN_ROUTE } from '../../constants/routes';
 import {
   makeStyles,
   Radio,
@@ -27,16 +23,10 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { colors, fonts } from '../../constants/variables';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import {
-  auth,
-  sendEmailVerify,
-  writeUserData,
-  getUserData,
-} from '../../requests/firebase';
+import { auth, writeUserData, database } from '../../requests/firebase';
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
-  onAuthStateChanged,
 } from 'firebase/auth';
 import { NavLink } from 'react-router-dom';
 
@@ -47,12 +37,10 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  // const [veryfyText,setVeryfyText] = useState('')
   const [gender, setGender] = useState('');
   const [role, setRole] = useState('');
   const [educationCenter, setEducationCenter] = useState('');
   const [country, setCountry] = useState('');
-  const [emailError, setEmailError] = useState('');
 
   const classes = useStyles();
 
@@ -96,8 +84,14 @@ const SignUp = () => {
 
   const register = async (e) => {
     e.preventDefault();
-    // let result = await getUserData(name);
-    // if (!result) {}
+    const usersRef = ref(database, 'users');
+    const snapshot = await get(
+      query(usersRef, orderByChild('email'), equalTo(email)),
+    );
+    if (snapshot.exists()) {
+      alert('User with this email already exists.');
+      return;
+    }
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -119,10 +113,6 @@ const SignUp = () => {
       country,
       educationCenter,
     });
-
-    // setEmailError(
-    //   'Խնդրում ենք օգտագործել այլ էլ․ փաստի հասցե, նշված հասցեով արդեն կա գրանցված օգտատեր',
-    // );
   };
 
   async function sendEmailVerify() {
