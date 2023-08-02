@@ -67,7 +67,8 @@ const SignIn = () => {
   }
 
   function emailValidation() {
-    if (!emailRegex.test(email) && email.length > 4) {
+    const emailTrimmed = email.trim();
+    if (!emailRegex.test(emailTrimmed) && emailTrimmed.length > 4) {
       return 'Խնդրում ենք մուտքագրեք վավեր էլ․ հասցե ';
     }
   }
@@ -85,6 +86,9 @@ const SignIn = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
+        if (errorCode === 'auth/user-not-found') {
+          alert('Խնդրում ենք նախ գրանցվել');
+        }
       });
   };
   return (
@@ -95,7 +99,7 @@ const SignIn = () => {
             <p className={classes.inputHeader}>Էլ․ փոստ</p>
             <TextField
               InputProps={{
-                inputProps: { maxLength: 20 },
+                inputProps: { maxLength: 40 },
                 className: classes.inputOfEmail,
               }}
               placeholder='Մուտքագրեք Ձեր Էլ․ փոստի հասցեն'

@@ -2,7 +2,6 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ref, get, query, orderByChild, equalTo } from 'firebase/database';
-
 import { HOME_ROUTE, SIGNIN_ROUTE } from '../../constants/routes';
 import {
   makeStyles,
@@ -34,6 +33,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
+  // const [displayName, setDisplayName] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -84,12 +84,17 @@ const SignUp = () => {
 
   const register = async (e) => {
     e.preventDefault();
+
     const usersRef = ref(database, 'users');
     const snapshot = await get(
       query(usersRef, orderByChild('email'), equalTo(email)),
     );
     if (snapshot.exists()) {
       alert('User with this email already exists.');
+      return;
+    }
+    if (!role || !gender || !name || !surname || !email || !password) {
+      alert('Խնդրում ենք նշել բոլոր պարտադիր դաշտերը');
       return;
     }
     await createUserWithEmailAndPassword(auth, email, password)
@@ -105,14 +110,15 @@ const SignUp = () => {
       });
     sendEmailVerify();
     writeUserData({
+      email,
       name,
       surname,
-      email,
       role,
       gender,
       country,
       educationCenter,
     });
+    // setDisplayName(`${name} ${surname}`);
   };
 
   async function sendEmailVerify() {
@@ -147,7 +153,7 @@ const SignUp = () => {
               <FormLabel
                 component='legend'
                 className={`${classes.labelOfGender}`}>
-                Սեռ
+                Սեռ*
               </FormLabel>
               <RadioGroup
                 row
@@ -174,7 +180,7 @@ const SignUp = () => {
             <FormLabel
               component='legend'
               className={`${classes.labelOfGender}`}>
-              Դերը պորտալում
+              Դերը պորտալում*
             </FormLabel>
 
             <RadioGroup

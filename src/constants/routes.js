@@ -5,6 +5,7 @@ export const RATING_ROUTE = '/rating';
 export const COMMUNITY_ROUTE = '/community';
 export const ABOUT_ROUTE = '/about';
 export const CALENDAR_ROUTE = '/calendar';
+export const PROFILE_ROUTE = '/profile';
 export const SIGNIN_ROUTE = '/signin';
 export const SIGNUP_ROUTE = '/signup';
 export const IQTests_ROUTE = '/IQTests';
@@ -16,5 +17,6 @@ export const GRAPHICDESIGN_ROUTE = '/graphicdesign';
 export const PROGRAMMING_ROUTE = '/programming';
 export const UIUXDESIGN_ROUTE = '/uiuxdesign';
 
-export const PROFILE_ROUTE = '/profile';
 export const RESET_ROUTE = '/reset';
+
+export const TOPIC_ROUTE = '/topic';

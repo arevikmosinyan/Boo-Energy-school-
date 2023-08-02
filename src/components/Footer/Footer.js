@@ -9,10 +9,13 @@ import Telegram from './Telegram';
 import Instagram from './Instagram';
 import Logo from '../Logo';
 import Form from './Form';
+import userContext from '../../contexts/userContext';
+import { useContext } from 'react';
 
 const Footer = () => {
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
+  const user = useContext(userContext);
 
   return (
     <footer className={`${classes.footer} ${classesForMediaQueries.footer}`}>
@@ -20,14 +23,17 @@ const Footer = () => {
         className={`${classes.containerOfLogo} ${classesForMediaQueries.containerOfLogo}`}>
         <Logo />
       </div>
-      <div
-        className={`${classes.containerOfSubscribeForm} ${classesForMediaQueries.containerOfSubscribeForm}`}>
-        <p
-          className={`${classes.typografyStyle} ${classesForMediaQueries.typografyStyle}`}>
-          Մուտքագրի՛ր էլ․փոստիդ հասցեն և սկսի՛ր
-        </p>
-        <Form />
-      </div>
+      {!user && (
+        <div
+          className={`${classes.containerOfSubscribeForm} ${classesForMediaQueries.containerOfSubscribeForm}`}>
+          <p
+            className={`${classes.typografyStyle} ${classesForMediaQueries.typografyStyle}`}>
+            Մուտքագրի՛ր էլ․փոստիդ հասցեն և սկսի՛ր
+          </p>
+          <Form />
+        </div>
+      )}
+
       <div
         className={`${classes.containerOfIconButtonsAndTypografy} ${classesForMediaQueries.containerOfIconButtonsAndTypografy}`}>
         <p
@@ -50,24 +56,6 @@ const Footer = () => {
             aria-label='Facebook'
             color='inherit'>
             <Facebook
-              className={`${classes.iconStyle} ${classesForMediaQueries.iconStyle}`}
-            />
-          </IconButton>
-          <IconButton
-            component={Link}
-            to='#'
-            aria-label='Telegram'
-            color='inherit'>
-            <Telegram
-              className={`${classes.iconStyle} ${classesForMediaQueries.iconStyle}`}
-            />
-          </IconButton>
-          <IconButton
-            component={Link}
-            to='#'
-            aria-label='Email'
-            color='inherit'>
-            <Email
               className={`${classes.iconStyle} ${classesForMediaQueries.iconStyle}`}
             />
           </IconButton>

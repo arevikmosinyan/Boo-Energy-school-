@@ -10,10 +10,14 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import { useNavigate } from 'react-router-dom';
+import { TOPIC_ROUTE } from '../../constants/routes';
 
 const MathematicsCourses = () => {
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
+  const navigate = useNavigate();
+
   return (
     <div className={classes.containerOfMathematics}>
       <div
@@ -35,10 +39,10 @@ const MathematicsCourses = () => {
             className={`${classes.courseName} ${classesForMediaQueries.courseName} `}>
             Մաթեմատիկա
           </p>
-          <p
+          {/* <p
             className={`${classes.examined} ${classesForMediaQueries.examined} `}>
             Ոսումնասիրված 40%
-          </p>
+          </p> */}
           <Paper
             component='form'
             className={`${classes.search} ${classesForMediaQueries.search} `}>
@@ -48,7 +52,7 @@ const MathematicsCourses = () => {
             />
             <IconButton
               type='submit'
-              className={classes.iconButton}
+              className={`${classes.iconButton} ${classesForMediaQueries.iconButton} `}
               aria-label='search'>
               <SearchIcon />
             </IconButton>
@@ -66,7 +70,14 @@ const MathematicsCourses = () => {
                 </div>
                 {singleDivision.classes.map((singleClass) => {
                   return (
-                    <div className={classes.wrapperOfSingleClass} key={uuid()}>
+                    <div
+                      className={classes.wrapperOfSingleClass}
+                      key={uuid()}
+                      onClick={() => {
+                        navigate(TOPIC_ROUTE, {
+                          state: { selectedClassId: singleClass.id },
+                        });
+                      }}>
                       <img
                         src={rectangle17}
                         alt='rec'
@@ -121,31 +132,39 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 20,
     padding: '10px 50px',
     height: 50,
+    marginBottom: 50,
   },
-  examined: {
-    background: colors.lightGreen,
-    fontFamily: fonts.armenian,
-    fontSize: 15,
-    color: colors.white,
-    textAlign: 'center',
-    borderRadius: 20,
-    padding: '5px 50px',
-    marginTop: 20,
-  },
+  // examined: {
+  //   background: colors.lightGreen,
+  //   fontFamily: fonts.armenian,
+  //   fontSize: 15,
+  //   color: colors.white,
+  //   textAlign: 'center',
+  //   borderRadius: 20,
+  //   padding: '5px 50px',
+  //   marginTop: 20,
+  // },
   search: {
-    padding: '2px 4px',
+    paddingLeft: 15,
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'space-between',
     width: '100%',
     marginTop: 2,
     background: colors.veryLightGreen,
-    fontSize: 15,
+
     borderRadius: 15,
   },
-  // input: {
-  //   marginLeft: theme.spacing(1),
-  //   flex: 1,
-  // },
+  input: {
+    flex: 7,
+    fontSize: 'clamp(10px, 2vw, 16px)',
+    // textIndent: 10,
+    paddingLeft: 5,
+  },
+  iconButton: {
+    flex: 1,
+    flexShrink: 0,
+  },
   wrapperOfDivisions: {
     margin: '40px 50px',
   },
@@ -201,18 +220,17 @@ const mediaQueries = makeStyles({
       borderRadius: 10,
       paddingTop: 4,
       height: 25,
+      marginBottom: 20,
     },
-    examined: {
-      fontSize: 12,
-      borderRadius: 10,
-      paddingTop: 4,
-      marginTop: 11,
-    },
-    search: {
-      padding: 0,
-      marginTop: 10,
-      fontSize: 12,
-      borderRadius: 10,
+    // examined: {
+    //   fontSize: 12,
+    //   borderRadius: 10,
+    //   paddingTop: 4,
+    //   marginTop: 11,
+    // },
+    iconButton: {
+      paddingTop: 5,
+      paddingBottom: 5,
     },
     headerOfDivision: {
       fontSize: 18,
@@ -222,6 +240,7 @@ const mediaQueries = makeStyles({
     wrapperOfCourseNameAnalyzeAndSearchbar: {
       marginTop: 30,
       marginRight: 60,
+      width: '40%',
     },
     courseName: {
       fontSize: 20,
@@ -230,24 +249,14 @@ const mediaQueries = makeStyles({
       borderRadius: 15,
       padding: '7px 30px',
       height: 35,
+      marginBottom: 30,
     },
-    examined: {
-      fontSize: 15,
-      borderRadius: 15,
-      padding: '3px 30px',
-      marginTop: 15,
-    },
-    search: {
-      padding: 0,
-      marginTop: 10,
-      fontSize: 12,
-      borderRadius: 10,
-    },
-  },
-  '@media (min-width:993px) and (max-width:1200px)': {
-    iconButton: {
-      width: '90px',
-      height: '90px',
-    },
+
+    // examined: {
+    //   fontSize: 15,
+    //   borderRadius: 15,
+    //   padding: '3px 30px',
+    //   marginTop: 15,
+    // },
   },
 });

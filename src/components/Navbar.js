@@ -9,6 +9,7 @@ import {
   CALENDAR_ROUTE,
   SIGNIN_ROUTE,
   SIGNUP_ROUTE,
+  PROFILE_ROUTE,
 } from '../constants/routes';
 import { colors, fonts } from '../constants/variables';
 import Logo from './Logo';
@@ -18,6 +19,7 @@ import MenuForCoursesAndTests from './MenuForCoursesAndTests';
 import userContext from '../contexts/userContext';
 import { signOut } from 'firebase/auth';
 import { auth } from '../requests/firebase';
+import userDataContext from '../contexts/userDataContext';
 
 function NavBar() {
   const [anchorEl1, setAnchorEl1] = useState(null);
@@ -26,6 +28,7 @@ function NavBar() {
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
   const user = useContext(userContext);
+  const userData = useContext(userDataContext);
   const navigate = useNavigate();
 
   const handleClick1 = (event) => {
@@ -45,13 +48,6 @@ function NavBar() {
 
   async function logout() {
     await signOut(auth);
-    // .then(() => {
-    //   navigate(HOME_ROUTE);
-    //   console.log('signOut successfully');
-    // })
-    // .catch((err) => {
-    //   console.log(err.message);
-    // });
   }
 
   return (
@@ -119,13 +115,17 @@ function NavBar() {
 
         {user ? (
           <div className={classes.containerOfSigninAndSignup}>
-            <NavLink to={HOME_ROUTE} className={classes.navLinkStyle}>
+            <NavLink to={HOME_ROUTE} className={classes.navLinkStyleLogout}>
               <Button
                 variant='outlined'
                 className={classes.buttonSignIn}
                 onClick={logout}>
                 Ելք
               </Button>
+            </NavLink>
+
+            <NavLink to={PROFILE_ROUTE} className={classes.userLink}>
+              {userData?.name} {userData?.surname}
             </NavLink>
           </div>
         ) : (
@@ -183,6 +183,10 @@ const useStyles = makeStyles({
   containerOfSigninAndSignup: {
     display: 'flex',
     justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  navLinkStyleLogout: {
+    margin: 15,
   },
   buttonSignIn: {
     color: colors.white,
@@ -197,6 +201,14 @@ const useStyles = makeStyles({
     color: colors.white,
     backgroundColor: colors.yellow,
     borderRadius: 10,
+  },
+
+  userLink: {
+    textDecoration: 'none',
+    color: colors.yellow,
+    border: `2px solid ${colors.yellow}`,
+    borderRadius: 10,
+    padding: 15,
   },
 });
 

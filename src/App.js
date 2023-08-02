@@ -7,6 +7,7 @@ import {
   COMMUNITY_ROUTE,
   ABOUT_ROUTE,
   CALENDAR_ROUTE,
+  PROFILE_ROUTE,
   SIGNIN_ROUTE,
   SIGNUP_ROUTE,
   IQTests_ROUTE,
@@ -18,6 +19,7 @@ import {
   GRAPHICDESIGN_ROUTE,
   PROGRAMMING_ROUTE,
   UIUXDESIGN_ROUTE,
+  TOPIC_ROUTE,
 } from './constants/routes';
 import { useEffect, useState } from 'react';
 import Home from './components/HomePage/Home';
@@ -35,20 +37,30 @@ import MathematicsQuizzes from './components/Quizzes/MathematicsQuizzes';
 import MathematicsCourses from './components/Courses/MathematicsCourses';
 import Programming from './components/Courses/Programming';
 import UIUXDesign from './components/Courses/UIUXDesign';
+import Profile from './components/Auth/Profile';
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer/Footer';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../src/requests/firebase';
+import { auth, getUserData } from '../src/requests/firebase';
 import userContext from './contexts/userContext';
+import userDataContext from './contexts/userDataContext';
+import Topic from '../src/components/Courses/Topic';
 
 function App() {
   const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        getUserData(user.email)
+          .then((data) => {
+            console.log(data);
+            setUserData(data);
+          })
+          .catch(() => setUserData(null));
         console.log(user);
       } else {
         console.log('user is logged out');
@@ -56,38 +68,43 @@ function App() {
       }
     });
   }, []);
+
   return (
     <userContext.Provider value={user}>
-      <div>
-        <Navbar />
-        <Routes>
-          <Route path={HOME_ROUTE} element={<Home />} />
-          {/* <Route path={COURSES_ROUTE} element={<Courses />} /> */}
-          {/* <Route path={QUIZZES_ROUTE} element={<Quizzes />} /> */}
-          <Route path={RATING_ROUTE} element={<Rating />} />
-          <Route path={COMMUNITY_ROUTE} element={<Community />} />
-          <Route path={CALENDAR_ROUTE} element={<Calendar />} />
-          <Route path={ABOUT_ROUTE} element={<AboutUs />} />
-          <Route path={SIGNIN_ROUTE} element={<SignIn />} />
-          <Route path={RESET_ROUTE} element={<ResetPassword />} />
-          <Route path={SIGNUP_ROUTE} element={<SignUp />} />
-          <Route path={IQTests_ROUTE} element={<IQTests />} />
-          <Route path={ENGLISH_ROUTE} element={<English />} />
-          <Route
-            path={MATHEMATICSCOURSE_ROUTE}
-            element={<MathematicsCourses />}
-          />
-          <Route
-            path={MATHEMATICSQUIZZES_ROUTE}
-            element={<MathematicsQuizzes />}
-          />
-          <Route path={GRAPHICDESIGN_ROUTE} element={<GraphicDesign />} />
-          <Route path={PROGRAMMING_ROUTE} element={<Programming />} />
-          <Route path={UIUXDESIGN_ROUTE} element={<UIUXDesign />} />
-          <Route path='*' element={<Navigate to={HOME_ROUTE} />} />
-        </Routes>
-        <Footer />
-      </div>
+      <userDataContext.Provider value={userData}>
+        <div>
+          <Navbar />
+          <Routes>
+            <Route path={HOME_ROUTE} element={<Home />} />
+            {/* <Route path={COURSES_ROUTE} element={<Courses />} /> */}
+            {/* <Route path={QUIZZES_ROUTE} element={<Quizzes />} /> */}
+            <Route path={RATING_ROUTE} element={<Rating />} />
+            <Route path={COMMUNITY_ROUTE} element={<Community />} />
+            <Route path={CALENDAR_ROUTE} element={<Calendar />} />
+            <Route path={ABOUT_ROUTE} element={<AboutUs />} />
+            <Route path={SIGNIN_ROUTE} element={<SignIn />} />
+            <Route path={RESET_ROUTE} element={<ResetPassword />} />
+            <Route path={SIGNUP_ROUTE} element={<SignUp />} />
+            <Route path={PROFILE_ROUTE} element={<Profile />} />
+            <Route path={IQTests_ROUTE} element={<IQTests />} />
+            <Route path={ENGLISH_ROUTE} element={<English />} />
+            <Route
+              path={MATHEMATICSCOURSE_ROUTE}
+              element={<MathematicsCourses />}
+            />
+            <Route
+              path={MATHEMATICSQUIZZES_ROUTE}
+              element={<MathematicsQuizzes />}
+            />
+            <Route path={GRAPHICDESIGN_ROUTE} element={<GraphicDesign />} />
+            <Route path={PROGRAMMING_ROUTE} element={<Programming />} />
+            <Route path={UIUXDESIGN_ROUTE} element={<UIUXDesign />} />
+            <Route path={TOPIC_ROUTE} element={<Topic />} />
+            <Route path='*' element={<Navigate to={HOME_ROUTE} />} />
+          </Routes>
+          <Footer />
+        </div>
+      </userDataContext.Provider>
     </userContext.Provider>
   );
 }

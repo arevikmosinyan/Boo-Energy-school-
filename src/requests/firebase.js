@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, set, get } from 'firebase/database';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAnJCtbdt-9-6_ZGlurh4Xor3la00DO7iQ',
@@ -26,7 +26,7 @@ export function writeUserData({
   country,
   educationCenter,
 }) {
-  set(ref(database, 'users/' + name), {
+  set(ref(database, 'users/' + email.replace('.', ',')), {
     name,
     surname,
     email,
@@ -35,4 +35,10 @@ export function writeUserData({
     country,
     educationCenter,
   });
+}
+
+export async function getUserData(email) {
+  const snapshot = await get(ref(database, 'users/' + email.replace('.', ',')));
+  const result = await snapshot.val();
+  return result;
 }
