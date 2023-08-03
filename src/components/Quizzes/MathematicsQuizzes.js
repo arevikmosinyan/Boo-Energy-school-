@@ -38,10 +38,10 @@ const MathematicsQuizzes = () => {
               className={`${classes.courseName} ${classesForMediaQueries.courseName} `}>
               Մաթեմատիկա
             </p>
-            <p
+            {/* <p
               className={`${classes.examined} ${classesForMediaQueries.examined} `}>
               Ոսումնասիրված 40%
-            </p>
+            </p> */}
             <Paper
               component='form'
               className={`${classes.searchBar} ${classesForMediaQueries.searchBar} `}>

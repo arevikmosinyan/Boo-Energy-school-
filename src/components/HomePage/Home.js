@@ -45,7 +45,7 @@ const Home = () => {
       </div>
       <SuggestedCoursesCarousel />
       <HowToUse />
-      <LearnAnyTime />
+      {/* <LearnAnyTime /> */}
       <OurPlatform />
       <PopularCourses />
       <AboutCoursesSection />

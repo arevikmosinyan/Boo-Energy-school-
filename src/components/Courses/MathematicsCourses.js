@@ -12,12 +12,29 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import { useNavigate } from 'react-router-dom';
 import { TOPIC_ROUTE } from '../../constants/routes';
+import { useState } from 'react';
 
 const MathematicsCourses = () => {
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
   const navigate = useNavigate();
+  const [searchText, setSearchText] = useState('');
 
+  function filteringClasses() {
+    let filteredClasses = [];
+    for (let singleDivision of divisions) {
+      filteredClasses.push(
+        singleDivision.classes.filter((singleClass) =>
+          singleClass.singleClassTitle
+            .toLowerCase()
+            .includes(searchText.toLowerCase().trim()),
+        ),
+      );
+    }
+    return filteredClasses.flat();
+  }
+
+  let filteredClasses = filteringClasses();
   return (
     <div className={classes.containerOfMathematics}>
       <div
@@ -49,14 +66,30 @@ const MathematicsCourses = () => {
             <InputBase
               className={`${classes.input} ${classesForMediaQueries.input} `}
               placeholder='Որոնել նախընտրելի թեման․․․'
+              onChange={(e) => setSearchText(e.target.value)}
             />
-            <IconButton
-              type='submit'
+
+            <SearchIcon
               className={`${classes.iconButton} ${classesForMediaQueries.iconButton} `}
-              aria-label='search'>
-              <SearchIcon />
-            </IconButton>
+            />
           </Paper>
+          {searchText && (
+            <div className={classes.searchPopUpSuggestionsForUser}>
+              {filteredClasses.map((filteredSingleClass) => {
+                return (
+                  <div
+                    onClick={() => {
+                      navigate(TOPIC_ROUTE, {
+                        state: { selectedClassId: filteredSingleClass.id },
+                      });
+                    }}
+                    className={classes.suggestedFilteredSingleClassForUser}>
+                    {filteredSingleClass.singleClassTitle}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
       <div className={classes.wrapperOfDivisions}>
@@ -155,6 +188,19 @@ const useStyles = makeStyles((theme) => ({
 
     borderRadius: 15,
   },
+  searchPopUpSuggestionsForUser: {
+    backgroundColor: colors.veryLightGreen,
+    border: `2px solid ${colors.yellow}`,
+    borderRadius: 15,
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: 5,
+  },
+  suggestedFilteredSingleClassForUser: {
+    marginTop: 5,
+    marginBottom: 5,
+    cursor: 'pointer',
+  },
   input: {
     flex: 7,
     fontSize: 'clamp(10px, 2vw, 16px)',
@@ -164,6 +210,7 @@ const useStyles = makeStyles((theme) => ({
   iconButton: {
     flex: 1,
     flexShrink: 0,
+    margin: 15,
   },
   wrapperOfDivisions: {
     margin: '40px 50px',

@@ -96,16 +96,16 @@ function NavBar() {
             className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
             Վարկանիշ
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to={COMMUNITY_ROUTE}
             className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
             Համայնք
-          </NavLink>
-          <NavLink
+          </NavLink> */}
+          {/* <NavLink
             to={CALENDAR_ROUTE}
             className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
             Օրացույց
-          </NavLink>
+          </NavLink> */}
           <NavLink
             to={ABOUT_ROUTE}
             className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
