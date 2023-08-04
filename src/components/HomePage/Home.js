@@ -7,7 +7,7 @@ import { colors, fonts } from '../../constants/variables';
 import image1 from '../../images/HomePagePicture1.png';
 import SuggestedCoursesCarousel from './SuggestedCoursesCarousel.js';
 import HowToUse from './HowToUse';
-import LearnAnyTime from './LearnAnyTime';
+// import LearnAnyTime from './LearnAnyTime';
 import PopularCourses from './PopularCourses';
 import AboutCoursesSection from './AboutCoursesSection';
 import OurPlatform from './OurPlatform';

@@ -4,14 +4,15 @@ import { makeStyles } from '@material-ui/core';
 import { colors, fonts } from '../../constants/variables';
 import leftArrowWhite from '../../icons/Caret_Circle_Left_white.png';
 import rightArrowWhite from '../../icons/Caret_Circle_Right_white.png';
-import { ourPlatformImages } from './OurPlatformImages.js';
-import workersImageOfHomePage from '../../images/two-attractive-female-friends-working-laptop-restaurant.png';
-import zIndex from '@material-ui/core/styles/zIndex';
+import image1 from '../../images/ourPlatformImage1.png';
+import image2 from '../../images/ourPlatformImage2.png';
 
 const OurPlatform = () => {
   const [index, setIndex] = useState(0);
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
+
+  const ourPlatformImages = [image1, image2];
 
   return (
     <div>
@@ -22,7 +23,7 @@ const OurPlatform = () => {
       <div
         className={`${classes.ourPlatform} ${classesForMediaQueries.ourPlatform}`}>
         <img
-          src={workersImageOfHomePage}
+          src={ourPlatformImages[index]}
           className={`${classes.workersImage} ${classesForMediaQueries.workersImage}`}
           alt='workersImage'
         />
@@ -30,9 +31,8 @@ const OurPlatform = () => {
         <div
           className={classes.arrowWhiteDivStyle}
           onClick={() => {
-            console.log('render');
-
             index > 0 && setIndex(index - 1);
+            index === 0 && setIndex(ourPlatformImages.length - 1);
           }}>
           <img
             src={leftArrowWhite}
@@ -50,8 +50,8 @@ const OurPlatform = () => {
         <div
           className={`${classes.arrowWhiteDivStyle} ${classesForMediaQueries.arrowWhiteDivStyle}`}
           onClick={() => {
-            console.log('render');
             index < ourPlatformImages.length - 1 && setIndex(index + 1);
+            index === ourPlatformImages.length - 1 && setIndex(0);
           }}>
           <img
             src={rightArrowWhite}
@@ -86,8 +86,9 @@ const useStyles = makeStyles({
     marginTop: 350,
   },
   workersImage: {
-    objectFit: 'contain',
+    objectFit: 'cover',
     width: '100%',
+    maxHeight: '100%',
     position: 'absolute',
     zIndex: 0,
   },

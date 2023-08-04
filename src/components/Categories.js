@@ -17,12 +17,20 @@ import class1Div2Math from '../components/Courses/classesOfMathematics/division2
 import class2Div2Math from '../components/Courses/classesOfMathematics/division2/class1';
 
 export const coursesToStudy = [
-  { title: 'Մաթեմատիկա', color: colors.darkGreen },
-  { title: 'Ծրագրավորում', color: colors.lightGreen },
-  { title: 'Անգլերեն', color: colors.yellow },
-  { title: 'Արվեստ', color: colors.darkGreen },
-  { title: 'Մշակույթ', color: colors.lightGreen },
-  { title: 'Պատմություն', color: colors.yellow },
+  {
+    title: 'Մաթեմատիկա',
+    color: colors.darkGreen,
+    route: MATHEMATICSCOURSE_ROUTE,
+  },
+  { title: 'Ծրագրավորում', color: colors.lightGreen, route: PROGRAMMING_ROUTE },
+  { title: 'Անգլերեն', color: colors.yellow, route: ENGLISH_ROUTE },
+  {
+    title: 'Գրաֆիկ դիզայն',
+    color: colors.darkGreen,
+    route: GRAPHICDESIGN_ROUTE,
+  },
+  { title: 'UI/UX դիզայն', color: colors.lightGreen, route: UIUXDESIGN_ROUTE },
+  // { title: 'IQ Թեստեր', color: colors.yellow },
 ];
 
 export const menuListOfSubjects = [
@@ -37,39 +45,39 @@ export const popularCoursesList = [
   {
     title: 'Անգլերեն',
     color: colors.darkGreen,
-    countOfStudents: '358 սովորող',
+    // countOfStudents: '358 սովորող',
     image: EnglishBook,
   },
   {
     title: 'Գրաֆիկ դիզայն',
     color: colors.lightGreen,
-    countOfStudents: '287 սովորող',
+    // countOfStudents: '287 սովորող',
     image: AdultFemale,
   },
   {
-    title: 'Մարքեթինգ',
+    title: 'UI/UX դիզայն',
     color: colors.yellow,
-    countOfStudents: '240 սովորող',
+    // countOfStudents: '240 սովորող',
     image: Businessman,
-  },
-  {
-    title: 'Հաշվապահություն',
-    color: colors.darkGreen,
-    countOfStudents: '150 սովորող',
-    image: EnglishBook,
-  },
-  {
-    title: 'Ապահովագրություն',
-    color: colors.lightGreen,
-    countOfStudents: '182 սովորող',
-    image: AdultFemale,
   },
   {
     title: 'Մաթեմատիկա',
-    color: colors.yellow,
-    countOfStudents: '195 սովորող',
-    image: Businessman,
+    color: colors.darkGreen,
+    // countOfStudents: '150 սովորող',
+    image: EnglishBook,
   },
+  {
+    title: 'Ծրագրավորում',
+    color: colors.lightGreen,
+    // countOfStudents: '182 սովորող',
+    image: AdultFemale,
+  },
+  // {
+  //   title: 'Մաթեմատիկա',
+  //   color: colors.yellow,
+  //   // countOfStudents: '195 սովորող',
+  //   image: Businessman,
+  // },
 ];
 
 export const divisions = [

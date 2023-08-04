@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import Slider from 'react-slick';
@@ -13,6 +14,7 @@ import '../../assest/styles/customSlick.css';
 const SuggestedCoursesCarousel = () => {
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
+  const navigate = useNavigate();
 
   var settings = {
     dots: false,
@@ -66,6 +68,7 @@ const SuggestedCoursesCarousel = () => {
             return (
               <div key={uuid()}>
                 <Card
+                  onClick={() => navigate(course.route)}
                   className={`${classes.card} ${classesForMediaQueries.card}`}
                   style={{
                     backgroundColor: course.color,

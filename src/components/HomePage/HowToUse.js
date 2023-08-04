@@ -21,7 +21,7 @@ const HowToUse = () => {
           className={`${classes.stepsToUse} ${classesForMediaQueries.stepsToUse}`}>
           <p
             className={`${classes.stepsToUseText} ${classesForMediaQueries.stepsToUseText}`}>
-            Քայլ1 ընտրում ենք դասընթացը և<br /> սկսում ուսումնասիրել նյութը
+            Քայլ 1․ Ընտրում ենք դասընթացը և<br /> սկսում ուսումնասիրել նյութը
           </p>
           <img
             src={illustration1}
@@ -34,7 +34,7 @@ const HowToUse = () => {
           className={`${classes.stepsToUse} ${classesForMediaQueries.stepsToUse}`}>
           <p
             className={`${classes.stepsToUseText} ${classesForMediaQueries.stepsToUseText}`}>
-            Քայլ2 Այնուհետև անցնում թեստերը
+            Քայլ 2․ Անցնում թեստերը
             <br /> գիտելիքներն ստուգելու համար
           </p>
           <img
@@ -47,7 +47,7 @@ const HowToUse = () => {
           className={`${classes.stepsToUse} ${classesForMediaQueries.stepsToUse}`}>
           <p
             className={`${classes.stepsToUseText} ${classesForMediaQueries.stepsToUseText}`}>
-            Քայլ3 Նայում ենք վարկանիշը և <br />
+            Քայլ 3․ Նայում ենք վարկանիշը և <br />
             քննարկում արդյունքները
           </p>
           <img

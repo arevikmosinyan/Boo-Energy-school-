@@ -75,10 +75,10 @@ const PopularCourses = () => {
                   <Typography
                     className={`${classes.typographyStyle} ${classesForMediaQueries.typographyStyle}`}>
                     {course.title}
-                    <p
+                    {/* <p
                       className={`${classes.countOfStudentsStyle} ${classesForMediaQueries.countOfStudentsStyle}`}>
                       {course.countOfStudents}
-                    </p>
+                    </p> */}
                   </Typography>
                 </Card>
               </div>
@@ -138,9 +138,9 @@ const useStyles = makeStyles({
     paddingTop: 17,
     padding: '17px 20px 0px 20px',
   },
-  countOfStudentsStyle: {
-    fontSize: 20,
-  },
+  // countOfStudentsStyle: {
+  //   fontSize: 20,
+  // },
 });
 /*-------------------------------------media quieries-----------------------*/
 const mediaQueries = makeStyles({
@@ -167,9 +167,9 @@ const mediaQueries = makeStyles({
       fontSize: 20,
       paddingTop: 5,
     },
-    countOfStudentsStyle: {
-      fontSize: 10,
-    },
+    // countOfStudentsStyle: {
+    //   fontSize: 10,
+    // },
   },
   '@media (min-width:601px) and (max-width:992px)': {
     popularCoursesHeader: {
@@ -196,9 +196,9 @@ const mediaQueries = makeStyles({
     card: {
       margin: '0 7px',
     },
-    countOfStudentsStyle: {
-      fontSize: 12,
-    },
+    // countOfStudentsStyle: {
+    //   fontSize: 12,
+    // },
   },
 
   '@media (min-width:993px) and (max-width:1200px)': {
