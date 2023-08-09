@@ -1,7 +1,10 @@
 import { colors } from '../constants/variables';
-import AdultFemale from '../images/AdultFemale.png';
-import Businessman from '../images/Businessman.png';
-import EnglishBook from '../images/EnglishBook.png';
+import AdultFemale from '../images/imagesForPopularCourses/AdultFemale.png';
+import EnglishBook from '../images/imagesForPopularCourses/EnglishBook.png';
+import Programming from '../images/imagesForPopularCourses/programming.png';
+import Mathematics from '../images/imagesForPopularCourses/mathematics.png';
+import UiUx from '../images/imagesForPopularCourses/UX_Design.png';
+
 import {
   MATHEMATICSCOURSE_ROUTE,
   MATHEMATICSQUIZZES_ROUTE,
@@ -47,30 +50,36 @@ export const popularCoursesList = [
     color: colors.darkGreen,
     // countOfStudents: '358 սովորող',
     image: EnglishBook,
+    route: ENGLISH_ROUTE,
   },
   {
     title: 'Գրաֆիկ դիզայն',
     color: colors.lightGreen,
     // countOfStudents: '287 սովորող',
     image: AdultFemale,
-  },
-  {
-    title: 'UI/UX դիզայն',
-    color: colors.yellow,
-    // countOfStudents: '240 սովորող',
-    image: Businessman,
+    route: GRAPHICDESIGN_ROUTE,
   },
   {
     title: 'Մաթեմատիկա',
     color: colors.darkGreen,
     // countOfStudents: '150 սովորող',
-    image: EnglishBook,
+    image: Mathematics,
+    route: MATHEMATICSCOURSE_ROUTE,
   },
+  {
+    title: 'UI/UX դիզայն',
+    color: colors.yellow,
+    // countOfStudents: '240 սովորող',
+    image: UiUx,
+    route: UIUXDESIGN_ROUTE,
+  },
+
   {
     title: 'Ծրագրավորում',
     color: colors.lightGreen,
     // countOfStudents: '182 սովորող',
-    image: AdultFemale,
+    image: Programming,
+    route: PROGRAMMING_ROUTE,
   },
   // {
   //   title: 'Մաթեմատիկա',
@@ -90,6 +99,7 @@ export const divisions = [
         singleClassNumber: 'Դաս 1',
         singleClassTitle: 'Բնական թվերը և դրանց գրառումը',
         singleClassContent: class1Div1Math(),
+        // isRead:false
       },
       {
         id: 'class2Div1Math',
@@ -177,8 +187,4 @@ export const divisions = [
     color: colors.lightGreen,
     classes: [],
   },
-];
-
-export const ratingList = [
-  { nameAndSurname: 'Արման Հովհաննիսյան', value: 2775 },
 ];

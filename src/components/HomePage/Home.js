@@ -26,6 +26,11 @@ const Home = () => {
             Այստեղ դու կգտնես ցանկացած <br />
             ոլորտ որով հետաքրքրված ես,
             <br /> բայց սկզբի համար․․․
+            {/* Գիտելիքի յուրաքանչյուր կտոր <br /> արժեք և հստակություն է հաղորդում
+            Ձեր մտածողության փազլին։
+            <br /> Ձեռք բեր նոր մտածողություն՝ <br />
+            համալրելով գիտելիքներդ արդի ոլորտներում՝ մեր կայքի միջոցով։ <br />
+            բայց սկզբի համար․․․ */}
           </Typography>
           <NavLink
             to={IQTests_ROUTE}
@@ -76,8 +81,8 @@ const useStyles = makeStyles({
     fontFamily: fonts.dejavu,
     fontSize: 45,
     lineHeight: 1,
-    maxWidth: 821,
-    height: 183,
+    maxWidth: 721,
+    height: 153,
   },
   IQTestsButton: {
     color: colors.white,

@@ -8,17 +8,19 @@ import {
   InputBase,
   IconButton,
 } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+
 import { colors, fonts } from '../constants/variables';
 import { useState } from 'react';
-import { menuListOfSubjects, ratingList } from './Categories';
-import { v4 as uuid } from 'uuid';
+import { menuListOfSubjects } from './Categories';
+import { useContext } from 'react';
+import userDataContext from '../contexts/userDataContext';
 
 const Rating = () => {
   const classes = useStyles();
   const [subject, setSubject] = useState('');
   const [quiz, setQuiz] = useState('');
   const [participant, setParticipant] = useState('');
+  const userData = useContext(userDataContext);
 
   function handleChangeOfSubject(event) {
     setSubject(event.target.value);
@@ -31,6 +33,15 @@ const Rating = () => {
   return (
     <div className={classes.containerOfRating}>
       <div className={classes.wrapperOfCourseQuizzessParticipant}>
+        <p className={classes.label}> Ձեր ընդհանուր վարկանիշը </p>
+        <div className={classes.wrapperOfRatingSchedule}>
+          <div className={classes.nameAndSurnameBar}>
+            {userData.name} {userData.surname}
+          </div>
+          <div className={classes.valueOfRatingBar}>52</div>
+        </div>
+        <p className={classes.label}>որից՝</p>
+
         <div className={classes.wrapperOfLabelAndSelect}>
           <p className={classes.label}>Դասընթաց</p>
           <FormControl variant='outlined' className={classes.formControl}>
@@ -69,6 +80,8 @@ const Rating = () => {
             </Select>
           </FormControl>
         </div>
+        <div className={classes.valueOfRatingBar}>52</div>
+
         <div className={classes.wrapperOfLabelAndSelect}>
           <p className={classes.label}>Թեստ</p>
           <FormControl variant='outlined' className={classes.formControl}>
@@ -103,20 +116,7 @@ const Rating = () => {
             </Select>
           </FormControl>
         </div>
-      </div>
-      <div className={classes.wrapperOfRatingSchedule}>
-        {ratingList.map((ratedParticipantInfo) => {
-          return (
-            <div key={uuid()} style={{ display: 'flex' }}>
-              <div className={classes.nameAndSurnameBar}>
-                {ratedParticipantInfo.nameAndSurname}
-              </div>
-              <div className={classes.valueOfRatingBar}>
-                {ratedParticipantInfo.value}
-              </div>
-            </div>
-          );
-        })}
+        <div className={classes.valueOfRatingBar}>52</div>
       </div>
     </div>
   );
@@ -128,22 +128,21 @@ const useStyles = makeStyles({
   containerOfRating: {
     margin: 80,
   },
-  wrapperOfCourseQuizzessParticipant: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: 20,
-  },
+  // wrapperOfCourseQuizzessParticipant: {
+  //   display: 'flex',
+  //   justifyContent: 'space-between',
+  //   padding: 20,
+  // },
   wrapperOfLabelAndSelect: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'start',
   },
   label: {
     color: colors.darkGreen,
     fontSize: 32,
     fontFamily: fonts.armenian,
-    marginRight: 20,
-    marginLeft: 20,
+    margin: 20,
   },
   select: {
     backgroundColor: colors.lightGreen,
@@ -156,7 +155,7 @@ const useStyles = makeStyles({
   },
   nameAndSurnameBar: {
     backgroundColor: colors.lightGreen,
-    width: 500,
+    flex: 2,
     height: 60,
     margin: 20,
     color: colors.white,
@@ -167,7 +166,7 @@ const useStyles = makeStyles({
   },
   valueOfRatingBar: {
     backgroundColor: colors.veryLightGreen,
-    width: 1115,
+    flex: 4,
     height: 60,
     margin: 20,
     color: colors.white,
@@ -179,5 +178,6 @@ const useStyles = makeStyles({
   },
   wrapperOfRatingSchedule: {
     marginTop: 50,
+    display: 'flex',
   },
 });

@@ -20,6 +20,7 @@ import userContext from '../contexts/userContext';
 import { signOut } from 'firebase/auth';
 import { auth } from '../requests/firebase';
 import userDataContext from '../contexts/userDataContext';
+import avatar from '../images/avatar.png';
 
 function NavBar() {
   const [anchorEl1, setAnchorEl1] = useState(null);
@@ -123,10 +124,14 @@ function NavBar() {
                 Ելք
               </Button>
             </NavLink>
-
-            <NavLink to={PROFILE_ROUTE} className={classes.userLink}>
-              {userData?.name} {userData?.surname}
-            </NavLink>
+            <div className={classes.wrappperOfLinkToProfile}>
+              <NavLink to={PROFILE_ROUTE} className={classes.userLink}>
+                {userData?.name}
+              </NavLink>
+              <div className={classes.wrapperOfAvatarImage}>
+                <img src={avatar} alt='avatar' className={classes.avatar} />
+              </div>
+            </div>
           </div>
         ) : (
           <div className={classes.containerOfSigninAndSignup}>
@@ -166,6 +171,12 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-around',
   },
+  wrappperOfLinkToProfile: {
+    display: 'flex',
+    border: `2px solid ${colors.yellow}`,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
   navLinkStyle: {
     color: colors.white,
     fontFamily: fonts.armenian,
@@ -184,6 +195,13 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
+  },
+  avatar: {
+    width: '70%',
+  },
+  wrapperOfAvatarImage: {
+    width: 60,
+    height: 30,
   },
   navLinkStyleLogout: {
     margin: 15,
@@ -206,8 +224,7 @@ const useStyles = makeStyles({
   userLink: {
     textDecoration: 'none',
     color: colors.yellow,
-    border: `2px solid ${colors.yellow}`,
-    borderRadius: 10,
+
     padding: 15,
   },
 });

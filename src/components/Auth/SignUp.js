@@ -41,6 +41,7 @@ const SignUp = () => {
   const [role, setRole] = useState('');
   const [educationCenter, setEducationCenter] = useState('');
   const [country, setCountry] = useState('');
+  const [scoreForReading, setScoreForReading] = useState(0);
 
   const classes = useStyles();
 
@@ -117,6 +118,7 @@ const SignUp = () => {
       gender,
       country,
       educationCenter,
+      scoreForReading,
     });
     // setDisplayName(`${name} ${surname}`);
   };

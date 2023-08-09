@@ -10,10 +10,12 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../../assest/styles/customSlick.css';
 import Slider from 'react-slick';
+import { useNavigate } from 'react-router-dom';
 
 const PopularCourses = () => {
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
+  const navigate = useNavigate();
 
   var settings = {
     dots: false,
@@ -62,6 +64,7 @@ const PopularCourses = () => {
           {popularCoursesList.map((course) => {
             return (
               <div
+                onClick={() => navigate(course.route)}
                 key={uuid()}
                 className={`${classes.cardDiv} ${classesForMediaQueries.cardDiv}`}>
                 <img
@@ -117,6 +120,8 @@ const useStyles = makeStyles({
     width: 180,
     height: 180,
     borderRadius: 20,
+    maxWidth: '100%',
+    objectFit: 'cover',
     position: 'relative',
     top: 35,
     zIndex: 1,
