@@ -24,7 +24,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { colors, fonts } from '../../constants/variables';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../requests/firebase';
+import { auth, getUserData } from '../../requests/firebase';
 import { NavLink } from 'react-router-dom';
 
 const SignIn = () => {
@@ -77,7 +77,6 @@ const SignIn = () => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user;
         navigate(HOME_ROUTE);
         console.log(user);
@@ -85,12 +84,16 @@ const SignIn = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        if (errorCode === 'auth/user-not-found') {
-          alert('Խնդրում ենք նախ գրանցվել');
+        console.log(errorCode, errorMessage, 111);
+        if (
+          errorCode === 'auth/user-not-found' ||
+          errorCode === 'auth/invalid-email'
+        ) {
+          alert('Նման օգտատեր չի գտնվել');
         }
       });
   };
+
   return (
     <>
       <div className={classes.containerOfSignIn}>

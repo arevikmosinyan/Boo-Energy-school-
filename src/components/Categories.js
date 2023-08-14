@@ -16,6 +16,8 @@ import {
 import { topics } from '../constants/contentsOfTopics';
 import class1Div1Math from '../components/Courses/classesOfMathematics/division1/class1';
 import class2Div1Math from '../components/Courses/classesOfMathematics/division1/class2';
+import class3Div1Math from '../components/Courses/classesOfMathematics/division1/class3';
+import class4Div1Math from '../components/Courses/classesOfMathematics/division1/class4';
 import class1Div2Math from '../components/Courses/classesOfMathematics/division2/class1';
 import class2Div2Math from '../components/Courses/classesOfMathematics/division2/class1';
 
@@ -81,12 +83,6 @@ export const popularCoursesList = [
     image: Programming,
     route: PROGRAMMING_ROUTE,
   },
-  // {
-  //   title: 'Մաթեմատիկա',
-  //   color: colors.yellow,
-  //   // countOfStudents: '195 սովորող',
-  //   image: Businessman,
-  // },
 ];
 
 export const divisions = [
@@ -99,23 +95,27 @@ export const divisions = [
         singleClassNumber: 'Դաս 1',
         singleClassTitle: 'Բնական թվերը և դրանց գրառումը',
         singleClassContent: class1Div1Math(),
-        // isRead:false
+        isRead: false,
       },
       {
         id: 'class2Div1Math',
         singleClassNumber: 'Դաս 2',
         singleClassTitle: 'Կարգ, կարգային արժեք',
         singleClassContent: class2Div1Math(),
+        isRead: false,
       },
       {
+        id: 'class3Div1Math',
         singleClassNumber: 'Դաս 3',
         singleClassTitle: 'Բնական թվերի համեմատումը',
-        singleClassContent: 'content',
+        singleClassContent: class3Div1Math(),
+        isRead: false,
       },
       {
         singleClassNumber: 'Դաս 4',
         singleClassTitle: 'Թվերի կլորացումը',
-        singleClassContent: 'content',
+        singleClassContent: class4Div1Math(),
+        isRead: false,
       },
     ],
   },
@@ -128,47 +128,56 @@ export const divisions = [
         singleClassNumber: 'Դաս 1',
         singleClassTitle: 'Բազմանիշ թվերի գումարումը',
         singleClassContent: class1Div2Math(),
+        isRead: false,
       },
       {
         id: 'class2Div2Math',
         singleClassNumber: 'Դաս 2',
         singleClassTitle: 'Գումարման օրենքները',
         singleClassContent: class2Div2Math(),
+        isRead: false,
       },
       {
         singleClassNumber: 'Դաս 3',
         singleClassTitle: 'Բազմանիշ թվերի հանումը',
         singleClassContent: 'content',
+        isRead: false,
       },
       {
         singleClassNumber: 'Դաս 4',
         singleClassTitle: 'Բազմանիշ թվերի բազմապատկումը',
         singleClassContent: 'content',
+        isRead: false,
       },
       {
         singleClassNumber: 'Դաս 5',
         singleClassTitle: 'Կարգային միավորների բազմապատկումը',
         singleClassContent: 'content',
+        isRead: false,
       },
       {
         singleClassNumber: 'Դաս 6',
         singleClassTitle: 'Բազմապատկման օրենքները',
         singleClassContent: 'content',
+        isRead: false,
       },
       {
         singleClassNumber: 'Դաս 7',
         singleClassTitle: 'Մնացորդով բաժանում',
         singleClassContent: 'content',
+        isRead: false,
       },
       {
         singleClassNumber: 'Դաս 8',
         singleClassTitle: 'Բազմանիշ թվերի բաժանումը',
         singleClassContent: 'content',
+        isRead: false,
       },
       {
         singleClassNumber: 'Դաս 9',
         singleClassTitle: 'Թվային արտահայտություններ',
         singleClassContent: 'content',
+        isRead: false,
       },
     ],
   },

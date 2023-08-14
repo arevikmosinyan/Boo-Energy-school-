@@ -22,7 +22,12 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { colors, fonts } from '../../constants/variables';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import { auth, writeUserData, database } from '../../requests/firebase';
+import {
+  auth,
+  writeUserData,
+  database,
+  getUserData,
+} from '../../requests/firebase';
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -102,6 +107,7 @@ const SignUp = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
+        sendEmailVerify();
         navigate(HOME_ROUTE);
       })
       .catch((error) => {
@@ -109,7 +115,7 @@ const SignUp = () => {
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
       });
-    sendEmailVerify();
+
     writeUserData({
       email,
       name,
@@ -122,6 +128,36 @@ const SignUp = () => {
     });
     // setDisplayName(`${name} ${surname}`);
   };
+
+  //   await createUserWithEmailAndPassword(auth, email, password)
+  //     .then(async (userCredential) => {
+  //       const user = userCredential.user;
+  //       console.log(user);
+
+  //       // Write user data after successful account creation
+  //       await writeUserData({
+  //         email,
+  //         name,
+  //         surname,
+  //         role,
+  //         gender,
+  //         country,
+  //         educationCenter,
+  //         scoreForReading,
+  //       });
+
+  //       // Now, fetch and display user data
+  //       const userData = await getUserData(email);
+  //       console.log(userData);
+  //       sendEmailVerify();
+  //       navigate(HOME_ROUTE);
+  //     })
+  //     .catch((error) => {
+  //       const errorCode = error.code;
+  //       const errorMessage = error.message;
+  //       console.log(errorCode, errorMessage);
+  //     });
+  // };
 
   async function sendEmailVerify() {
     await sendEmailVerification(auth.currentUser).then(() => {

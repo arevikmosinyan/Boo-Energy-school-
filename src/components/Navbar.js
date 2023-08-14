@@ -9,6 +9,7 @@ import {
   CALENDAR_ROUTE,
   SIGNIN_ROUTE,
   SIGNUP_ROUTE,
+  COURSES_ROUTE,
   PROFILE_ROUTE,
 } from '../constants/routes';
 import { colors, fonts } from '../constants/variables';
@@ -34,6 +35,9 @@ function NavBar() {
 
   const handleClick1 = (event) => {
     setAnchorEl1(event.currentTarget);
+    setTimeout(() => {
+      navigate(COURSES_ROUTE);
+    }, 100);
   };
 
   const handleClose1 = () => {
@@ -124,10 +128,10 @@ function NavBar() {
                 Ելք
               </Button>
             </NavLink>
-            <div className={classes.wrappperOfLinkToProfile}>
-              <NavLink to={PROFILE_ROUTE} className={classes.userLink}>
-                {userData?.name}
-              </NavLink>
+            <div
+              className={classes.wrappperOfLinkToProfile}
+              onClick={() => navigate(PROFILE_ROUTE)}>
+              <div className={classes.userLink}>{userData?.name}</div>
               <div className={classes.wrapperOfAvatarImage}>
                 <img src={avatar} alt='avatar' className={classes.avatar} />
               </div>
@@ -176,6 +180,7 @@ const useStyles = makeStyles({
     border: `2px solid ${colors.yellow}`,
     borderRadius: 10,
     alignItems: 'center',
+    cursor: 'pointer',
   },
   navLinkStyle: {
     color: colors.white,
@@ -222,9 +227,7 @@ const useStyles = makeStyles({
   },
 
   userLink: {
-    textDecoration: 'none',
     color: colors.yellow,
-
     padding: 15,
   },
 });

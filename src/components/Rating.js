@@ -36,7 +36,7 @@ const Rating = () => {
         <p className={classes.label}> Ձեր ընդհանուր վարկանիշը </p>
         <div className={classes.wrapperOfRatingSchedule}>
           <div className={classes.nameAndSurnameBar}>
-            {userData.name} {userData.surname}
+            {userData?.name} {userData?.surname}
           </div>
           <div className={classes.valueOfRatingBar}>52</div>
         </div>

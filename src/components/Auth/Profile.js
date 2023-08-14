@@ -18,17 +18,20 @@ import {
 import { colors } from '../../constants/variables';
 import { writeUserData } from '../../requests/firebase';
 import loadingContext from '../../contexts/dataLoadingContext';
+import { useLocation } from 'react-router-dom';
 
 const Profile = () => {
   const classes = useStyles();
   const userData = useContext(userDataContext);
   const loading = useContext(loadingContext);
   const [country, setCountry] = useState('');
-  console.log(loading);
+  console.log(loading); //կոճակը սեղմելիս կստանա true արժեքը, հենց data-ն ստանա, կստանա false ու loading-ը կդադարի
   const [educationCenter, setEducationCenter] = useState('');
   const [role, setRole] = useState('');
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
+  // const location = useLocation();
+  // const newScoreData = location.state;
 
   function changeCountry() {
     writeUserData({
@@ -36,6 +39,7 @@ const Profile = () => {
       country,
     });
   }
+
   function changeEducationalCenter() {
     writeUserData({
       ...userData,
@@ -75,14 +79,17 @@ const Profile = () => {
         ) : (
           <List>
             <ListItem className={classes.listItem}>
-              <ListItemText primary={`Անուն: ${userData?.name}`} />
+              <ListItemText
+                primary={`Անուն: ${userData?.name}`}
+                className={classes.prevName}
+              />
               <TextField
                 placeholder='Մուտքագրեք Ձեր անունը'
                 variant='outlined'
                 required
-                className={classes.input}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                className={classes.formControl}
               />
 
               <form className={classes.wrapperOfAcceptChangesButton}>
@@ -96,14 +103,17 @@ const Profile = () => {
               </form>
             </ListItem>
             <ListItem className={classes.listItem}>
-              <ListItemText primary={`Ազգանուն: ${userData?.surname}`} />
+              <ListItemText
+                primary={`Ազգանուն: ${userData?.surname}`}
+                className={classes.prevName}
+              />
               <TextField
                 placeholder='Մուտքագրեք Ձեր ազգանունը'
                 variant='outlined'
                 required
-                className={classes.input}
                 value={surname}
                 onChange={(e) => setSurname(e.target.value)}
+                className={classes.formControl}
               />
 
               <form className={classes.wrapperOfAcceptChangesButton}>
@@ -117,10 +127,13 @@ const Profile = () => {
               </form>
             </ListItem>
             <ListItem className={classes.listItem}>
-              <ListItemText primary={`Դերը պորտալում: ${userData?.role}`} />
+              <ListItemText
+                primary={`Դերը պորտալում: ${userData?.role}`}
+                className={classes.prevName}
+              />
               <FormControl variant='outlined' className={classes.formControl}>
                 <Select
-                  className={classes.select}
+                  className={classes.formControl}
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
                   displayEmpty
@@ -152,7 +165,7 @@ const Profile = () => {
               />
               <FormControl variant='outlined' className={classes.formControl}>
                 <Select
-                  className={classes.select}
+                  className={classes.formControl}
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
                   displayEmpty
@@ -181,7 +194,7 @@ const Profile = () => {
               </form>
             </ListItem>
             <ListItem className={classes.listItem}>
-              <div>
+              <div className={classes.prevName}>
                 <ListItemText primary={`Ուսումնական հաստատության անվանում: `} />
                 <div>{userData?.educationCenter}</div>
               </div>
@@ -240,6 +253,9 @@ const Profile = () => {
               </form>
             </ListItem>
             <ListItem className={classes.listItem}>
+              {/* <ListItemText
+                primary={`Ընթերցանության վարկանիշ: ${newScoreData?.newScore}`}
+              /> */}
               <ListItemText
                 primary={`Ընթերցանության վարկանիշ: ${userData?.scoreForReading}`}
               />
