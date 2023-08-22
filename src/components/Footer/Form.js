@@ -4,11 +4,13 @@ import { NavLink } from 'react-router-dom';
 import { SIGNIN_ROUTE, SIGNUP_ROUTE } from '../../constants/routes';
 import { makeStyles, Button } from '@material-ui/core';
 import { colors, fonts } from '../../constants/variables';
+import { useNavigate } from 'react-router-dom';
 
 const Form = () => {
   const [email, setEmail] = useState('');
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
+  const navigate = useNavigate();
 
   function emailChange(e) {
     setEmail(e.target.value);
@@ -24,16 +26,23 @@ const Form = () => {
         margin='normal'
       />
       <div className={classes.containerOfSigninAndSignup}>
-        <NavLink to={SIGNIN_ROUTE} className={classes.navLinkStyleForSignIn}>
-          <Button variant='outlined' className={classes.buttonSignIn}>
-            Մուտք
-          </Button>
-        </NavLink>
-        <NavLink to={SIGNUP_ROUTE} className={classes.navLinkStyleForSignUp}>
-          <Button variant='outlined' className={classes.buttonSignUp}>
-            Գրանցում
-          </Button>
-        </NavLink>
+        <Button
+          onClick={() =>
+            navigate(SIGNIN_ROUTE, { state: { navigatedEmail: email } })
+          }
+          variant='outlined'
+          className={classes.buttonSignIn}>
+          Մուտք
+        </Button>
+
+        <Button
+          onClick={() =>
+            navigate(SIGNUP_ROUTE, { state: { navigatedEmail: email } })
+          }
+          variant='outlined'
+          className={classes.buttonSignUp}>
+          Գրանցում
+        </Button>
       </div>
     </div>
   );
@@ -92,6 +101,7 @@ const useStyles = makeStyles({
     width: '100%',
     height: 48,
     color: colors.darkGreen,
+    margin: 5,
     borderRadius: 10,
     backgroundColor: colors.white,
     '&:hover': {
@@ -102,6 +112,7 @@ const useStyles = makeStyles({
     width: '100%',
     height: 48,
     color: colors.white,
+    margin: 5,
     backgroundColor: colors.yellow,
     borderRadius: 10,
   },

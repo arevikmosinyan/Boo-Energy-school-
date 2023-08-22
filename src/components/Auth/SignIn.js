@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   makeStyles,
@@ -26,13 +26,22 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, getUserData } from '../../requests/firebase';
 import { NavLink } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const SignIn = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const location = useLocation();
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const wrapperOfEmailAndPasswordRef = useRef();
+
+  useEffect(() => {
+    wrapperOfEmailAndPasswordRef?.current.scrollIntoView({ block: 'center' });
+  }, [location.state]);
+
+  const locationEmail = location.state;
 
   const emailRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -67,8 +76,8 @@ const SignIn = () => {
   }
 
   function emailValidation() {
-    const emailTrimmed = email.trim();
-    if (!emailRegex.test(emailTrimmed) && emailTrimmed.length > 4) {
+    const emailTrimmed = email.trim() || locationEmail?.navigatedEmail.trim();
+    if (!emailRegex.test(emailTrimmed) && emailTrimmed?.length > 4) {
       return 'Խնդրում ենք մուտքագրեք վավեր էլ․ հասցե ';
     }
   }
@@ -98,7 +107,9 @@ const SignIn = () => {
     <>
       <div className={classes.containerOfSignIn}>
         <div className={classes.wrapperOfPasswordAndEmail}>
-          <div className={classes.wrapperOfInputFiledAndInputHeader}>
+          <div
+            className={classes.wrapperOfInputFiledAndInputHeader}
+            ref={wrapperOfEmailAndPasswordRef}>
             <p className={classes.inputHeader}>Էլ․ փոստ</p>
             <TextField
               InputProps={{
@@ -108,7 +119,7 @@ const SignIn = () => {
               placeholder='Մուտքագրեք Ձեր Էլ․ փոստի հասցեն'
               variant='outlined'
               required
-              value={email}
+              value={locationEmail?.navigatedEmail || email}
               onChange={(e) => setEmail(e.target.value)}
               helperText={emailValidation()}
             />

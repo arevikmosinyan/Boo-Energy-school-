@@ -1,16 +1,28 @@
 import React from 'react';
 import IconButton from '@mui/material/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import { colors } from '../../constants/variables';
+import { Link, NavLink } from 'react-router-dom';
+
+import { colors, fonts } from '../../constants/variables';
 import Facebook from './Facebook';
-import Email from './Email';
-import Telegram from './Telegram';
 import Instagram from './Instagram';
 import Logo from '../Logo';
 import Form from './Form';
 import userContext from '../../contexts/userContext';
 import { useContext } from 'react';
+import {
+  HOME_ROUTE,
+  RATING_ROUTE,
+  COMMUNITY_ROUTE,
+  ABOUT_ROUTE,
+  CALENDAR_ROUTE,
+  SIGNIN_ROUTE,
+  SIGNUP_ROUTE,
+  COURSES_ROUTE,
+  PROFILE_ROUTE,
+  QUIZZES_ROUTE,
+  IQTests_ROUTE,
+} from '../../constants/routes';
 
 const Footer = () => {
   const classes = useStyles();
@@ -23,6 +35,78 @@ const Footer = () => {
         className={`${classes.containerOfLogo} ${classesForMediaQueries.containerOfLogo}`}>
         <Logo />
       </div>
+      {user && (
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4,1fr)',
+            gap: '10px',
+            marginTop: 35,
+            marginBottom: 35,
+          }}>
+          <div className={classes.wrapperOfLinkAndSubLinks}>
+            <NavLink
+              to={ABOUT_ROUTE}
+              className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
+              Մեր մասին
+            </NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>
+              Ինչ է իրենից ներկայացնում Թեստեր բաժինը
+            </NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>
+              Ինչ է իրենից ներկայացնում Դասընթացներ բաժինը
+            </NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>
+              Ինչ է իրենից ներկայացնում Վարկանիշ բաժինը
+            </NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>Կապը մեզ հետ</NavLink>
+          </div>
+
+          <div className={classes.wrapperOfLinkAndSubLinks}>
+            <NavLink
+              to={COURSES_ROUTE}
+              className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
+              Դասընթացներ
+            </NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>Մաթեմատիկա</NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>Ծրագրավորում</NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>Անգլերեն</NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>
+              Գրաֆիկ դիզայն
+            </NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>UI/UX դիզայն</NavLink>
+          </div>
+
+          <div className={classes.wrapperOfLinkAndSubLinks}>
+            <NavLink
+              to={QUIZZES_ROUTE}
+              className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
+              Թեստեր
+            </NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>Մաթեմատիկա</NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>Ծրագրավորում</NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>Անգլերեն</NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>
+              Գրաֆիկ դիզայն
+            </NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>UI/UX դիզայն</NavLink>
+          </div>
+          <div className={classes.wrapperOfLinkAndSubLinks}>
+            <NavLink
+              to={RATING_ROUTE}
+              className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
+              Վարկանիշ
+            </NavLink>
+
+            <NavLink
+              to={IQTests_ROUTE}
+              className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
+              IQ թեստեր
+            </NavLink>
+          </div>
+        </div>
+      )}
+
       {!user && (
         <div
           className={`${classes.containerOfSubscribeForm} ${classesForMediaQueries.containerOfSubscribeForm}`}>
@@ -75,8 +159,8 @@ const useStyles = makeStyles({
     justifyContent: 'space-around',
   },
   containerOfLogo: {
-    width: 250,
-    height: 178,
+    // width: 250,
+    // height: 178,
     marginLeft: 100,
     marginTop: 50,
   },
@@ -89,17 +173,42 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    marginTop: 20,
   },
   containerOfIconButtonsAndTypografy: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   containerOfIconButtons: {
     display: 'flex',
   },
   iconStyle: {
     width: 40,
+  },
+  navLinkStyle: {
+    color: colors.white,
+    fontFamily: fonts.armenian,
+    textDecoration: 'none',
+    fontStyle: 'normal',
+    fontSize: 20,
+    margin: 5,
+    marginBottom: 15,
+    '&:focus': {
+      color: colors.yellow,
+    },
+  },
+  wrapperOfLinkAndSubLinks: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 8,
+  },
+  subLinkOfNavLink: {
+    color: colors.white,
+    fontSize: 12,
+    margin: 5,
+    textDecoration: 'none',
   },
 });
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { divisions } from '../Categories';
 import { Button, makeStyles } from '@material-ui/core';
@@ -22,7 +22,7 @@ const Topic = () => {
   const navigate = useNavigate();
   const userData = useContext(userDataContext);
   const loading = useContext(loadingContext);
-  console.log(loading);
+
   // const [isLoading, setIsLoading] = useState(loading);
   const [alreadyRead, setAlreadyRead] = useState(false);
   const [scoreForReading, setScoreForReading] = useState(
@@ -33,49 +33,14 @@ const Topic = () => {
   const { selectedClassId } = location.state || {};
   let selectedClass = null;
 
-  useEffect(() => {
-    function checkReadOrNot() {
-      const scrollHeight = document.documentElement.scrollHeight; // ամբողջ էջն է, scroll-ի ենթակա ամբողջ մասը
-      const scrollYOffset = window.pageYOffset; //scroll արած վերև գնացած, չերևացող մասը
-      const windowHeight = window.innerHeight; // user-ին տեսանելի հատվածը
+  console.log(loading);
+  // console.log(isLoading);
 
-      for (let singleDivision of divisions) {
-        for (let singleClass of singleDivision.classes) {
-          if (singleClass.id === selectedClassId) {
-            if (!singleClass.isRead) {
-              if (windowHeight + scrollYOffset >= scrollHeight) {
-                setScoreForReading(scoreForReading + 1);
-              }
-            }
-          }
-        }
-
-        if (selectedClass) {
-          break;
-        }
-      }
-    }
-
-    window.addEventListener('scroll', checkReadOrNot);
-
-    return () => window.removeEventListener('scroll', checkReadOrNot);
-  }, []);
-
-  for (let singleDivision of divisions) {
-    for (let singleClass of singleDivision.classes) {
-      if (singleClass.id === selectedClassId) {
-        selectedClass = singleClass;
-        break;
-      }
-    }
-
-    if (selectedClass) {
-      break;
-    }
-  }
+  /*-------------------------------------setting new score to real-time database while clicking----------------*/
 
   function submitGainedScoresForReading() {
     // setIsLoading(true);
+
     for (let singleDivision of divisions) {
       for (let singleClass of singleDivision.classes) {
         if (singleClass.id === selectedClassId) {
@@ -99,13 +64,60 @@ const Topic = () => {
         break;
       }
     }
-    // setIsLoading(false);
-    // setTimeout(
-    //   () => navigate(PROFILE_ROUTE, { state: { newScore: scoreForReading } }),
-    //   1000,
-    // );
+    // window.location.reload();
   }
 
+  /*---------------------------------------------------adding score while scrolling-----------------*/
+
+  //topic component-ի mount-ի ժամանակ, scroll-i ժամանակ կկանչվի addingScoreWhileScrolling ֆունկցիան ու կփոխի setScoreForReading(scoreForReading + 1); արժեքը
+  //այս ֆունկցիան` addingScoreWhileScrolling, չի սարքում isRead-ը true, մեզ պետք է , որ երբ setScoreForReading(scoreForReading + 1) լինի, նաև
+  //isRead-ը true դառնա։ բայց setScoreForReading(scoreForReading + 1) և isRead-ը true դառնալը լինի կլիկի ժամանակ։
+  useEffect(() => {
+    function addingScoreWhileScrolling() {
+      const scrollHeight = document.documentElement.scrollHeight; // ամբողջ էջն է, scroll-ի ենթակա ամբողջ մասը
+      const scrollYOffset = window.pageYOffset; //scroll արած վերև գնացած, չերևացող մասը
+      const windowHeight = window.innerHeight; // user-ին տեսանելի հատվածը
+
+      for (let singleDivision of divisions) {
+        for (let singleClass of singleDivision.classes) {
+          if (singleClass.id === selectedClassId) {
+            if (!singleClass.isRead) {
+              if (windowHeight + scrollYOffset >= scrollHeight) {
+                setScoreForReading(scoreForReading + 1);
+              }
+            }
+          }
+        }
+
+        if (selectedClass) {
+          break;
+        }
+      }
+    }
+
+    window.addEventListener('scroll', addingScoreWhileScrolling);
+
+    return () =>
+      window.removeEventListener('scroll', addingScoreWhileScrolling);
+  }, [scoreForReading, selectedClass, selectedClassId]);
+
+  /*--------------------------------by this loop we decide which class was selected-------------------------*/
+  for (let singleDivision of divisions) {
+    for (let singleClass of singleDivision.classes) {
+      if (singleClass.id === selectedClassId) {
+        selectedClass = singleClass;
+        break;
+      }
+    }
+
+    if (selectedClass) {
+      break;
+    }
+  }
+
+  /*-------------------------------------------------------------------------------------------------------------*/
+  console.log(scoreForReading);
+  console.log(userData?.scoreForReading);
   return (
     <div
       className={classes.container}

@@ -37,7 +37,7 @@ import MathematicsQuizzes from './components/Quizzes/MathematicsQuizzes';
 import MathematicsCourses from './components/Courses/MathematicsCourses';
 import Programming from './components/Courses/Programming';
 import UIUXDesign from './components/Courses/UIUXDesign';
-import Courses from './components/Courses/Courses';
+import Courses from './components/Courses/AllCoursesComponent';
 import Profile from './components/Auth/Profile';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -56,10 +56,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      // if (loading) {
-      //   setLoading(false);
-      // }
+    const listener = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
         getUserData(user.email)
@@ -68,24 +65,28 @@ function App() {
             setUserData(data);
             setLoading(false);
           })
-          .catch(() => setUserData(null));
+          .catch(() => {
+            setUserData(null);
+            setLoading(false);
+          });
         console.log(user);
       } else {
         console.log('user is logged out');
         setUser(null);
+        setLoading(false);
       }
     });
+    return listener;
   }, []);
   //loading-ի initial արժեքը կոնտեքստում false է, իսկ current արժեքը true է, ու տրված է աբողջ application-ին որպես հասանելի արժեք
   //, որ կոմպոնենտը կուզի կօգտագործի (true արժեքը), որ կոմպոնենտը որ չի օգտագործի , այդ կոմպոննետում արժեքը կլինի false.
   //<loadingContext.Provider value={loading}> այս տողով տվել ենք true արժեքը
   return (
-    <userContext.Provider value={user}>
-      <userDataContext.Provider value={userData}>
-        <loadingContext.Provider value={loading}>
+    <loadingContext.Provider value={loading}>
+      <userContext.Provider value={user}>
+        <userDataContext.Provider value={userData}>
           <div>
             <Navbar />
-            {/* {loading && <Loading />} */}
             <Routes>
               <Route path={HOME_ROUTE} element={<Home />} />
               <Route path={COURSES_ROUTE} element={<Courses />} />
@@ -116,9 +117,9 @@ function App() {
             </Routes>
             <Footer />
           </div>
-        </loadingContext.Provider>
-      </userDataContext.Provider>
-    </userContext.Provider>
+        </userDataContext.Provider>
+      </userContext.Provider>
+    </loadingContext.Provider>
   );
 }
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles, MenuItem, Menu } from '@material-ui/core';
-import { NavLink, useNavigate } from 'react-router-dom';
-import MenuForCoursesAndTests from '../MenuForCoursesAndTests';
+import { NavLink } from 'react-router-dom';
 import {
   ENGLISH_ROUTE,
   PROGRAMMING_ROUTE,
@@ -9,23 +8,19 @@ import {
   UIUXDESIGN_ROUTE,
   MATHEMATICSCOURSE_ROUTE,
 } from '../../constants/routes';
-import { colors } from '../../constants/variables';
+import allCorsesBackgroundImage from '../../images/AllCoursesComponentBackgroundImage.png';
 
 const Courses = () => {
   const classes = useStyles();
   return (
     <div className={classes.container}>
-      <h1>
-        Այստեղ կգտնեք ներքոնշյան առարկաների վերաբերյալ տարաբնույթ դասընթացներ
-      </h1>
-      <div
-        className={classes.wrapperOfMenuForCoursesAndTests}
-        id='simple-menu'
-        //   anchorEl={anchorEl}
-        //   keepMounted
-        //   open={open}
-        //   onClose={onClose}>
-      >
+      <img
+        src={allCorsesBackgroundImage}
+        alt='all courses'
+        className={classes.image}
+      />
+
+      <div className={classes.coursesWrapper}>
         <MenuItem>
           <NavLink
             exact
@@ -65,13 +60,29 @@ export default Courses;
 
 const useStyles = makeStyles({
   container: {
-    margin: 25,
-    backgroundColor: colors.lightGreen,
     height: '100vh',
+    position: 'relative',
   },
-
-  wrapperOfMenuForCoursesAndTests: {
-    width: '100%',
+  image: {
+    objectFit: 'cover',
+    width: '100vw',
     height: '100%',
+  },
+  coursesWrapper: {
+    position: 'absolute',
+    top: 50,
+    left: '10%',
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    width: '40%',
+    borderRadius: 10,
+  },
+  menuItem: {
+    margin: '10px 0px 10px 0px',
+    backgroundColor: 'rgba(100, 100, 100, 0.5)',
+    padding: 10,
+    width: '50%',
+    color: 'rgba(0, 0, 0, 0.7)',
+    textDecoration: 'none',
+    borderRadius: 10,
   },
 });

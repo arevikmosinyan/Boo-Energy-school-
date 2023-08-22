@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ref, get, query, orderByChild, equalTo } from 'firebase/database';
@@ -33,6 +33,8 @@ import {
   sendEmailVerification,
 } from 'firebase/auth';
 import { NavLink } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useRef } from 'react';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -47,8 +49,15 @@ const SignUp = () => {
   const [educationCenter, setEducationCenter] = useState('');
   const [country, setCountry] = useState('');
   const [scoreForReading, setScoreForReading] = useState(0);
-
+  const emailAndNameRef = useRef();
+  const location = useLocation();
   const classes = useStyles();
+
+  useEffect(() => {
+    emailAndNameRef?.current.scrollIntoView({ block: 'center' });
+  }, [location.state]);
+
+  const locationEmail = location.state;
 
   const emailRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -83,7 +92,8 @@ const SignUp = () => {
   }
 
   function emailValidation() {
-    if (!emailRegex.test(email) && email.length > 4) {
+    const emailTrimmed = email.trim() || locationEmail?.navigatedEmail.trim();
+    if (!emailRegex.test(emailTrimmed) && emailTrimmed?.length > 4) {
       return 'Խնդրում ենք մուտքագրեք վավեր էլ․ հասցե ';
     }
   }
@@ -268,7 +278,9 @@ const SignUp = () => {
             </RadioGroup>
           </FormControl>
           <div className={classes.textFields}>
-            <div className={classes.wrapperOfEmailAndName}>
+            <div
+              className={classes.wrapperOfEmailAndName}
+              ref={emailAndNameRef}>
               <div className={classes.wrapperOfInputFiledAndInputHeader}>
                 <p className={classes.inputHeader}>Էլ․ փոստ *</p>
                 <TextField
@@ -279,7 +291,7 @@ const SignUp = () => {
                   variant='outlined'
                   required
                   className={classes.input}
-                  value={email}
+                  value={locationEmail?.navigatedEmail || email}
                   onChange={(e) => {
                     setEmail(e.target.value);
                     // if (emailError) {
