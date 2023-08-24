@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ref, get, query, orderByChild, equalTo } from 'firebase/database';
 import { HOME_ROUTE, SIGNIN_ROUTE } from '../../constants/routes';
@@ -17,7 +17,7 @@ import {
   Button,
   MenuItem,
 } from '@material-ui/core';
-
+import Loading from '../Loading';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { colors, fonts } from '../../constants/variables';
@@ -35,9 +35,11 @@ import {
 import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useRef } from 'react';
+import loadingContext from '../../contexts/dataLoadingContext';
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const loading = useContext(loadingContext);
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   // const [displayName, setDisplayName] = useState('');
@@ -49,6 +51,7 @@ const SignUp = () => {
   const [educationCenter, setEducationCenter] = useState('');
   const [country, setCountry] = useState('');
   const [scoreForReading, setScoreForReading] = useState(0);
+  const [alreadyReadClassesIds, setAlreadyReadClassesIds] = useState([]);
   const emailAndNameRef = useRef();
   const location = useLocation();
   const classes = useStyles();
@@ -92,8 +95,12 @@ const SignUp = () => {
   }
 
   function emailValidation() {
-    const emailTrimmed = email.trim() || locationEmail?.navigatedEmail.trim();
-    if (!emailRegex.test(emailTrimmed) && emailTrimmed?.length > 4) {
+    const emailToTestForValidation =
+      email.trim() || locationEmail?.navigatedEmail;
+    if (
+      !emailRegex.test(emailToTestForValidation) &&
+      emailToTestForValidation?.length > 4
+    ) {
       return 'Խնդրում ենք մուտքագրեք վավեր էլ․ հասցե ';
     }
   }
@@ -135,39 +142,9 @@ const SignUp = () => {
       country,
       educationCenter,
       scoreForReading,
+      alreadyReadClassesIds,
     });
-    // setDisplayName(`${name} ${surname}`);
   };
-
-  //   await createUserWithEmailAndPassword(auth, email, password)
-  //     .then(async (userCredential) => {
-  //       const user = userCredential.user;
-  //       console.log(user);
-
-  //       // Write user data after successful account creation
-  //       await writeUserData({
-  //         email,
-  //         name,
-  //         surname,
-  //         role,
-  //         gender,
-  //         country,
-  //         educationCenter,
-  //         scoreForReading,
-  //       });
-
-  //       // Now, fetch and display user data
-  //       const userData = await getUserData(email);
-  //       console.log(userData);
-  //       sendEmailVerify();
-  //       navigate(HOME_ROUTE);
-  //     })
-  //     .catch((error) => {
-  //       const errorCode = error.code;
-  //       const errorMessage = error.message;
-  //       console.log(errorCode, errorMessage);
-  //     });
-  // };
 
   async function sendEmailVerify() {
     await sendEmailVerification(auth.currentUser).then(() => {
@@ -291,7 +268,7 @@ const SignUp = () => {
                   variant='outlined'
                   required
                   className={classes.input}
-                  value={locationEmail?.navigatedEmail || email}
+                  value={locationEmail?.navigatedEmail || email.trim()}
                   onChange={(e) => {
                     setEmail(e.target.value);
                     // if (emailError) {

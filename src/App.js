@@ -78,49 +78,51 @@ function App() {
     });
     return listener;
   }, []);
-  //loading-ի initial արժեքը կոնտեքստում false է, իսկ current արժեքը true է, ու տրված է աբողջ application-ին որպես հասանելի արժեք
-  //, որ կոմպոնենտը կուզի կօգտագործի (true արժեքը), որ կոմպոնենտը որ չի օգտագործի , այդ կոմպոննետում արժեքը կլինի false.
-  //<loadingContext.Provider value={loading}> այս տողով տվել ենք true արժեքը
-  return (
-    <loadingContext.Provider value={loading}>
-      <userContext.Provider value={user}>
-        <userDataContext.Provider value={userData}>
-          <div>
-            <Navbar />
-            <Routes>
-              <Route path={HOME_ROUTE} element={<Home />} />
-              <Route path={COURSES_ROUTE} element={<Courses />} />
-              {/* <Route path={QUIZZES_ROUTE} element={<Quizzes />} /> */}
-              <Route path={RATING_ROUTE} element={<Rating />} />
-              <Route path={COMMUNITY_ROUTE} element={<Community />} />
-              <Route path={CALENDAR_ROUTE} element={<Calendar />} />
-              <Route path={ABOUT_ROUTE} element={<AboutUs />} />
-              <Route path={SIGNIN_ROUTE} element={<SignIn />} />
-              <Route path={RESET_ROUTE} element={<ResetPassword />} />
-              <Route path={SIGNUP_ROUTE} element={<SignUp />} />
-              <Route path={PROFILE_ROUTE} element={<Profile />} />
-              <Route path={IQTests_ROUTE} element={<IQTests />} />
-              <Route path={ENGLISH_ROUTE} element={<English />} />
-              <Route
-                path={MATHEMATICSCOURSE_ROUTE}
-                element={<MathematicsCourses />}
-              />
-              <Route
-                path={MATHEMATICSQUIZZES_ROUTE}
-                element={<MathematicsQuizzes />}
-              />
-              <Route path={GRAPHICDESIGN_ROUTE} element={<GraphicDesign />} />
-              <Route path={PROGRAMMING_ROUTE} element={<Programming />} />
-              <Route path={UIUXDESIGN_ROUTE} element={<UIUXDesign />} />
-              <Route path={TOPIC_ROUTE} element={<Topic />} />
-              <Route path='*' element={<Navigate to={HOME_ROUTE} />} />
-            </Routes>
-            <Footer />
-          </div>
-        </userDataContext.Provider>
-      </userContext.Provider>
-    </loadingContext.Provider>
-  );
+
+  if (loading) {
+    return <Loading />;
+  } else {
+    return (
+      <loadingContext.Provider value={loading}>
+        <userContext.Provider value={user}>
+          <userDataContext.Provider value={userData}>
+            <div>
+              <Navbar />
+              <Routes>
+                <Route path={HOME_ROUTE} element={<Home />} />
+                <Route path={COURSES_ROUTE} element={<Courses />} />
+                {/* <Route path={QUIZZES_ROUTE} element={<Quizzes />} /> */}
+                <Route path={RATING_ROUTE} element={<Rating />} />
+                <Route path={COMMUNITY_ROUTE} element={<Community />} />
+                <Route path={CALENDAR_ROUTE} element={<Calendar />} />
+                <Route path={ABOUT_ROUTE} element={<AboutUs />} />
+                <Route path={SIGNIN_ROUTE} element={<SignIn />} />
+                <Route path={RESET_ROUTE} element={<ResetPassword />} />
+                <Route path={SIGNUP_ROUTE} element={<SignUp />} />
+                <Route path={PROFILE_ROUTE} element={<Profile />} />
+                <Route path={IQTests_ROUTE} element={<IQTests />} />
+                <Route path={ENGLISH_ROUTE} element={<English />} />
+                <Route
+                  path={MATHEMATICSCOURSE_ROUTE}
+                  element={<MathematicsCourses />}
+                />
+                <Route
+                  path={MATHEMATICSQUIZZES_ROUTE}
+                  element={<MathematicsQuizzes />}
+                />
+                <Route path={GRAPHICDESIGN_ROUTE} element={<GraphicDesign />} />
+                <Route path={PROGRAMMING_ROUTE} element={<Programming />} />
+                <Route path={UIUXDESIGN_ROUTE} element={<UIUXDesign />} />
+                <Route path={TOPIC_ROUTE} element={<Topic />} />
+                <Route path='*' element={<Navigate to={HOME_ROUTE} />} />
+              </Routes>
+              <Footer />
+            </div>
+          </userDataContext.Provider>
+        </userContext.Provider>
+      </loadingContext.Provider>
+    );
+  }
 }
 
 export default App;

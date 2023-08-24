@@ -13,47 +13,43 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import loadingContext from '../../contexts/dataLoadingContext';
 import Loading from '../Loading';
-import { useNavigate } from 'react-router-dom';
-import { PROFILE_ROUTE } from '../../constants/routes';
 
 const Topic = () => {
   const classes = useStyles();
   const location = useLocation();
-  const navigate = useNavigate();
   const userData = useContext(userDataContext);
   const loading = useContext(loadingContext);
 
-  // const [isLoading, setIsLoading] = useState(loading);
+  const [alreadyReadClassesIds, setAlreadyReadClassesIds] = useState(
+    userData?.alreadyReadClassesIds || ['hello'],
+  );
   const [alreadyRead, setAlreadyRead] = useState(false);
   const [scoreForReading, setScoreForReading] = useState(
-    userData?.scoreForReading,
+    userData?.scoreForReading || 0,
   );
-
   const [openTheDialog, setOpenTheDialog] = useState(false);
   const { selectedClassId } = location.state || {};
   let selectedClass = null;
 
   console.log(loading);
-  // console.log(isLoading);
 
   /*-------------------------------------setting new score to real-time database while clicking----------------*/
 
   function submitGainedScoresForReading() {
-    // setIsLoading(true);
-
     for (let singleDivision of divisions) {
       for (let singleClass of singleDivision.classes) {
         if (singleClass.id === selectedClassId) {
           if (!singleClass.isRead) {
+            singleClass.isRead = true;
+
             writeUserData({
               ...userData,
               scoreForReading,
+              alreadyReadClassesIds,
             });
-            singleClass.isRead = true;
             setAlreadyRead(true);
           } else {
             setOpenTheDialog(true);
-            // setIsLoading(false);
             return;
           }
           break;
@@ -64,7 +60,6 @@ const Topic = () => {
         break;
       }
     }
-    // window.location.reload();
   }
 
   /*---------------------------------------------------adding score while scrolling-----------------*/
@@ -84,6 +79,10 @@ const Topic = () => {
             if (!singleClass.isRead) {
               if (windowHeight + scrollYOffset >= scrollHeight) {
                 setScoreForReading(scoreForReading + 1);
+                setAlreadyReadClassesIds([
+                  ...alreadyReadClassesIds,
+                  singleClass.id,
+                ]);
               }
             }
           }
@@ -99,7 +98,7 @@ const Topic = () => {
 
     return () =>
       window.removeEventListener('scroll', addingScoreWhileScrolling);
-  }, [scoreForReading, selectedClass, selectedClassId]);
+  }, []);
 
   /*--------------------------------by this loop we decide which class was selected-------------------------*/
   for (let singleDivision of divisions) {
@@ -116,7 +115,11 @@ const Topic = () => {
   }
 
   /*-------------------------------------------------------------------------------------------------------------*/
-  console.log(scoreForReading);
+  console.log(scoreForReading); //stex der undefined e, chi hascnum get ani, dra hama8 es togh@ ||ov em tvel
+  // <div className={classes.scoreShowDiv}>
+  //{scoreForReading || userData?.scoreForReading}
+
+  // </div>
   console.log(userData?.scoreForReading);
   return (
     <div
@@ -126,13 +129,16 @@ const Topic = () => {
         <Loading />
       ) : (
         <>
-          <div className={classes.scoreShowDiv}>{scoreForReading}</div>
+          <div className={classes.scoreShowDiv}>
+            {/* {scoreForReading || userData?.scoreForReading} */}
+            {scoreForReading}
+          </div>
           <p className={classes.paragraph}>
             {selectedClass && selectedClass.singleClassContent}
           </p>
           <form className={classes.wrapperOfButtonSignUp}>
             <Button
-              type='button'
+              type='submit'
               variant='outlined'
               className={classes.submitButtonOfGainedScoresForReading}
               onClick={submitGainedScoresForReading}>

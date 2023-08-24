@@ -26,6 +26,7 @@ export function writeUserData({
   country,
   educationCenter,
   scoreForReading,
+  alreadyReadClassesIds,
 }) {
   set(ref(database, 'users/' + email.replace('.', ',')), {
     name,
@@ -36,6 +37,7 @@ export function writeUserData({
     country,
     educationCenter,
     scoreForReading,
+    alreadyReadClassesIds,
   });
 }
 

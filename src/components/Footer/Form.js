@@ -20,7 +20,7 @@ const Form = () => {
       <TextField
         className={classes.emailAddressFieldStyle}
         placeholder='Ձեր էլ․ փոստը'
-        value={email}
+        value={email.trim()}
         onChange={emailChange}
         fullWidth
         margin='normal'
@@ -28,7 +28,7 @@ const Form = () => {
       <div className={classes.containerOfSigninAndSignup}>
         <Button
           onClick={() =>
-            navigate(SIGNIN_ROUTE, { state: { navigatedEmail: email } })
+            navigate(SIGNIN_ROUTE, { state: { navigatedEmail: email.trim() } })
           }
           variant='outlined'
           className={classes.buttonSignIn}>
@@ -37,7 +37,7 @@ const Form = () => {
 
         <Button
           onClick={() =>
-            navigate(SIGNUP_ROUTE, { state: { navigatedEmail: email } })
+            navigate(SIGNUP_ROUTE, { state: { navigatedEmail: email.trim() } })
           }
           variant='outlined'
           className={classes.buttonSignUp}>

@@ -2,6 +2,9 @@ import React from 'react';
 import userDataContext from '../../contexts/userDataContext';
 import { useContext, useState } from 'react';
 import Loading from '../Loading';
+import { ref, remove } from 'firebase/database';
+import { HOME_ROUTE } from '../../constants/routes';
+
 import {
   makeStyles,
   Card,
@@ -14,24 +17,30 @@ import {
   Select,
   Button,
   TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from '@material-ui/core';
 import { colors } from '../../constants/variables';
-import { writeUserData } from '../../requests/firebase';
+
+import { writeUserData, auth, database } from '../../requests/firebase';
 import loadingContext from '../../contexts/dataLoadingContext';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const classes = useStyles();
   const userData = useContext(userDataContext);
   const loading = useContext(loadingContext);
+  const navigate = useNavigate();
   const [country, setCountry] = useState('');
-  console.log(loading); //կոճակը սեղմելիս կստանա true արժեքը, հենց data-ն ստանա, կստանա false ու loading-ը կդադարի
+  console.log(loading);
   const [educationCenter, setEducationCenter] = useState('');
   const [role, setRole] = useState('');
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
-  // const location = useLocation();
-  // const newScoreData = location.state;
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   function changeCountry() {
     writeUserData({
@@ -67,6 +76,22 @@ const Profile = () => {
       surname,
     });
   }
+
+  const onDeleteAccount = async () => {
+    setDeleteDialogOpen(false);
+
+    try {
+      const userRef = ref(
+        database,
+        'users/' + userData?.email.replace('.', ','),
+      );
+      await remove(userRef);
+      await auth.currentUser.delete();
+      navigate(HOME_ROUTE);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -253,12 +278,43 @@ const Profile = () => {
               </form>
             </ListItem>
             <ListItem className={classes.listItem}>
-              {/* <ListItemText
-                primary={`Ընթերցանության վարկանիշ: ${newScoreData?.newScore}`}
-              /> */}
               <ListItemText
                 primary={`Ընթերցանության վարկանիշ: ${userData?.scoreForReading}`}
               />
+            </ListItem>
+            <ListItem className={classes.listItem}>
+              <ListItemText
+                primary={`կարդացած դասերի համարներ: ${
+                  userData?.alreadyReadClassesIds || []
+                }`}
+              />
+            </ListItem>
+            <ListItem className={classes.listItem}>
+              <Button
+                variant='outlined'
+                className={classes.deleteButton}
+                onClick={() => setDeleteDialogOpen(true)}>
+                Այլեվս չեմ ցանկանում լինել օգտատեր
+              </Button>
+              <Dialog
+                open={deleteDialogOpen}
+                onClose={() => setDeleteDialogOpen(false)}>
+                <DialogContent>
+                  <DialogContentText>
+                    Համոզվա՞ծ եք, որ այլևս չեք ցանկանում լինել օգտատեր
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    onClick={() => setDeleteDialogOpen(false)}
+                    color='primary'>
+                    Չեղարկել
+                  </Button>
+                  <Button onClick={onDeleteAccount} color='primary'>
+                    Հաստատել
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </ListItem>
           </List>
         )}
@@ -304,6 +360,14 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     '&:hover': {
       backgroundColor: colors.lightGreen,
+    },
+  },
+  deleteButton: {
+    color: 'red',
+    borderColor: 'red',
+    margin: 'auto',
+    '&:hover': {
+      backgroundColor: 'rgba(255, 0, 0, 0.1)',
     },
   },
 }));
