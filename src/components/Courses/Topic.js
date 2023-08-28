@@ -13,20 +13,20 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import loadingContext from '../../contexts/dataLoadingContext';
 import Loading from '../Loading';
+import userContext from '../../contexts/userContext';
 
 const Topic = () => {
   const classes = useStyles();
   const location = useLocation();
   const userData = useContext(userDataContext);
+  const user = useContext(userContext);
   const loading = useContext(loadingContext);
-
-  const [alreadyReadClassesIds, setAlreadyReadClassesIds] = useState(
-    userData?.alreadyReadClassesIds || ['hello'],
-  );
+  // const [alreadyReadClassesIds,setAlreadyReadClassesIds]=useState(userData?.alreadyReadClassesIds)
   const [alreadyRead, setAlreadyRead] = useState(false);
   const [scoreForReading, setScoreForReading] = useState(
     userData?.scoreForReading || 0,
   );
+
   const [openTheDialog, setOpenTheDialog] = useState(false);
   const { selectedClassId } = location.state || {};
   let selectedClass = null;
@@ -39,19 +39,24 @@ const Topic = () => {
     for (let singleDivision of divisions) {
       for (let singleClass of singleDivision.classes) {
         if (singleClass.id === selectedClassId) {
-          if (!singleClass.isRead) {
-            singleClass.isRead = true;
-
+          if (!userData?.alreadyReadClassesIds?.includes(singleClass.id)) {
+            // setAlreadyReadClassesIds([...userData.alreadyReadClassesIds,singleClass.id]);//chi ashxatum ays tarberakum
             writeUserData({
               ...userData,
               scoreForReading,
-              alreadyReadClassesIds,
+              // alreadyReadClassesIds,
+              alreadyReadClassesIds: [
+                ...userData?.alreadyReadClassesIds,
+                singleClass.id,
+              ],
             });
-            setAlreadyRead(true);
           } else {
+            setAlreadyRead(true);
             setOpenTheDialog(true);
+
             return;
           }
+
           break;
         }
       }
@@ -64,9 +69,6 @@ const Topic = () => {
 
   /*---------------------------------------------------adding score while scrolling-----------------*/
 
-  //topic component-ի mount-ի ժամանակ, scroll-i ժամանակ կկանչվի addingScoreWhileScrolling ֆունկցիան ու կփոխի setScoreForReading(scoreForReading + 1); արժեքը
-  //այս ֆունկցիան` addingScoreWhileScrolling, չի սարքում isRead-ը true, մեզ պետք է , որ երբ setScoreForReading(scoreForReading + 1) լինի, նաև
-  //isRead-ը true դառնա։ բայց setScoreForReading(scoreForReading + 1) և isRead-ը true դառնալը լինի կլիկի ժամանակ։
   useEffect(() => {
     function addingScoreWhileScrolling() {
       const scrollHeight = document.documentElement.scrollHeight; // ամբողջ էջն է, scroll-ի ենթակա ամբողջ մասը
@@ -79,10 +81,6 @@ const Topic = () => {
             if (!singleClass.isRead) {
               if (windowHeight + scrollYOffset >= scrollHeight) {
                 setScoreForReading(scoreForReading + 1);
-                setAlreadyReadClassesIds([
-                  ...alreadyReadClassesIds,
-                  singleClass.id,
-                ]);
               }
             }
           }
@@ -133,21 +131,21 @@ const Topic = () => {
             {/* {scoreForReading || userData?.scoreForReading} */}
             {scoreForReading}
           </div>
+
           <p className={classes.paragraph}>
-            {selectedClass && selectedClass.singleClassContent}
+            {selectedClass?.singleClassContent}
           </p>
+
           <form className={classes.wrapperOfButtonSignUp}>
             <Button
-              type='submit'
+              type={openTheDialog ? 'button' : 'submit'}
               variant='outlined'
               className={classes.submitButtonOfGainedScoresForReading}
               onClick={submitGainedScoresForReading}>
               Պահպանել հավաքած միավորները
             </Button>
             {openTheDialog ? (
-              <Dialog
-                open={openTheDialog}
-                onClose={() => setOpenTheDialog(false)}>
+              <Dialog open={true} onClose={() => setOpenTheDialog(false)}>
                 <DialogContent>
                   <DialogContentText>
                     Դուք արդեն կարդացել եք այս դասը և վաստակել համապատասխան

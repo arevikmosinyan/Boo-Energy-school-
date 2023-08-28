@@ -42,7 +42,7 @@ const SignUp = () => {
   const loading = useContext(loadingContext);
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
-  // const [displayName, setDisplayName] = useState('');
+
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -51,7 +51,8 @@ const SignUp = () => {
   const [educationCenter, setEducationCenter] = useState('');
   const [country, setCountry] = useState('');
   const [scoreForReading, setScoreForReading] = useState(0);
-  const [alreadyReadClassesIds, setAlreadyReadClassesIds] = useState([]);
+  const [alreadyReadClassesIds, setAlreadyReadClassesIds] = useState(['']);
+
   const emailAndNameRef = useRef();
   const location = useLocation();
   const classes = useStyles();
@@ -271,10 +272,6 @@ const SignUp = () => {
                   value={locationEmail?.navigatedEmail || email.trim()}
                   onChange={(e) => {
                     setEmail(e.target.value);
-                    // if (emailError) {
-                    //   alert(emailError);
-                    //   setEmailError('');
-                    //                       }
                   }}
                   helperText={emailValidation()}
                 />

@@ -285,7 +285,8 @@ const Profile = () => {
             <ListItem className={classes.listItem}>
               <ListItemText
                 primary={`կարդացած դասերի համարներ: ${
-                  userData?.alreadyReadClassesIds || []
+                  String(userData?.alreadyReadClassesIds) ||
+                  'Դուք դեռևս չունեք ընթերցած դասեր'
                 }`}
               />
             </ListItem>
@@ -310,7 +311,10 @@ const Profile = () => {
                     color='primary'>
                     Չեղարկել
                   </Button>
-                  <Button onClick={onDeleteAccount} color='primary'>
+                  <Button
+                    onClick={onDeleteAccount}
+                    color='primary'
+                    type='submit'>
                     Հաստատել
                   </Button>
                 </DialogActions>
