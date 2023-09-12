@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/%7BBoo-Energy-school-React-JS-%7D/static/css/main.494d03d0.css",
+    "main.js": "/%7BBoo-Energy-school-React-JS-%7D/static/js/main.1c1a52f3.js",
+    "static/js/787.28cb0dcd.chunk.js": "/%7BBoo-Energy-school-React-JS-%7D/static/js/787.28cb0dcd.chunk.js",
+    "static/media/ourPlatformImage1.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/ourPlatformImage1.db3e7f399a1ac679a80a.png",
+    "static/media/mathematicsBackground.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/mathematicsBackground.598127fb528949f6a2d7.png",
+    "static/media/ourPlatformImage2.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/ourPlatformImage2.ea28aac984dac86d214f.png",
+    "static/media/programming.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/programming.645506d9297b655bdddc.png",
+    "static/media/HomePagePicture1.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/HomePagePicture1.02864bf7bd3c80a8f707.png",
+    "static/media/EnglishBook.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/EnglishBook.096ffb904ec52785349c.png",
+    "static/media/AdultFemale.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/AdultFemale.c0491d7d9f9270b4939b.png",
+    "static/media/AllCoursesComponentBackgroundImage.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/AllCoursesComponentBackgroundImage.934d26a4ac89c98992ea.png",
+    "static/media/mathematics.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/mathematics.734eb90901396c428e46.png",
+    "static/media/ClassesSectionImage.jpg": "/%7BBoo-Energy-school-React-JS-%7D/static/media/ClassesSectionImage.743d9c26d4623b11cda3.jpg",
+    "static/media/TestSectionImage.jpg": "/%7BBoo-Energy-school-React-JS-%7D/static/media/TestSectionImage.775efd8d1524e1e0ffd4.jpg",
+    "static/media/math2.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/math2.22d95e23c5658f4ff333.png",
+    "static/media/math1.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/math1.a5052da700027998b386.png",
+    "static/media/Illustration2.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/Illustration2.d5ba09677ae2916bd4a0.png",
+    "static/media/Illustration1.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/Illustration1.9575e723931bdd9aab6e.png",
+    "static/media/IllustrationCourse.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/IllustrationCourse.ae23222489389685c4dc.png",
+    "static/media/Illustration3.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/Illustration3.b625df020eae36059947.png",
+    "static/media/math3.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/math3.473609944a71f4d5be3d.png",
+    "static/media/RatingSectionImage.jpg": "/%7BBoo-Energy-school-React-JS-%7D/static/media/RatingSectionImage.5b616774017915b4daff.jpg",
+    "static/media/UX_Design.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/UX_Design.f969ef4f7fca1bba49eb.png",
+    "static/media/avatar.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/avatar.2e040d3d12e3c85c7efd.png",
+    "static/media/calendar.png": "/%7BBoo-Energy-school-React-JS-%7D/static/media/calendar.dc31248b73efa8e12e80.png",
+    "static/media/slick.svg": "/%7BBoo-Energy-school-React-JS-%7D/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/%7BBoo-Energy-school-React-JS-%7D/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/%7BBoo-Energy-school-React-JS-%7D/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/%7BBoo-Energy-school-React-JS-%7D/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/%7BBoo-Energy-school-React-JS-%7D/index.html",
+    "main.494d03d0.css.map": "/%7BBoo-Energy-school-React-JS-%7D/static/css/main.494d03d0.css.map",
+    "main.1c1a52f3.js.map": "/%7BBoo-Energy-school-React-JS-%7D/static/js/main.1c1a52f3.js.map",
+    "787.28cb0dcd.chunk.js.map": "/%7BBoo-Energy-school-React-JS-%7D/static/js/787.28cb0dcd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.494d03d0.css",
+    "static/js/main.1c1a52f3.js"
+  ]
+}
