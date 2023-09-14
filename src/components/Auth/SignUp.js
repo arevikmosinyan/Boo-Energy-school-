@@ -53,12 +53,14 @@ const SignUp = () => {
   const [scoreForReading, setScoreForReading] = useState(0);
   const [alreadyReadClassesIds, setAlreadyReadClassesIds] = useState(['']);
 
-  const emailAndNameRef = useRef();
+  const refOfwrapperOfnavigateToLoginLink = useRef();
   const location = useLocation();
   const classes = useStyles();
 
   useEffect(() => {
-    emailAndNameRef?.current.scrollIntoView({ block: 'center' });
+    refOfwrapperOfnavigateToLoginLink?.current.scrollIntoView({
+      block: 'center',
+    });
   }, [location.state]);
 
   const locationEmail = location.state;
@@ -100,7 +102,7 @@ const SignUp = () => {
       email.trim() || locationEmail?.navigatedEmail;
     if (
       !emailRegex.test(emailToTestForValidation) &&
-      emailToTestForValidation?.length > 4
+      emailToTestForValidation?.length > 1
     ) {
       return 'Խնդրում ենք մուտքագրեք վավեր էլ․ հասցե ';
     }
@@ -157,7 +159,9 @@ const SignUp = () => {
     <>
       <div className={classes.containerOfSignUp}>
         <ThemeProvider theme={theme}>
-          <div className={classes.wrapperOfnavigateToLoginLink}>
+          <div
+            ref={refOfwrapperOfnavigateToLoginLink}
+            className={classes.wrapperOfnavigateToLoginLink}>
             <p className={classes.ifYouAreAlreadySignedUpQuestion}>
               Եթե արդեն գրանցված օգտատեր եք ապա
             </p>
@@ -256,9 +260,7 @@ const SignUp = () => {
             </RadioGroup>
           </FormControl>
           <div className={classes.textFields}>
-            <div
-              className={classes.wrapperOfEmailAndName}
-              ref={emailAndNameRef}>
+            <div className={classes.wrapperOfEmailAndName}>
               <div className={classes.wrapperOfInputFiledAndInputHeader}>
                 <p className={classes.inputHeader}>Էլ․ փոստ *</p>
                 <TextField

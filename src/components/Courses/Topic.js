@@ -21,13 +21,14 @@ const Topic = () => {
   const userData = useContext(userDataContext);
   const user = useContext(userContext);
   const loading = useContext(loadingContext);
-  // const [alreadyReadClassesIds,setAlreadyReadClassesIds]=useState(userData?.alreadyReadClassesIds)
   const [alreadyRead, setAlreadyRead] = useState(false);
   const [scoreForReading, setScoreForReading] = useState(
     userData?.scoreForReading || 0,
   );
 
   const [openTheDialog, setOpenTheDialog] = useState(false);
+  const [dialogForNonRegisteredUsers, setDialogForNonRegisteredUsers] =
+    useState(false);
   const { selectedClassId } = location.state || {};
   let selectedClass = null;
 
@@ -40,20 +41,17 @@ const Topic = () => {
       for (let singleClass of singleDivision.classes) {
         if (singleClass.id === selectedClassId) {
           if (!userData?.alreadyReadClassesIds?.includes(singleClass.id)) {
-            // setAlreadyReadClassesIds([...userData.alreadyReadClassesIds,singleClass.id]);//chi ashxatum ays tarberakum
             writeUserData({
               ...userData,
               scoreForReading,
-              // alreadyReadClassesIds,
               alreadyReadClassesIds: [
                 ...userData?.alreadyReadClassesIds,
                 singleClass.id,
               ],
             });
           } else {
-            setAlreadyRead(true);
+            // setAlreadyRead(true);
             setOpenTheDialog(true);
-
             return;
           }
 
@@ -70,6 +68,10 @@ const Topic = () => {
   /*---------------------------------------------------adding score while scrolling-----------------*/
 
   useEffect(() => {
+    if (!user) {
+      setDialogForNonRegisteredUsers(true);
+    }
+
     function addingScoreWhileScrolling() {
       const scrollHeight = document.documentElement.scrollHeight; // ամբողջ էջն է, scroll-ի ենթակա ամբողջ մասը
       const scrollYOffset = window.pageYOffset; //scroll արած վերև գնացած, չերևացող մասը
@@ -122,48 +124,73 @@ const Topic = () => {
   return (
     <div
       className={classes.container}
-      style={{ backgroundColor: alreadyRead ? 'red' : 'blue' }}>
+      // style={{ backgroundColor: alreadyRead ? 'red' : 'blue' }}
+    >
+      {dialogForNonRegisteredUsers ? (
+        <Dialog
+          open={true}
+          onClose={() => setDialogForNonRegisteredUsers(false)}>
+          <DialogContent>
+            <DialogContentText>
+              Ուշադրությու՛ն, դուք կարող եք վաստակել միավորներ՝ ընթերցելով
+              դասընթացը, եթե դառնաք գրանցված օգտատեր։
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => setDialogForNonRegisteredUsers(false)}
+              color='primary'
+              autoFocus>
+              Լավ
+            </Button>
+          </DialogActions>
+        </Dialog>
+      ) : null}
       {loading ? (
         <Loading />
       ) : (
         <>
-          <div className={classes.scoreShowDiv}>
-            {/* {scoreForReading || userData?.scoreForReading} */}
-            {scoreForReading}
-          </div>
+          {user && (
+            <div className={classes.scoreShowDiv}>
+              {/* {scoreForReading || userData?.scoreForReading} */}
+              {scoreForReading}
+            </div>
+          )}
 
           <p className={classes.paragraph}>
             {selectedClass?.singleClassContent}
           </p>
 
-          <form className={classes.wrapperOfButtonSignUp}>
-            <Button
-              type={openTheDialog ? 'button' : 'submit'}
-              variant='outlined'
-              className={classes.submitButtonOfGainedScoresForReading}
-              onClick={submitGainedScoresForReading}>
-              Պահպանել հավաքած միավորները
-            </Button>
-            {openTheDialog ? (
-              <Dialog open={true} onClose={() => setOpenTheDialog(false)}>
-                <DialogContent>
-                  <DialogContentText>
-                    Դուք արդեն կարդացել եք այս դասը և վաստակել համապատասխան
-                    միավոր։ Կրկնակի ընթերցանությունից լրացուցիչ միավորներ չեն
-                    ավելանում:
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button
-                    onClick={() => setOpenTheDialog(false)}
-                    color='primary'
-                    autoFocus>
-                    Լավ
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            ) : null}
-          </form>
+          {user && (
+            <form className={classes.wrapperOfButtonSignUp}>
+              <Button
+                type={openTheDialog ? 'button' : 'submit'}
+                variant='outlined'
+                className={classes.submitButtonOfGainedScoresForReading}
+                onClick={submitGainedScoresForReading}>
+                Պահպանել հավաքած միավորները
+              </Button>
+              {openTheDialog ? (
+                <Dialog open={true} onClose={() => setOpenTheDialog(false)}>
+                  <DialogContent>
+                    <DialogContentText>
+                      Դուք արդեն կարդացել եք այս դասը և վաստակել համապատասխան
+                      միավոր։ Կրկնակի ընթերցանությունից լրացուցիչ միավորներ չեն
+                      ավելանում:
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={() => setOpenTheDialog(false)}
+                      color='primary'
+                      autoFocus>
+                      Լավ
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              ) : null}
+            </form>
+          )}
         </>
       )}
     </div>

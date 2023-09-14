@@ -11,9 +11,21 @@ const Form = () => {
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
   const navigate = useNavigate();
+  const emailRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   function emailChange(e) {
     setEmail(e.target.value);
+  }
+
+  function emailValidation() {
+    const emailToTestForValidation = email.trim();
+    if (
+      !emailRegex.test(emailToTestForValidation) &&
+      emailToTestForValidation?.length > 1
+    ) {
+      return 'Խնդրում ենք մուտքագրեք վավեր էլ․ հասցե ';
+    }
   }
   return (
     <div className={`${classes.form} ${classesForMediaQueries.form}`}>
@@ -24,6 +36,7 @@ const Form = () => {
         onChange={emailChange}
         fullWidth
         margin='normal'
+        helperText={emailValidation()}
       />
       <div className={classes.containerOfSigninAndSignup}>
         <Button
