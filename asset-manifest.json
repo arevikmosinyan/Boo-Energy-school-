@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Boo-Energy-school-React-JS-/static/css/main.c8e1966f.css",
-    "main.js": "/Boo-Energy-school-React-JS-/static/js/main.83e9340f.js",
+    "main.js": "/Boo-Energy-school-React-JS-/static/js/main.294f3f99.js",
     "static/js/787.28cb0dcd.chunk.js": "/Boo-Energy-school-React-JS-/static/js/787.28cb0dcd.chunk.js",
     "static/media/ourPlatformImage1.png": "/Boo-Energy-school-React-JS-/static/media/ourPlatformImage1.db3e7f399a1ac679a80a.png",
     "static/media/mathematicsBackground.png": "/Boo-Energy-school-React-JS-/static/media/mathematicsBackground.598127fb528949f6a2d7.png",
@@ -20,6 +20,7 @@
     "static/media/Illustration1.png": "/Boo-Energy-school-React-JS-/static/media/Illustration1.9575e723931bdd9aab6e.png",
     "static/media/IllustrationCourse.png": "/Boo-Energy-school-React-JS-/static/media/IllustrationCourse.ae23222489389685c4dc.png",
     "static/media/Illustration3.png": "/Boo-Energy-school-React-JS-/static/media/Illustration3.b625df020eae36059947.png",
+    "static/media/quiz.jpg": "/Boo-Energy-school-React-JS-/static/media/quiz.8ae29940f18c97d80815.jpg",
     "static/media/math3.png": "/Boo-Energy-school-React-JS-/static/media/math3.473609944a71f4d5be3d.png",
     "static/media/RatingSectionImage.jpg": "/Boo-Energy-school-React-JS-/static/media/RatingSectionImage.5b616774017915b4daff.jpg",
     "static/media/UX_Design.png": "/Boo-Energy-school-React-JS-/static/media/UX_Design.f969ef4f7fca1bba49eb.png",
@@ -31,11 +32,11 @@
     "static/media/slick.woff": "/Boo-Energy-school-React-JS-/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/Boo-Energy-school-React-JS-/index.html",
     "main.c8e1966f.css.map": "/Boo-Energy-school-React-JS-/static/css/main.c8e1966f.css.map",
-    "main.83e9340f.js.map": "/Boo-Energy-school-React-JS-/static/js/main.83e9340f.js.map",
+    "main.294f3f99.js.map": "/Boo-Energy-school-React-JS-/static/js/main.294f3f99.js.map",
     "787.28cb0dcd.chunk.js.map": "/Boo-Energy-school-React-JS-/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c8e1966f.css",
-    "static/js/main.83e9340f.js"
+    "static/js/main.294f3f99.js"
   ]
 }
