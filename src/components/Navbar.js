@@ -11,6 +11,7 @@ import {
   SIGNUP_ROUTE,
   COURSES_ROUTE,
   PROFILE_ROUTE,
+  QUIZZES_ROUTE,
 } from '../constants/routes';
 import { colors, fonts } from '../constants/variables';
 import Logo from './Logo';
@@ -45,6 +46,9 @@ function NavBar() {
   };
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);
+    setTimeout(() => {
+      navigate(QUIZZES_ROUTE);
+    }, 100);
   };
 
   const handleClose2 = () => {

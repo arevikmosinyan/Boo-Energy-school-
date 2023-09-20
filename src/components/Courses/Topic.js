@@ -48,6 +48,10 @@ const Topic = () => {
                 ...userData?.alreadyReadClassesIds,
                 singleClass.id,
               ],
+              alreadyReadClassesTitles: [
+                ...userData?.alreadyReadClassesTitles,
+                singleClass.singleClassTitle,
+              ],
             });
           } else {
             // setAlreadyRead(true);
@@ -80,10 +84,8 @@ const Topic = () => {
       for (let singleDivision of divisions) {
         for (let singleClass of singleDivision.classes) {
           if (singleClass.id === selectedClassId) {
-            if (!singleClass.isRead) {
-              if (windowHeight + scrollYOffset >= scrollHeight) {
-                setScoreForReading(scoreForReading + 1);
-              }
+            if (windowHeight + scrollYOffset + 10 >= scrollHeight) {
+              setScoreForReading(scoreForReading + 1);
             }
           }
         }

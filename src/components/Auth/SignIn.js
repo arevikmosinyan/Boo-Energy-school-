@@ -119,7 +119,7 @@ const SignIn = () => {
               placeholder='Մուտքագրեք Ձեր Էլ․ փոստի հասցեն'
               variant='outlined'
               required
-              value={locationEmail?.navigatedEmail || email}
+              value={locationEmail?.navigatedEmail || email.trim()}
               onChange={(e) => setEmail(e.target.value)}
               helperText={emailValidation()}
             />
@@ -133,7 +133,7 @@ const SignIn = () => {
                 className={`${classes.passwordInput} `}
                 placeholder='Մուտքագրեք Ձեր գաղտնաբառը'
                 type={showPassword ? 'text' : 'password'}
-                value={password}
+                value={password.trim()}
                 onChange={(e) => setPassword(e.target.value)}
                 helperText={onCheckingValidationOfPassword()}
                 InputProps={{

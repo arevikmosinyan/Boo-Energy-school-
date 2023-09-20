@@ -7,8 +7,8 @@ import {
   GRAPHICDESIGN_ROUTE,
   UIUXDESIGN_ROUTE,
   MATHEMATICSCOURSE_ROUTE,
-} from '../../constants/routes';
-import allCorsesBackgroundImage from '../../images/AllCoursesComponentBackgroundImage.png';
+} from '../constants/routes';
+import allCorsesBackgroundImage from '../images/AllCoursesComponentBackgroundImage.png';
 
 const Courses = () => {
   const classes = useStyles();
@@ -65,7 +65,7 @@ const useStyles = makeStyles({
   },
   image: {
     objectFit: 'cover',
-    width: '100vw',
+    width: '100%',
     height: '100%',
   },
   coursesWrapper: {

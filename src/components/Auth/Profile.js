@@ -291,6 +291,14 @@ const Profile = () => {
               />
             </ListItem>
             <ListItem className={classes.listItem}>
+              <ListItemText
+                primary={`կարդացած դասերի վերնագրեր: ${
+                  String(userData?.alreadyReadClassesTitles) ||
+                  'Դուք դեռևս չունեք ընթերցած դասեր'
+                }`}
+              />
+            </ListItem>
+            <ListItem className={classes.listItem}>
               <Button
                 variant='outlined'
                 className={classes.deleteButton}

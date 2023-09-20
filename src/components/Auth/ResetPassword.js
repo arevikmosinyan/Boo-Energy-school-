@@ -40,7 +40,7 @@ const ResetPassword = () => {
           placeholder='Մուտքագրեք Ձեր Էլ․ փոստի հասցեն'
           variant='outlined'
           required
-          value={email}
+          value={email.trim()}
           onChange={(e) => setEmail(e.target.value)}
           //   helperText={emailValidation()}
         />

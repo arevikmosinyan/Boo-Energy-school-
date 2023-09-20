@@ -52,6 +52,9 @@ const SignUp = () => {
   const [country, setCountry] = useState('');
   const [scoreForReading, setScoreForReading] = useState(0);
   const [alreadyReadClassesIds, setAlreadyReadClassesIds] = useState(['']);
+  const [alreadyReadClassesTitles, setAlreadyReadClassesTitles] = useState([
+    '',
+  ]);
 
   const refOfwrapperOfnavigateToLoginLink = useRef();
   const location = useLocation();
@@ -146,6 +149,7 @@ const SignUp = () => {
       educationCenter,
       scoreForReading,
       alreadyReadClassesIds,
+      alreadyReadClassesTitles,
     });
   };
 

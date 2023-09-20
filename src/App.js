@@ -37,7 +37,8 @@ import MathematicsQuizzes from './components/Quizzes/MathematicsQuizzes';
 import MathematicsCourses from './components/Courses/MathematicsCourses';
 import Programming from './components/Courses/Programming';
 import UIUXDesign from './components/Courses/UIUXDesign';
-import Courses from './components/Courses/AllCoursesComponent';
+import AllCoursesComponent from './components/AllCoursesComponent';
+import AllQuizzesComponent from './components/AllQuizzesComponent';
 import Profile from './components/Auth/Profile';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -90,8 +91,8 @@ function App() {
               <Navbar />
               <Routes>
                 <Route path={HOME_ROUTE} element={<Home />} />
-                <Route path={COURSES_ROUTE} element={<Courses />} />
-                {/* <Route path={QUIZZES_ROUTE} element={<Quizzes />} /> */}
+                <Route path={COURSES_ROUTE} element={<AllCoursesComponent />} />
+                <Route path={QUIZZES_ROUTE} element={<AllQuizzesComponent />} />
                 <Route path={RATING_ROUTE} element={<Rating />} />
                 <Route path={COMMUNITY_ROUTE} element={<Community />} />
                 <Route path={CALENDAR_ROUTE} element={<Calendar />} />
