@@ -1,9 +1,12 @@
 import { colors } from '../constants/variables';
+// import { useTranslation } from 'react-i18next';
 import AdultFemale from '../images/imagesForPopularCourses/AdultFemale.png';
 import EnglishBook from '../images/imagesForPopularCourses/EnglishBook.png';
 import Programming from '../images/imagesForPopularCourses/programming.png';
 import Mathematics from '../images/imagesForPopularCourses/mathematics.png';
 import UiUx from '../images/imagesForPopularCourses/UX_Design.png';
+
+// const {t} = useTranslation()
 
 import {
   MATHEMATICSCOURSE_ROUTE,
@@ -14,6 +17,7 @@ import {
   UIUXDESIGN_ROUTE,
 } from '../constants/routes';
 import { topics } from '../constants/contentsOfTopics';
+
 import class1Div1Math from '../components/Courses/classesOfMathematics/division1/class1';
 import class2Div1Math from '../components/Courses/classesOfMathematics/division1/class2';
 import class3Div1Math from '../components/Courses/classesOfMathematics/division1/class3';
@@ -23,53 +27,53 @@ import class2Div2Math from '../components/Courses/classesOfMathematics/division2
 
 export const coursesToStudy = [
   {
-    title: 'Մաթեմատիկա',
+    title: 'mathematics',
     color: colors.darkGreen,
     route: MATHEMATICSCOURSE_ROUTE,
   },
-  { title: 'Ծրագրավորում', color: colors.lightGreen, route: PROGRAMMING_ROUTE },
-  { title: 'Անգլերեն', color: colors.yellow, route: ENGLISH_ROUTE },
+  { title: 'programming', color: colors.lightGreen, route: PROGRAMMING_ROUTE },
+  { title: 'english', color: colors.yellow, route: ENGLISH_ROUTE },
   {
-    title: 'Գրաֆիկ դիզայն',
+    title: 'graphicDesign',
     color: colors.darkGreen,
     route: GRAPHICDESIGN_ROUTE,
   },
-  { title: 'UI/UX դիզայն', color: colors.lightGreen, route: UIUXDESIGN_ROUTE },
+  { title: 'UX/UI', color: colors.lightGreen, route: UIUXDESIGN_ROUTE },
   // { title: 'IQ Թեստեր', color: colors.yellow },
 ];
 
 export const menuListOfSubjects = [
-  { nameOfSubject: 'Մաթեմատիկա', routeOfSubject: MATHEMATICSCOURSE_ROUTE },
-  { nameOfSubject: 'Անգլերեն', routeOfSubject: ENGLISH_ROUTE },
-  { nameOfSubject: 'Ծրագրավորում', routeOfSubject: PROGRAMMING_ROUTE },
-  { nameOfSubject: 'Գրաֆիկ դիզայն', routeOfSubject: GRAPHICDESIGN_ROUTE },
-  { nameOfSubject: 'UI/UX դիզայն', routeOfSubject: UIUXDESIGN_ROUTE },
+  { nameOfSubject: 'mathematics', routeOfSubject: MATHEMATICSCOURSE_ROUTE },
+  { nameOfSubject: 'english', routeOfSubject: ENGLISH_ROUTE },
+  { nameOfSubject: 'programming', routeOfSubject: PROGRAMMING_ROUTE },
+  { nameOfSubject: 'graphicDesign', routeOfSubject: GRAPHICDESIGN_ROUTE },
+  { nameOfSubject: 'UX/UI', routeOfSubject: UIUXDESIGN_ROUTE },
 ];
 
 export const popularCoursesList = [
   {
-    title: 'Անգլերեն',
+    title: 'english',
     color: colors.darkGreen,
     // countOfStudents: '358 սովորող',
     image: EnglishBook,
     route: ENGLISH_ROUTE,
   },
   {
-    title: 'Գրաֆիկ դիզայն',
+    title: 'graphicDesign',
     color: colors.lightGreen,
     // countOfStudents: '287 սովորող',
     image: AdultFemale,
     route: GRAPHICDESIGN_ROUTE,
   },
   {
-    title: 'Մաթեմատիկա',
+    title: 'mathematics',
     color: colors.darkGreen,
     // countOfStudents: '150 սովորող',
     image: Mathematics,
     route: MATHEMATICSCOURSE_ROUTE,
   },
   {
-    title: 'UI/UX դիզայն',
+    title: 'UX/UI',
     color: colors.yellow,
     // countOfStudents: '240 սովորող',
     image: UiUx,
@@ -77,7 +81,7 @@ export const popularCoursesList = [
   },
 
   {
-    title: 'Ծրագրավորում',
+    title: 'programming',
     color: colors.lightGreen,
     // countOfStudents: '182 սովորող',
     image: Programming,

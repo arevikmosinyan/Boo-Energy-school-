@@ -6,6 +6,7 @@ import leftArrowWhite from '../../icons/Caret_Circle_Left_white.png';
 import rightArrowWhite from '../../icons/Caret_Circle_Right_white.png';
 import image1 from '../../images/ourPlatformImage1.png';
 import image2 from '../../images/ourPlatformImage2.png';
+import { t } from 'i18next';
 
 const OurPlatform = () => {
   const [index, setIndex] = useState(0);
@@ -18,7 +19,7 @@ const OurPlatform = () => {
     <div>
       <p
         className={`${classes.ourPlatformHeader} ${classesForMediaQueries.ourPlatformHeader}`}>
-        Մեր հարթակը
+        {t('ourPlatformHeader')}
       </p>
       <div
         className={`${classes.ourPlatform} ${classesForMediaQueries.ourPlatform}`}>
@@ -43,9 +44,20 @@ const OurPlatform = () => {
 
         <p
           className={`${classes.ourPlatformText} ${classesForMediaQueries.ourPlatformText}`}>
-          Շատ մարդիկ լրացնում են իրենց գիտելիքների պաշարը, բացահայտում նոր
+          {/* Շատ մարդիկ լրացնում են իրենց գիտելիքների պաշարը, բացահայտում նոր
           ոլորտներ, համեմատում իրենց վարկանիշը և հաղորդակցվում իրար հետ այս
-          ինտելեկտուալ հարթակում
+          ինտելեկտուալ հարթակում */}
+          "Education is the most powerful weapon which you can use to change the
+          world." - Nelson Mandela <br />
+          {/* "Live as if you were to die tomorrow. Learn as if you were to live
+          forever." - Mahatma Gandhi <br />
+          "The whole purpose of education is to turn mirrors into windows." -
+          Sydney J. Harris <br />
+          "The best way to predict the future is to invent it." - Alan Kay{' '}
+          <br />
+          "Learning never exhausts the mind." - Leonardo da Vinci <br />
+          "An investment in knowledge pays the best interest." - Benjamin
+          Franklin */}
         </p>
         <div
           className={`${classes.arrowWhiteDivStyle} ${classesForMediaQueries.arrowWhiteDivStyle}`}
@@ -109,7 +121,7 @@ const useStyles = makeStyles({
     textAlign: 'center',
     fontSize: 50,
     fontFamily: fonts.armenian,
-    color: colors.white,
+    color: colors.darkGreen,
     paddingBottom: 300,
     opacity: 0.8,
   },

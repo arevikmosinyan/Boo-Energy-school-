@@ -18,6 +18,7 @@ import { menuListOfSubjects } from './Categories';
 import { useContext } from 'react';
 import userDataContext from '../contexts/userDataContext';
 import userContext from '../contexts/userContext';
+import { useTranslation } from 'react-i18next';
 
 const Rating = () => {
   const classes = useStyles();
@@ -27,6 +28,7 @@ const Rating = () => {
   const [selectedItemId, setSelectedItemId] = useState(null);
   const userData = useContext(userDataContext);
   const user = useContext(userContext);
+  const { t } = useTranslation();
 
   function handleChangeOfSubject(event) {
     setSubject(event.target.value);
@@ -200,12 +202,13 @@ const Rating = () => {
           className={classes.containerpaperForNotRegisteredUserOfRatingSection}>
           <Paper className={classes.paperForNotRegisteredUserOfRatingSection}>
             <h1 className={classes.headerOfNonRegisterdUserRatingSection}>
-              Գրանցվե՛ք, վաստակեք համապատասխան վարկանիշ
+              {t('headerOfNonRegisterdUserRatingSection')}
+              {/* Գրանցվե՛ք, վաստակեք համապատասխան վարկանիշ */}
             </h1>
             <Typography
               paragraph
               className={classes.infoForNotRegisteredUserOfRatingSection}>
-              <span
+              {/* <span
                 className={
                   classes.firstWordOfInfoForNotRegisteredUserOfRatingSection
                 }>
@@ -213,7 +216,8 @@ const Rating = () => {
               </span>
               օգտատեր, գրանցվելով մեր կայքում, հնարավորություն կունենաք վաստակել
               միավորներ ընթերցած դասընթացներից և անցած թեստերից։ Վաստակած
-              միավորները կտեսնեք այս էջում։
+              միավորները կտեսնեք այս էջում։ */}
+              {t('infoForNotRegisteredUserOfRatingSection')}
             </Typography>
           </Paper>
         </Container>

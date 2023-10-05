@@ -1,1 +1,18 @@
+i.flag-armenia:before {
+  background-position: 0 -156px !important;
+}
 
+i.flag-united-kingdom:before {
+  background-position: -36px -26px !important;
+}
+i.flag:before,
+i.flag:not(.icon) {
+  display: inline-block;
+  width: 16px;
+  height: 11px;
+}
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}

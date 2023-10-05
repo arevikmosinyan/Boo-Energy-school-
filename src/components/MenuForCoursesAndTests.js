@@ -14,10 +14,12 @@ import { colors, fonts } from '../constants/variables';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { useState } from 'react';
 import { menuListOfSubjects } from './Categories';
+import { useTranslation } from 'react-i18next';
 
 function MenuForCoursesAndTests(props) {
   const classes = useStyles();
   const [route, setRoute] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (props.isQuizzes) {
@@ -55,17 +57,17 @@ function MenuForCoursesAndTests(props) {
           })} */}
           <MenuItem onClick={handleMenuItemClick}>
             <NavLink to={route} className={classes.menuItem}>
-              Մաթեմատիկա
+              {t('mathematics')}
             </NavLink>
           </MenuItem>
           <MenuItem onClick={props.onClose}>
             <NavLink exact to={ENGLISH_ROUTE} className={classes.menuItem}>
-              Անգլերեն
+              {t('english')}
             </NavLink>
           </MenuItem>
           <MenuItem onClick={props.onClose}>
             <NavLink exact to={PROGRAMMING_ROUTE} className={classes.menuItem}>
-              Ծրագրավորում
+              {t('programming')}
             </NavLink>
           </MenuItem>
           <MenuItem onClick={props.onClose}>
@@ -73,12 +75,12 @@ function MenuForCoursesAndTests(props) {
               exact
               to={GRAPHICDESIGN_ROUTE}
               className={classes.menuItem}>
-              Գրաֆիկ դիզայն
+              {t('graphicDesign')}
             </NavLink>
           </MenuItem>
           <MenuItem onClick={props.onClose}>
             <NavLink exact to={UIUXDESIGN_ROUTE} className={classes.menuItem}>
-              UI/UX դիզայն
+              {t('UX/UI')}
             </NavLink>
           </MenuItem>
         </Menu>

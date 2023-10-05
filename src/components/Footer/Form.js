@@ -5,11 +5,13 @@ import { SIGNIN_ROUTE, SIGNUP_ROUTE } from '../../constants/routes';
 import { makeStyles, Button } from '@material-ui/core';
 import { colors, fonts } from '../../constants/variables';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Form = () => {
   const [email, setEmail] = useState('');
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const emailRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -24,14 +26,14 @@ const Form = () => {
       !emailRegex.test(emailToTestForValidation) &&
       emailToTestForValidation?.length > 1
     ) {
-      return 'Խնդրում ենք մուտքագրեք վավեր էլ․ հասցե ';
+      return t('emailValidationText');
     }
   }
   return (
     <div className={`${classes.form} ${classesForMediaQueries.form}`}>
       <TextField
         className={classes.emailAddressFieldStyle}
-        placeholder='Ձեր էլ․ փոստը'
+        placeholder={t('placeholderForEmail')}
         value={email.trim()}
         onChange={emailChange}
         fullWidth
@@ -45,7 +47,7 @@ const Form = () => {
           }
           variant='outlined'
           className={classes.buttonSignIn}>
-          Մուտք
+          {t('login')}
         </Button>
 
         <Button
@@ -54,7 +56,7 @@ const Form = () => {
           }
           variant='outlined'
           className={classes.buttonSignUp}>
-          Գրանցում
+          {t('register')}
         </Button>
       </div>
     </div>

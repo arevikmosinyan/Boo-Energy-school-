@@ -4,16 +4,18 @@ import illustration2 from '../../images/Illustration2.png';
 import illustration3 from '../../images/Illustration3.png';
 import { makeStyles } from '@material-ui/core';
 import { colors, fonts } from '../../constants/variables';
+import { useTranslation } from 'react-i18next';
 
 const HowToUse = () => {
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
+  const { t } = useTranslation();
 
   return (
     <div className={classes.HowToUseSection}>
       <div
         className={`${classes.headerOfHowToUse} ${classesForMediaQueries.headerOfHowToUse}`}>
-        <p>Ինչպես ենք օգտվում</p>
+        <p>{t('howToUseHeader')}</p>
       </div>
       <div
         className={`${classes.containerOfHowToUse} ${classesForMediaQueries.containerOfHowToUse}`}>
@@ -21,7 +23,7 @@ const HowToUse = () => {
           className={`${classes.stepsToUse} ${classesForMediaQueries.stepsToUse}`}>
           <p
             className={`${classes.stepsToUseText} ${classesForMediaQueries.stepsToUseText}`}>
-            Քայլ 1․ Ընտրում ենք դասընթացը և<br /> սկսում ուսումնասիրել նյութը
+            {t('stepOneOfHowToUse')}
           </p>
           <img
             src={illustration1}
@@ -34,8 +36,7 @@ const HowToUse = () => {
           className={`${classes.stepsToUse} ${classesForMediaQueries.stepsToUse}`}>
           <p
             className={`${classes.stepsToUseText} ${classesForMediaQueries.stepsToUseText}`}>
-            Քայլ 2․ Անցնում թեստերը
-            <br /> գիտելիքներն ստուգելու համար
+            {t('stepTwoOfHowToUse')}
           </p>
           <img
             src={illustration2}
@@ -47,8 +48,7 @@ const HowToUse = () => {
           className={`${classes.stepsToUse} ${classesForMediaQueries.stepsToUse}`}>
           <p
             className={`${classes.stepsToUseText} ${classesForMediaQueries.stepsToUseText}`}>
-            Քայլ 3․ Նայում ենք վարկանիշը և <br />
-            քննարկում արդյունքները
+            {t('stepThreeOfHowToUse')}
           </p>
           <img
             src={illustration3}

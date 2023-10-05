@@ -4,6 +4,7 @@ import { colors, fonts } from '../../constants/variables';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import rectangle17 from '../../icons/Rectangle17.png';
 import illustrationCourse from '../../images/IllustrationCourse.png';
+import { t } from 'i18next';
 
 const AboutCoursesSection = () => {
   const classes = useStyles();
@@ -12,7 +13,7 @@ const AboutCoursesSection = () => {
     <>
       <p
         className={`${classes.aboutCoursesHeader} ${classesForMediaQueries.aboutCoursesHeader}`}>
-        Դասընթացների մասին
+        {t('aboutCoursesSectionHeader')}
       </p>
       <div className={classes.wrapperOfAboutCoursesTextsAndIllustration}>
         <div
@@ -26,7 +27,7 @@ const AboutCoursesSection = () => {
             />
             <span
               className={`${classes.aboutCoursesText} ${classesForMediaQueries.aboutCoursesText}`}>
-              Դասընթացները կազմված են լավագույն մասնագետների կողմից
+              {t('aboutCoursesSectionText1')}
             </span>
           </div>
 
@@ -39,7 +40,7 @@ const AboutCoursesSection = () => {
             />
             <span
               className={`${classes.aboutCoursesText} ${classesForMediaQueries.aboutCoursesText}`}>
-              Ուսուցման նյութերի ինֆորմացիան վստահելի աղբյուրներից է
+              {t('aboutCoursesSectionText2')}
             </span>
           </div>
 
@@ -52,7 +53,7 @@ const AboutCoursesSection = () => {
             />
             <span
               className={`${classes.aboutCoursesText} ${classesForMediaQueries.aboutCoursesText}`}>
-              Ընտրված դասընթացները հիմնված են լսարանի կարիքների վրա
+              {t('aboutCoursesSectionText3')}
             </span>
           </div>
 
@@ -65,7 +66,7 @@ const AboutCoursesSection = () => {
             />
             <span
               className={`${classes.aboutCoursesText} ${classesForMediaQueries.aboutCoursesText}`}>
-              Յուրաքանչյուր դասընթացին հաջորդող թեստի լրացումը պարտադիր է
+              {t('aboutCoursesSectionText4')}
             </span>
           </div>
         </div>

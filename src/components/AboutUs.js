@@ -6,28 +6,24 @@ import TestSectionImage from '../images/imagesOfAboutUs/TestSectionImage.jpg';
 import ClassesSectionImage from '../images/imagesOfAboutUs/ClassesSectionImage.jpg';
 import RatingSectionImage from '../images/imagesOfAboutUs/RatingSectionImage.jpg';
 import { fonts, colors } from '../constants/variables';
+import { useTranslation } from 'react-i18next';
 
 const AboutUs = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <Container className={classes.container}>
       <Paper className={classes.paper}>
-        <h1 className={classes.header}>Մեր մասին</h1>
+        <h1 className={classes.header}>{t('aboutus')}</h1>
         <Typography paragraph className={classes.aboutUsTypography}>
-          Բարի գալուստ մեր կրթական կայք։ Մենք պատրաստ ենք տրամադրելու բարձրորակ
-          կրթական բովանդակություն բոլոր տարիքի սովորողների համար։ Մեր
-          առաքելությունն է դարձնել ուսուցումը զվարճալի, գրավիչ և հասանելի բոլորի
-          համար։
+          {t('aboutUsTypographyText1')}
         </Typography>
         <Typography paragraph className={classes.aboutUsTypography}>
-          Մեր մասնագետների թիմը աշխատում է մշակելու համար ուսումնական նյութեր,
-          որոնք ընդգրկում են առարկաների լայն շրջանակ՝ անկախ նրանից , թե դուք
-          ուսանող եք, ուսուցիչ, դպրոցական, թե՝ պարզապես ինքնակրթվող մարդ։
+          {t('aboutUsTypographyText2')}
         </Typography>
         <Typography paragraph className={classes.aboutUsTypography}>
-          Շնորհակալություն մեզ` որպես ձեր ուսումնական գործընկեր ընտրելու համար:
-          Մենք սիրով կուղեկցենք ձեզ` ձեր ուսումնական ճամփորդության ընթացքում։
+          {t('aboutUsTypographyText3')}
         </Typography>
 
         <div className={classes.wrapperOfSections}>
@@ -41,10 +37,9 @@ const AboutUs = () => {
             </div>
 
             <div className={classes.containerOfTypography}>
-              <h2 className={classes.header}>Թեստեր</h2>
+              <h2 className={classes.header}>{t('tests')}</h2>
               <Typography className={classes.typeographyOfSection}>
-                Անցե՛ք ինտերակտիվ թեստեր տարբեր առարկաներից ձեր գիտելիքներն ու
-                տրամաբանությունը գնահատելու համար ։
+                {t('aboutUsTypographyTestsSection')}
               </Typography>
             </div>
           </div>
@@ -59,11 +54,9 @@ const AboutUs = () => {
               />
             </div>
             <div className={classes.containerOfTypography}>
-              <h2 className={classes.header}>Դասընթացներ</h2>
+              <h2 className={classes.header}>{t('courses')}</h2>
               <Typography className={classes.typeographyOfSection}>
-                Միացե՛ք մեր ինտերակտիվ դասերին: Իրական ժամանակում շփվեք
-                ուսուցիչների և համակուրսեցիների հետ՝ դարձնելով ուսումը գրավիչ և
-                հաճելի:
+                {t('aboutUsTypographyCoursesSection')}
               </Typography>
             </div>
           </div>
@@ -78,13 +71,9 @@ const AboutUs = () => {
               />
             </div>
             <div className={classes.containerOfTypography}>
-              <h2 className={classes.header}>Վարկանիշ</h2>
+              <h2 className={classes.header}>{t('rating')}</h2>
               <Typography className={classes.typeographyOfSection}>
-                Վարկանիշային բաժինը ուսանողներին հնարավորություն է տալիս ճշգրիտ
-                գնահատել իրենց ներկայիս գիտելիքներն ու հմտությունները: Անցնելով
-                թեստեր և ստանալով ակնթարթային արձագանք՝ ուսանողները արժեքավոր
-                պատկերացումներ են ձեռք բերում իրենց ուժեղ և թույլ կողմերի
-                վերաբերյալ:
+                {t('aboutUsTypographyRatingSection')}
               </Typography>
             </div>
           </div>
@@ -93,10 +82,9 @@ const AboutUs = () => {
 
         {/* Contact Us  */}
         <div className={classes.contactUsSectionWrapper}>
-          <h4 className={classes.headerOfContactUs}>Կապը մեզ հետ</h4>
+          <h4 className={classes.headerOfContactUs}>{t('contactUs')}</h4>
           <Typography paragraph className={classes.typographyOfContactUs}>
-            Եթե ​​ունեք հարցեր, կարծիքներ կամ առաջարկություններ, խնդրում եմ
-            դիմեք մեզ: Դուք կարող եք կապվել մեզ հետ՝
+            {t('contactUsSection')}
           </Typography>
           <Typography className={classes.typographyOfContactUs}>
             Email:

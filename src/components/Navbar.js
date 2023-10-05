@@ -1,6 +1,18 @@
 import * as React from 'react';
-import { useState, useContext } from 'react';
-import { makeStyles, AppBar, Toolbar, Button } from '@material-ui/core';
+import { useState, useContext, useEffect } from 'react';
+import {
+  makeStyles,
+  AppBar,
+  Toolbar,
+  Button,
+  Select,
+  MenuItem,
+  FormControl,
+  MenuList,
+  IconButton,
+  Menu,
+} from '@material-ui/core';
+import '../assest/styles/all.css';
 import {
   HOME_ROUTE,
   RATING_ROUTE,
@@ -13,6 +25,7 @@ import {
   PROFILE_ROUTE,
   QUIZZES_ROUTE,
 } from '../constants/routes';
+import 'mdbreact/dist/css/mdb.css';
 import { colors, fonts } from '../constants/variables';
 import Logo from './Logo';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -23,16 +36,59 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../requests/firebase';
 import userDataContext from '../contexts/userDataContext';
 import avatar from '../images/avatar.png';
+// import { changeLanguage } from 'i18next';
+import { useTranslation } from 'react-i18next';
+import LanguageIcon from '@material-ui/icons/Language';
 
-function NavBar() {
+function NavBar(props) {
   const [anchorEl1, setAnchorEl1] = useState(null);
   const [anchorEl2, setAnchorEl2] = useState(null);
+  const [anchorElOfLanguageMenu, setAnchorElOfLanguageMenu] = useState(null);
+  const [language, setLanguage] = useState('Armenian');
+
+  const { t, i18n } = useTranslation();
 
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
   const user = useContext(userContext);
   const userData = useContext(userDataContext);
   const navigate = useNavigate();
+
+  function changeLanguage(language) {
+    i18n.changeLanguage(language);
+  }
+
+  function handleClickOfLanguageMenu(event) {
+    setAnchorElOfLanguageMenu(event.currentTarget);
+  }
+
+  function handleCloseOfLanguageMenu() {
+    setAnchorElOfLanguageMenu(null);
+  }
+
+  useEffect(() => {
+    const initialLanguage = localStorage.getItem('language');
+    if (initialLanguage) {
+      setLanguage(initialLanguage);
+    }
+    if (initialLanguage === 'English') {
+      changeLanguage('en');
+    } else if (initialLanguage === 'Armenian') {
+      changeLanguage('hy');
+    }
+  }, []);
+
+  function handleLanguageChange(language) {
+    setLanguage(language);
+
+    if (language === 'English') {
+      changeLanguage('en');
+    } else if (language === 'Armenian') {
+      changeLanguage('hy');
+    }
+    localStorage.setItem('language', language);
+    handleCloseOfLanguageMenu();
+  }
 
   const handleClick1 = (event) => {
     setAnchorEl1(event.currentTarget);
@@ -63,6 +119,24 @@ function NavBar() {
     <AppBar position='static' className={classes.appBarStyle}>
       <Toolbar className={classes.toolbarStyle}>
         <MenuButtonComponent />
+        <div className={classes.LanguageSelectDiv}>
+          <IconButton onClick={handleClickOfLanguageMenu}>
+            <LanguageIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorElOfLanguageMenu}
+            open={Boolean(anchorElOfLanguageMenu)}
+            onClose={handleCloseOfLanguageMenu}>
+            <MenuItem onClick={() => handleLanguageChange('Armenian')}>
+              <i className='flag flag-armenia'></i>
+              Armenian
+            </MenuItem>
+            <MenuItem onClick={() => handleLanguageChange('English')}>
+              <i class='flag flag-united-kingdom'></i>
+              English
+            </MenuItem>
+          </Menu>
+        </div>
 
         <div
           className={`${classes.containerOfLogo} ${classesForMediaQueries.containerOfLogo}`}>
@@ -74,13 +148,13 @@ function NavBar() {
             exact
             to={HOME_ROUTE}
             className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
-            Գլխավոր
+            {t('home')}
           </NavLink>
 
           <NavLink
             onClick={handleClick1}
             className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
-            Դասընթացներ
+            {t('courses')}
           </NavLink>
           <MenuForCoursesAndTests
             anchorEl={anchorEl1}
@@ -92,7 +166,7 @@ function NavBar() {
           <NavLink
             onClick={handleClick2}
             className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
-            Թեստեր
+            {t('tests')}
           </NavLink>
           <MenuForCoursesAndTests
             anchorEl={anchorEl2}
@@ -103,7 +177,7 @@ function NavBar() {
           <NavLink
             to={RATING_ROUTE}
             className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
-            Վարկանիշ
+            {t('rating')}
           </NavLink>
           {/* <NavLink
             to={COMMUNITY_ROUTE}
@@ -118,7 +192,7 @@ function NavBar() {
           <NavLink
             to={ABOUT_ROUTE}
             className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
-            Մեր մասին
+            {t('aboutus')}
           </NavLink>
         </div>
 
@@ -129,7 +203,7 @@ function NavBar() {
                 variant='outlined'
                 className={classes.buttonSignIn}
                 onClick={logout}>
-                Ելք
+                {t('logout')}
               </Button>
             </NavLink>
             <div
@@ -145,12 +219,12 @@ function NavBar() {
           <div className={classes.containerOfSigninAndSignup}>
             <NavLink to={SIGNIN_ROUTE} className={classes.navLinkStyle}>
               <Button variant='outlined' className={classes.buttonSignIn}>
-                Մուտք
+                {t('login')}
               </Button>
             </NavLink>
             <NavLink to={SIGNUP_ROUTE} className={classes.navLinkStyle}>
               <Button variant='outlined' className={classes.buttonSignUp}>
-                Գրանցում
+                {t('register')}
               </Button>
             </NavLink>
           </div>
@@ -165,6 +239,12 @@ export default NavBar;
 const useStyles = makeStyles({
   containerOfLogo: {
     marginTop: 15,
+  },
+  formControl: {
+    padding: '0px 10px 10px 10px',
+  },
+  blackBorder: {
+    borderColor: 'black',
   },
   appBarStyle: {
     backgroundColor: colors.darkGreen,
@@ -196,6 +276,10 @@ const useStyles = makeStyles({
     fontSize: 18,
     margin: 10,
     '&:focus': {
+      color: colors.yellow,
+      fontWeight: 'bold',
+    },
+    '&:hover': {
       color: colors.yellow,
       fontWeight: 'bold',
     },

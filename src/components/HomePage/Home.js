@@ -11,26 +11,31 @@ import HowToUse from './HowToUse';
 import PopularCourses from './PopularCourses';
 import AboutCoursesSection from './AboutCoursesSection';
 import OurPlatform from './OurPlatform';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
+  const { t } = useTranslation();
 
   return (
     <>
       <div
         className={`${classes.IQTestsDivOfHomePage} ${classesForMediaQueries.IQTestsDivOfHomePage}`}>
-        <div className={classes.wrapperOfTypographyAndIQTestButton}>
+        <div
+          className={classes.wrapperOfTypographyAndIQTestButton}
+          style={{ alignItems: window.innerWidth < 600 && 'center' }}>
           <Typography
             className={`${classes.typographyStyle} ${classesForMediaQueries.typographyStyle}`}>
-            Այստեղ դու կգտնես ցանկացած <br />
+            {/* Այստեղ դու կգտնես ցանկացած <br />
             ոլորտ որով հետաքրքրված ես,
-            <br /> բայց սկզբի համար․․․
+            <br /> բայց սկզբի համար․․․ */}
             {/* Գիտելիքի յուրաքանչյուր կտոր <br /> արժեք և հստակություն է հաղորդում
-            Ձեր մտածողության փազլին։
-            <br /> Ձեռք բեր նոր մտածողություն՝ <br />
+            Ձեր մտածողության փազլին։*/}
+            {/* <br /> Ձեռք բեր նոր մտածողություն՝ <br />
             համալրելով գիտելիքներդ արդի ոլորտներում՝ մեր կայքի միջոցով։ <br />
             բայց սկզբի համար․․․ */}
+            {t('homePageTypographyText1')}
           </Typography>
           <NavLink
             to={IQTests_ROUTE}
@@ -39,12 +44,14 @@ const Home = () => {
             <Button
               variant='outlined'
               className={`${classes.IQTestsButton} ${classesForMediaQueries.IQTestsButton}`}>
-              Անցնենք IQ թեստը
+              {t('homePageIQTestButton')}
             </Button>
           </NavLink>
         </div>
 
-        <div className={classes.ImageOfIQTestsDivOfHomePage}>
+        <div
+          className={classes.ImageOfIQTestsDivOfHomePage}
+          style={{ height: window.innerWidth <= 600 && '40%' }}>
           <img src={image1} alt='hire' className={classes.Image} />
         </div>
       </div>
@@ -70,7 +77,6 @@ const useStyles = makeStyles({
     justifyContent: 'space-around',
     padding: '0px 16px',
     margin: '0px auto',
-    flexWrap: 'wrap',
   },
   wrapperOfTypographyAndIQTestButton: {
     display: 'flex',
@@ -82,15 +88,15 @@ const useStyles = makeStyles({
     fontSize: 45,
     lineHeight: 1,
     maxWidth: 721,
-    height: 153,
+    // margin: 30,
   },
   IQTestsButton: {
     color: colors.white,
     backgroundColor: colors.darkGreen,
-    textTransform: 'capitalize',
+    marginTop: 15,
   },
   ImageOfIQTestsDivOfHomePage: {
-    height: 300,
+    height: '80%',
   },
   Image: {
     width: '100%',
@@ -107,22 +113,27 @@ const mediaQueries = makeStyles({
     },
     wrapperOfTypographyAndIQTestButton: {
       flexDirection: 'column',
+      // alignItems: 'center',
     },
     typographyStyle: {
       fontSize: 20,
       lineHeight: 1,
       maxWidth: 321,
-      height: 83,
       paddingTop: 20,
+      textAlign: 'center',
     },
     IQTestsButton: {
       margin: 20,
     },
+    // ImageOfIQTestsDivOfHomePage: {
+    //   height: '20% !important',
+    // },
   },
   '@media (min-width:601px) and (max-width:992px)': {
     IQTestsDivOfHomePage: {
       alignItems: 'center',
       justifyContent: 'center',
+      height: 250,
     },
     wrapperOfTypographyAndIQTestButton: {
       marginLeft: 35,
@@ -130,14 +141,12 @@ const mediaQueries = makeStyles({
     typographyStyle: {
       fontSize: 25,
       maxWidth: 421,
-      height: 90,
       marginTop: 25,
       paddingRight: 20,
       marginBottom: 25,
     },
 
     ImageOfIQTestsDivOfHomePage: {
-      marginRight: 50,
       height: '50%',
     },
   },
@@ -157,22 +166,14 @@ const mediaQueries = makeStyles({
       fontFamily: fonts.dejavu,
       fontSize: 33,
       lineHeight: 1,
-      // width: 521,
       maxWidth: 521,
-      height: 120,
       paddingRight: 20,
     },
 
     ImageOfIQTestsDivOfHomePage: {
       marginRight: 50,
-      width: 322,
+      width: '50%',
       height: 200,
-    },
-    Image: {
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover',
-      borderRadius: 20,
     },
   },
 });

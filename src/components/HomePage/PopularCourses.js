@@ -11,11 +11,13 @@ import 'slick-carousel/slick/slick-theme.css';
 import '../../assest/styles/customSlick.css';
 import Slider from 'react-slick';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const PopularCourses = () => {
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   var settings = {
     dots: false,
@@ -56,7 +58,7 @@ const PopularCourses = () => {
     <div>
       <p
         className={`${classes.popularCoursesHeader} ${classesForMediaQueries.popularCoursesHeader}`}>
-        Ամենահայտնի դասընթացները
+        {t('popularCoursesHeader')}
       </p>
       <div
         className={`${classes.containerOfCategoriesAsSlides} ${classesForMediaQueries.containerOfCategoriesAsSlides}`}>
@@ -77,7 +79,7 @@ const PopularCourses = () => {
                   style={{ backgroundColor: course.color }}>
                   <Typography
                     className={`${classes.typographyStyle} ${classesForMediaQueries.typographyStyle}`}>
-                    {course.title}
+                    {t(`${course.title}`)}
                     {/* <p
                       className={`${classes.countOfStudentsStyle} ${classesForMediaQueries.countOfStudentsStyle}`}>
                       {course.countOfStudents}

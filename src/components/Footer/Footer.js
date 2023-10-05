@@ -23,11 +23,13 @@ import {
   QUIZZES_ROUTE,
   IQTests_ROUTE,
 } from '../../constants/routes';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
   const user = useContext(userContext);
+  const { t } = useTranslation();
 
   return (
     <footer className={`${classes.footer} ${classesForMediaQueries.footer}`}>
@@ -112,7 +114,7 @@ const Footer = () => {
           className={`${classes.containerOfSubscribeForm} ${classesForMediaQueries.containerOfSubscribeForm}`}>
           <p
             className={`${classes.typografyStyle} ${classesForMediaQueries.typografyStyle}`}>
-            Մուտքագրի՛ր էլ․փոստիդ հասցեն և սկսի՛ր
+            {t('footerFormHeader')}
           </p>
           <Form />
         </div>
@@ -122,7 +124,7 @@ const Footer = () => {
         className={`${classes.containerOfIconButtonsAndTypografy} ${classesForMediaQueries.containerOfIconButtonsAndTypografy}`}>
         <p
           className={`${classes.typografyStyle} ${classesForMediaQueries.typografyStyle}`}>
-          Հետևեք մեզ այստեղ
+          {t('footerSocialMediaLinksHeader')}
         </p>
         <div className={classes.containerOfIconButtons}>
           <IconButton

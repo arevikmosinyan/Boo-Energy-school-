@@ -11,9 +11,12 @@ import {
 // import allQuizzesComponentBackgroundImage from '../images/AllQuizzesComponentBackgroundImage.jpg';
 import allQuizzesComponentBackgroundImage from '../images/quiz.jpg';
 import { colors, fonts } from '../constants/variables';
+import { useTranslation } from 'react-i18next';
 
 const AllQuizzesComponent = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
+
   return (
     <div className={classes.container}>
       <img
@@ -28,27 +31,27 @@ const AllQuizzesComponent = () => {
             exact
             to={MATHEMATICSCOURSE_ROUTE}
             className={classes.menuItem}>
-            Մաթեմատիկա
+            {t('mathematics')}
           </NavLink>
         </MenuItem>
         <MenuItem>
           <NavLink exact to={ENGLISH_ROUTE} className={classes.menuItem}>
-            Անգլերեն
+            {t('english')}
           </NavLink>
         </MenuItem>
         <MenuItem>
           <NavLink exact to={PROGRAMMING_ROUTE} className={classes.menuItem}>
-            Ծրագրավորում
+            {t('programming')}
           </NavLink>
         </MenuItem>
         <MenuItem>
           <NavLink exact to={GRAPHICDESIGN_ROUTE} className={classes.menuItem}>
-            Գրաֆիկ դիզայն
+            {t('graphicDesign')}
           </NavLink>
         </MenuItem>
         <MenuItem>
           <NavLink exact to={UIUXDESIGN_ROUTE} className={classes.menuItem}>
-            UI/UX դիզայն
+            {t('UX/UI')}
           </NavLink>
         </MenuItem>
       </div>
@@ -88,5 +91,8 @@ const useStyles = makeStyles({
     color: colors.yellow,
     textDecoration: 'none',
     borderRadius: 10,
+    '&:hover': {
+      color: 'black',
+    },
   },
 });

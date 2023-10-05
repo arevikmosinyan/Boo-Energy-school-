@@ -10,11 +10,14 @@ import { coursesToStudy } from '../Categories.js';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../../assest/styles/customSlick.css';
+import { useTranslation } from 'react-i18next';
 
 const SuggestedCoursesCarousel = () => {
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   var settings = {
     dots: false,
@@ -57,8 +60,11 @@ const SuggestedCoursesCarousel = () => {
         className={`${classes.wrapperOfSugestedCoursesTypeography} ${classesForMediaQueries.wrapperOfSugestedCoursesTypeography}`}>
         <Typography
           className={`${classes.suggestedCoursesAndTypography} ${classesForMediaQueries.suggestedCoursesAndTypography}`}>
-          Հիմա, երբ արդեն անցել ես ընդհանուր թեստը, <br />
-          մենք կարող ենք առաջարկել քեզ դասընթացներ
+          {t('suggestedCoursesCarouselHeader')
+            .split('\n')
+            .map((elem) => {
+              return <p key={uuid()}>{elem}</p>;
+            })}
         </Typography>
       </div>
       <div
@@ -75,7 +81,7 @@ const SuggestedCoursesCarousel = () => {
                   }}>
                   <p
                     className={`${classes.typographyStyle} ${classesForMediaQueries.typographyStyle}`}>
-                    {course.title}
+                    {t(`${course.title}`)}
                   </p>
                 </Card>
               </div>

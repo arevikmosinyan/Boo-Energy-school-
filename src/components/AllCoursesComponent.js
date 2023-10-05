@@ -9,6 +9,7 @@ import {
   MATHEMATICSCOURSE_ROUTE,
 } from '../constants/routes';
 import allCorsesBackgroundImage from '../images/AllCoursesComponentBackgroundImage.png';
+import { t } from 'i18next';
 
 const Courses = () => {
   const classes = useStyles();
@@ -26,27 +27,27 @@ const Courses = () => {
             exact
             to={MATHEMATICSCOURSE_ROUTE}
             className={classes.menuItem}>
-            Մաթեմատիկա
+            {t('mathematics')}
           </NavLink>
         </MenuItem>
         <MenuItem>
           <NavLink exact to={ENGLISH_ROUTE} className={classes.menuItem}>
-            Անգլերեն
+            {t('english')}
           </NavLink>
         </MenuItem>
         <MenuItem>
           <NavLink exact to={PROGRAMMING_ROUTE} className={classes.menuItem}>
-            Ծրագրավորում
+            {t('programming')}
           </NavLink>
         </MenuItem>
         <MenuItem>
           <NavLink exact to={GRAPHICDESIGN_ROUTE} className={classes.menuItem}>
-            Գրաֆիկ դիզայն
+            {t('graphicDesign')}
           </NavLink>
         </MenuItem>
         <MenuItem>
           <NavLink exact to={UIUXDESIGN_ROUTE} className={classes.menuItem}>
-            UI/UX դիզայն
+            {t('UX/UI')}
           </NavLink>
         </MenuItem>
       </div>
@@ -84,5 +85,8 @@ const useStyles = makeStyles({
     color: 'rgba(0, 0, 0, 0.7)',
     textDecoration: 'none',
     borderRadius: 10,
+    '&:hover': {
+      color: 'black',
+    },
   },
 });
