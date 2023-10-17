@@ -88,7 +88,7 @@ const Rating = () => {
     <div className={classes.containerOfRating}>
       {user ? (
         <div className={classes.wrapperOfCourseQuizzessParticipant}>
-          <p className={classes.label}> Ձեր ընդհանուր վարկանիշը </p>
+          <p className={classes.label}>{t('ratingHeaderForRegisteredUser')} </p>
           <div className={classes.wrapperOfRatingSchedule}>
             <div className={classes.nameAndSurnameBar}>
               {userData?.name} {userData?.surname}
@@ -97,10 +97,10 @@ const Rating = () => {
               {userData?.scoreForReading} + միավոր թեստերից
             </div>
           </div>
-          <p className={classes.label}>որից՝</p>
+          <p className={classes.label}>{t('ofWhich')}</p>
 
           <div className={classes.wrapperOfLabelAndSelect}>
-            <p className={classes.label}>Դասընթաց</p>
+            <p className={classes.label}>{t('courses')}</p>
             <FormControl variant='outlined' className={classes.formControl}>
               <Select
                 className={classes.select}
@@ -117,42 +117,42 @@ const Rating = () => {
                   selected
                   hidden
                   className={classes.menuItem}>
-                  Ընտրել
+                  {t('select')}
                 </MenuItem>
                 <MenuItem
                   value={10}
                   id='math'
                   onClick={handleId}
                   className={classes.menuItem}>
-                  Մաթեմատիկա
+                  {t('mathematics')}
                 </MenuItem>
                 <MenuItem
                   value={20}
                   id='english'
                   onClick={handleId}
                   className={classes.menuItem}>
-                  Անգլերեն
+                  {t('english')}
                 </MenuItem>
                 <MenuItem
                   value={30}
                   id='programming'
                   onClick={handleId}
                   className={classes.menuItem}>
-                  Ծրագրավորում
+                  {t('programming')}
                 </MenuItem>
                 <MenuItem
                   value={40}
                   id='graphicDesign'
                   onClick={handleId}
                   className={classes.menuItem}>
-                  Գրաֆիկ դիզայն
+                  {t('graphicDesign')}
                 </MenuItem>
                 <MenuItem
                   value={50}
                   id='UI/UXDesign'
                   onClick={handleId}
                   className={classes.menuItem}>
-                  UI/UX դիզայն
+                  {t('UX/UI')}
                 </MenuItem>
               </Select>
             </FormControl>
@@ -162,7 +162,7 @@ const Rating = () => {
           </div>
 
           <div className={classes.wrapperOfLabelAndSelect}>
-            <p className={classes.label}>Թեստ</p>
+            <p className={classes.label}>{t('tests')}</p>
             <FormControl variant='outlined' className={classes.formControl}>
               <Select
                 className={classes.select}
@@ -175,22 +175,22 @@ const Rating = () => {
                   selected
                   hidden
                   className={classes.menuItem}>
-                  Ընտրել
+                  {t('select')}
                 </MenuItem>
                 <MenuItem value={10} className={classes.menuItem}>
-                  Մաթեմատիկա
+                  {t('mathematics')}
                 </MenuItem>
                 <MenuItem value={20} className={classes.menuItem}>
-                  Անգլերեն
+                  {t('english')}
                 </MenuItem>
                 <MenuItem value={30} className={classes.menuItem}>
-                  Ծրագրավորում
+                  {t('programming')}
                 </MenuItem>
                 <MenuItem value={40} className={classes.menuItem}>
-                  Գրաֆիկ դիզայն
+                  {t('graphicDesign')}
                 </MenuItem>
                 <MenuItem value={50} className={classes.menuItem}>
-                  UI/UX դիզայն
+                  {t('UX/UI')}
                 </MenuItem>
               </Select>
             </FormControl>

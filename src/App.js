@@ -47,7 +47,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth, getUserData } from '../src/requests/firebase';
 import userContext from './contexts/userContext';
 import userDataContext from './contexts/userDataContext';
-import loadingContext from './contexts/dataLoadingContext';
+// import loadingContext from './contexts/dataLoadingContext';
 import Topic from '../src/components/Courses/Topic';
 import Loading from '../src/components/Loading';
 
@@ -81,47 +81,53 @@ function App() {
   }, []);
 
   if (loading) {
-    return <Loading />;
+    return (
+      <>
+        <Navbar />
+        <Loading />;
+        <Footer positionForLoading={'fixed'} bottomPositionForLoading={0} />
+      </>
+    );
   } else {
     return (
-      <loadingContext.Provider value={loading}>
-        <userContext.Provider value={user}>
-          <userDataContext.Provider value={userData}>
-            <div>
-              <Navbar />
-              <Routes>
-                <Route path={HOME_ROUTE} element={<Home />} />
-                <Route path={COURSES_ROUTE} element={<AllCoursesComponent />} />
-                <Route path={QUIZZES_ROUTE} element={<AllQuizzesComponent />} />
-                <Route path={RATING_ROUTE} element={<Rating />} />
-                <Route path={COMMUNITY_ROUTE} element={<Community />} />
-                <Route path={CALENDAR_ROUTE} element={<Calendar />} />
-                <Route path={ABOUT_ROUTE} element={<AboutUs />} />
-                <Route path={SIGNIN_ROUTE} element={<SignIn />} />
-                <Route path={RESET_ROUTE} element={<ResetPassword />} />
-                <Route path={SIGNUP_ROUTE} element={<SignUp />} />
-                <Route path={PROFILE_ROUTE} element={<Profile />} />
-                <Route path={IQTests_ROUTE} element={<IQTests />} />
-                <Route path={ENGLISH_ROUTE} element={<English />} />
-                <Route
-                  path={MATHEMATICSCOURSE_ROUTE}
-                  element={<MathematicsCourses />}
-                />
-                <Route
-                  path={MATHEMATICSQUIZZES_ROUTE}
-                  element={<MathematicsQuizzes />}
-                />
-                <Route path={GRAPHICDESIGN_ROUTE} element={<GraphicDesign />} />
-                <Route path={PROGRAMMING_ROUTE} element={<Programming />} />
-                <Route path={UIUXDESIGN_ROUTE} element={<UIUXDesign />} />
-                <Route path={TOPIC_ROUTE} element={<Topic />} />
-                <Route path='*' element={<Navigate to={HOME_ROUTE} />} />
-              </Routes>
-              <Footer />
-            </div>
-          </userDataContext.Provider>
-        </userContext.Provider>
-      </loadingContext.Provider>
+      // <loadingContext.Provider value={loading}>
+      <userContext.Provider value={user}>
+        <userDataContext.Provider value={userData}>
+          <div>
+            <Navbar />
+            <Routes>
+              <Route path={HOME_ROUTE} element={<Home />} />
+              <Route path={COURSES_ROUTE} element={<AllCoursesComponent />} />
+              <Route path={QUIZZES_ROUTE} element={<AllQuizzesComponent />} />
+              <Route path={RATING_ROUTE} element={<Rating />} />
+              <Route path={COMMUNITY_ROUTE} element={<Community />} />
+              <Route path={CALENDAR_ROUTE} element={<Calendar />} />
+              <Route path={ABOUT_ROUTE} element={<AboutUs />} />
+              <Route path={SIGNIN_ROUTE} element={<SignIn />} />
+              <Route path={RESET_ROUTE} element={<ResetPassword />} />
+              <Route path={SIGNUP_ROUTE} element={<SignUp />} />
+              <Route path={PROFILE_ROUTE} element={<Profile />} />
+              <Route path={IQTests_ROUTE} element={<IQTests />} />
+              <Route path={ENGLISH_ROUTE} element={<English />} />
+              <Route
+                path={MATHEMATICSCOURSE_ROUTE}
+                element={<MathematicsCourses />}
+              />
+              <Route
+                path={MATHEMATICSQUIZZES_ROUTE}
+                element={<MathematicsQuizzes />}
+              />
+              <Route path={GRAPHICDESIGN_ROUTE} element={<GraphicDesign />} />
+              <Route path={PROGRAMMING_ROUTE} element={<Programming />} />
+              <Route path={UIUXDESIGN_ROUTE} element={<UIUXDesign />} />
+              <Route path={TOPIC_ROUTE} element={<Topic />} />
+              <Route path='*' element={<Navigate to={HOME_ROUTE} />} />
+            </Routes>
+            <Footer />
+          </div>
+        </userDataContext.Provider>
+      </userContext.Provider>
+      // </loadingContext.Provider>
     );
   }
 }

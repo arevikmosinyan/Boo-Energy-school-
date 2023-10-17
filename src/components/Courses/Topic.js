@@ -11,7 +11,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import loadingContext from '../../contexts/dataLoadingContext';
+// import loadingContext from '../../contexts/dataLoadingContext';
 import Loading from '../Loading';
 import userContext from '../../contexts/userContext';
 
@@ -20,7 +20,7 @@ const Topic = () => {
   const location = useLocation();
   const userData = useContext(userDataContext);
   const user = useContext(userContext);
-  const loading = useContext(loadingContext);
+  // const loading = useContext(loadingContext);
   const [alreadyRead, setAlreadyRead] = useState(false);
   const [scoreForReading, setScoreForReading] = useState(
     userData?.scoreForReading || 0,
@@ -32,7 +32,7 @@ const Topic = () => {
   const { selectedClassId } = location.state || {};
   let selectedClass = null;
 
-  console.log(loading);
+  // console.log(loading);
 
   /*-------------------------------------setting new score to real-time database while clicking----------------*/
 
@@ -148,53 +148,50 @@ const Topic = () => {
           </DialogActions>
         </Dialog>
       ) : null}
-      {loading ? (
+      {/* {loading ? (
         <Loading />
-      ) : (
-        <>
-          {user && (
-            <div className={classes.scoreShowDiv}>
-              {/* {scoreForReading || userData?.scoreForReading} */}
-              {scoreForReading}
-            </div>
-          )}
+      ) : ()} */}
+      <>
+        {user && (
+          <div className={classes.scoreShowDiv}>
+            {/* {scoreForReading || userData?.scoreForReading} */}
+            {scoreForReading}
+          </div>
+        )}
 
-          <p className={classes.paragraph}>
-            {selectedClass?.singleClassContent}
-          </p>
+        <p className={classes.paragraph}>{selectedClass?.singleClassContent}</p>
 
-          {user && (
-            <form className={classes.wrapperOfButtonSignUp}>
-              <Button
-                type={openTheDialog ? 'button' : 'submit'}
-                variant='outlined'
-                className={classes.submitButtonOfGainedScoresForReading}
-                onClick={submitGainedScoresForReading}>
-                Պահպանել հավաքած միավորները
-              </Button>
-              {openTheDialog ? (
-                <Dialog open={true} onClose={() => setOpenTheDialog(false)}>
-                  <DialogContent>
-                    <DialogContentText>
-                      Դուք արդեն կարդացել եք այս դասը և վաստակել համապատասխան
-                      միավոր։ Կրկնակի ընթերցանությունից լրացուցիչ միավորներ չեն
-                      ավելանում:
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button
-                      onClick={() => setOpenTheDialog(false)}
-                      color='primary'
-                      autoFocus>
-                      Լավ
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-              ) : null}
-            </form>
-          )}
-        </>
-      )}
+        {user && (
+          <form className={classes.wrapperOfButtonSignUp}>
+            <Button
+              type={openTheDialog ? 'button' : 'submit'}
+              variant='outlined'
+              className={classes.submitButtonOfGainedScoresForReading}
+              onClick={submitGainedScoresForReading}>
+              Պահպանել հավաքած միավորները
+            </Button>
+            {openTheDialog ? (
+              <Dialog open={true} onClose={() => setOpenTheDialog(false)}>
+                <DialogContent>
+                  <DialogContentText>
+                    Դուք արդեն կարդացել եք այս դասը և վաստակել համապատասխան
+                    միավոր։ Կրկնակի ընթերցանությունից լրացուցիչ միավորներ չեն
+                    ավելանում:
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    onClick={() => setOpenTheDialog(false)}
+                    color='primary'
+                    autoFocus>
+                    Լավ
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            ) : null}
+          </form>
+        )}
+      </>
     </div>
   );
 };

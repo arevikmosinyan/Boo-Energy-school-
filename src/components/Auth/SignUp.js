@@ -35,11 +35,12 @@ import {
 import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useRef } from 'react';
-import loadingContext from '../../contexts/dataLoadingContext';
+// import loadingContext from '../../contexts/dataLoadingContext';
+import { useTranslation } from 'react-i18next';
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const loading = useContext(loadingContext);
+  // const loading = useContext(loadingContext);
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
 
@@ -55,7 +56,7 @@ const SignUp = () => {
   const [alreadyReadClassesTitles, setAlreadyReadClassesTitles] = useState([
     '',
   ]);
-
+  const { t } = useTranslation();
   const refOfwrapperOfnavigateToLoginLink = useRef();
   const location = useLocation();
   const classes = useStyles();
@@ -85,16 +86,16 @@ const SignUp = () => {
 
   function onCheckingValidationOfPassword() {
     if (password.length && password.length < 8) {
-      return 'Գաղտնաբառը պետք է ներառի նվազագույնը 8 նիշ';
+      return t('minCountOfCharsOfPasswordValidation');
     } else if (password.length && !includesUpperCaseAndLowerCase) {
       if (!includesLatinLetters) {
-        return 'գաղտնաբառը պետք է լինի լատինատառ';
+        return t('latinLettersOfCharsOfPasswordValidation');
       }
-      return 'Գաղտնաբառը պետք է ներառի առնվազն մեկ մեծատառ և մեկ փոքրատառ';
+      return t('capitalLetterAndSmallLetterOfCharsOfPasswordValidation');
     } else if (password.length && !includesSpecialSymbols) {
-      return 'Գաղտնաբառը պետք է պարունակի առնվազն մեկ հատուկ սիմվոլ !,@,#,$,%,^,&,*,(),_,+,=,~';
+      return t('specialSymbolOfCharsOfPasswordValidation');
     } else if (password.length && !includesNumber) {
-      return 'գաղտնաբառը պետք է պարունակի առնվազն մեկ թվային արժեք';
+      return t('numberTypeOfCharsOfPasswordValidation');
     } else {
       return '';
     }
@@ -107,7 +108,7 @@ const SignUp = () => {
       !emailRegex.test(emailToTestForValidation) &&
       emailToTestForValidation?.length > 1
     ) {
-      return 'Խնդրում ենք մուտքագրեք վավեր էլ․ հասցե ';
+      return t('emailValidation');
     }
   }
 
@@ -123,7 +124,7 @@ const SignUp = () => {
       return;
     }
     if (!role || !gender || !name || !surname || !email || !password) {
-      alert('Խնդրում ենք նշել բոլոր պարտադիր դաշտերը');
+      alert(t('requiredFields'));
       return;
     }
     await createUserWithEmailAndPassword(auth, email, password)
@@ -161,24 +162,28 @@ const SignUp = () => {
 
   return (
     <>
+      {/* {loading ? (
+        <Loading />
+      ) : ()} */}
       <div className={classes.containerOfSignUp}>
         <ThemeProvider theme={theme}>
           <div
             ref={refOfwrapperOfnavigateToLoginLink}
             className={classes.wrapperOfnavigateToLoginLink}>
             <p className={classes.ifYouAreAlreadySignedUpQuestion}>
-              Եթե արդեն գրանցված օգտատեր եք ապա
+              {t('ifAlreadyRegisteredUser')}
             </p>
             <NavLink to={SIGNIN_ROUTE} className={classes.linkToSignIn}>
-              Մուտք
+              {t('login')}
             </NavLink>
-            <p className={classes.ifYouAreAlreadySignedUpQuestion}>եթե ոչ՝</p>
+            <p className={classes.ifYouAreAlreadySignedUpQuestion}>
+              {t('ifNot')}
+            </p>
           </div>
 
-          <div className={`${classes.header} `}>Գրանցում</div>
+          <div className={`${classes.header} `}>{t('register')}</div>
           <p className={classes.warningText}>
-            Ուշադրությու՛ն, գրանցվելու համար պետք է լրացնել բոլոր տողերը։
-            Կայքում գրանցվելն անվճար է։
+            {t('allTheFieldsMustBeFilledAndRegistrationIsFreeOfCharge')}
           </p>
           <div className={classes.wrapperOfGender}>
             <FormControl
@@ -187,7 +192,7 @@ const SignUp = () => {
               <FormLabel
                 component='legend'
                 className={`${classes.labelOfGender}`}>
-                Սեռ*
+                {t('gender')}*
               </FormLabel>
               <RadioGroup
                 row
@@ -198,13 +203,13 @@ const SignUp = () => {
                 <FormControlLabel
                   value='Արական'
                   control={<Radio />}
-                  label='Արական'
+                  label={t('male')}
                   className={`${classes.labelOfGender}`}
                 />
                 <FormControlLabel
                   value='Իգական'
                   control={<Radio />}
-                  label='Իգական'
+                  label={t('female')}
                   className={`${classes.labelOfGender}`}
                 />
               </RadioGroup>
@@ -214,7 +219,7 @@ const SignUp = () => {
             <FormLabel
               component='legend'
               className={`${classes.labelOfGender}`}>
-              Դերը պորտալում*
+              {t('role')}*
             </FormLabel>
 
             <RadioGroup
@@ -225,19 +230,19 @@ const SignUp = () => {
                 <FormControlLabel
                   value='Նախադպրոցական'
                   control={<Radio />}
-                  label='Նախադպրոցական'
+                  label={t('preSchool')}
                   className={`${classes.labelOfGender}`}
                 />
                 <FormControlLabel
                   value='Դպրոցական'
                   control={<Radio />}
-                  label='Դպրոցական'
+                  label={t('school')}
                   className={`${classes.labelOfGender}`}
                 />
                 <FormControlLabel
                   value='Ուսանող'
                   control={<Radio />}
-                  label='Ուսանող'
+                  label={t('student')}
                   className={`${classes.labelOfGender}`}
                 />
               </div>
@@ -245,19 +250,19 @@ const SignUp = () => {
                 <FormControlLabel
                   value='Դասախոս'
                   control={<Radio />}
-                  label='Դասախոս'
+                  label={t('lecturer')}
                   className={`${classes.labelOfGender}`}
                 />
                 <FormControlLabel
                   value='Ծնող'
                   control={<Radio />}
-                  label='Ծնող'
+                  label={t('parent')}
                   className={`${classes.labelOfGender}`}
                 />
                 <FormControlLabel
                   value='Հյուր'
                   control={<Radio />}
-                  label='Հյուր'
+                  label={t('guest')}
                   className={`${classes.labelOfGender}`}
                 />
               </div>
@@ -266,12 +271,12 @@ const SignUp = () => {
           <div className={classes.textFields}>
             <div className={classes.wrapperOfEmailAndName}>
               <div className={classes.wrapperOfInputFiledAndInputHeader}>
-                <p className={classes.inputHeader}>Էլ․ փոստ *</p>
+                <p className={classes.inputHeader}>{t('email')} *</p>
                 <TextField
                   InputProps={{
                     inputProps: { maxLength: 30 },
                   }}
-                  placeholder='Մուտքագրեք Ձեր Էլ․ փոստի հասցեն'
+                  placeholder={t('enterEmailAddress')}
                   variant='outlined'
                   required
                   className={classes.input}
@@ -283,7 +288,7 @@ const SignUp = () => {
                 />
               </div>
               <div className={classes.wrapperOfInputFiledAndInputHeader}>
-                <p className={classes.inputHeader}>Անուն *</p>
+                <p className={classes.inputHeader}>{t('name')}*</p>
                 <TextField
                   placeholder='Մուտքագրեք Ձեր անունը'
                   variant='outlined'
@@ -296,13 +301,13 @@ const SignUp = () => {
             </div>
             <div className={classes.wrapperOfPasswordAndSurname}>
               <div className={classes.wrapperOfInputFiledAndInputHeader}>
-                <p className={classes.inputHeader}>Գաղտնաբառ *</p>
+                <p className={classes.inputHeader}>{t('password')}*</p>
                 <FormControl className={classes.input} variant='outlined'>
                   <TextField
                     variant='outlined'
                     required
                     className={classes.passwordInput}
-                    placeholder='Մուտքագրեք Ձեր գաղտնաբառը'
+                    placeholder={t('enterYourPassword')}
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -324,10 +329,10 @@ const SignUp = () => {
               </div>
 
               <div className={classes.wrapperOfInputFiledAndInputHeader}>
-                <p className={classes.inputHeader}>Ազգանուն *</p>
+                <p className={classes.inputHeader}>{t('surname')}*</p>
                 <TextField
                   id='outlined-start-adornment'
-                  placeholder='Մուտքագրեք Ձեր ազգանունը'
+                  placeholder={t('enterSurname')}
                   variant='outlined'
                   required
                   className={classes.input}
@@ -339,12 +344,12 @@ const SignUp = () => {
           </div>
           <div className={classes.wrapperOfEducationCentersSection}>
             <p className={classes.headerOfEducationSection}>
-              Ուսումնական հաստատություն
+              {t('educationalInstitution')}
             </p>
             <div className={classes.wrapperOfCountriesAndEducationCenters}>
               <div className={classes.wrapperOfCountries}>
                 <p style={{ paddingBottom: 10, color: colors.darkGreen }}>
-                  Երկիր
+                  {t('country')}
                 </p>
                 <FormControl variant='outlined' className={classes.formControl}>
                   <Select
@@ -354,67 +359,68 @@ const SignUp = () => {
                     displayEmpty
                     inputProps={{ 'aria-label': 'Select country' }}>
                     <MenuItem value='Հայաստան'>
-                      <em>Հայաստան</em>
+                      <em>{t('armenia')}</em>
                     </MenuItem>
-                    <MenuItem value={'Ռուսաստան'}>Ռուսաստան</MenuItem>
-                    <MenuItem value={'Վրաստան'}>Վրաստան</MenuItem>
-                    <MenuItem value={'Իրան'}>Իրան</MenuItem>
-                    <MenuItem value={'Կանադա'}>Կանադա</MenuItem>
-                    <MenuItem value={'Գերմանիա'}>Գերմանիա</MenuItem>
-                    <MenuItem value={'ԱՄՆ'}>ԱՄՆ</MenuItem>
-                    <MenuItem value={'Սիրիա'}>Սիրիա</MenuItem>
-                    <MenuItem value={'Դանիա'}>Դանիա</MenuItem>
+                    <MenuItem value={'Ռուսաստան'}>{t('russia')}</MenuItem>
+                    <MenuItem value={'Վրաստան'}>{t('georgia')}</MenuItem>
+                    <MenuItem value={'Իրան'}>{t('iran')}</MenuItem>
+                    <MenuItem value={'Կանադա'}>{t('canada')}</MenuItem>
+                    <MenuItem value={'Գերմանիա'}>{t('germany')}</MenuItem>
+                    <MenuItem value={'ԱՄՆ'}>{t('US')}</MenuItem>
+                    <MenuItem value={'Սիրիա'}>{t('syria')}</MenuItem>
+                    <MenuItem value={'Դանիա'}>{t('denmark')}</MenuItem>
                   </Select>
                 </FormControl>
               </div>
               <div className={classes.wrapperOfEducationCenters}>
                 <p style={{ paddingBottom: 10, color: colors.darkGreen }}>
-                  Ոսումնական հաստատության որոնում
+                  {t('labelOfEducationalInstitution')}
                 </p>
                 <FormControl variant='outlined' className={classes.formControl}>
                   <Select
                     className={classes.select}
                     value={educationCenter}
-                    onChange={(e) => setEducationCenter(e.target.value)}
-                    placeholder='Մուտքագրիր ուսումնական հաստատության հասցեն և ․․․'>
+                    onChange={(e) => setEducationCenter(e.target.value)}>
                     <MenuItem value='Երևանի պետական համալսարան (ԵՊՀ)'>
-                      <em> Երևանի պետական համալսարան (ԵՊՀ)</em>
+                      <em>{t('yerevanStateUniversity(YSU)')}</em>
                     </MenuItem>
 
                     <MenuItem
                       value={
                         'Հայաստանի պետական տնտեսագիտական համալսարան (ՀՊՏՀ)'
                       }>
-                      Հայաստանի պետական տնտեսագիտական համալսարան (ՀՊՏՀ)
+                      {t('armenianStateUniversityOfEconomics')}
                     </MenuItem>
                     <MenuItem value={'Հայաստանի գեղարվեստի պետական ակադեմիա'}>
-                      Հայաստանի գեղարվեստի պետական ակադեմիա
+                      {t('armenianStateAcademyOfFineArts')}
                     </MenuItem>
                     <MenuItem
                       value={'Երևանի թատրոնի և կինոյի պետական ինստիտուտ'}>
-                      Երևանի թատրոնի և կինոյի պետական ինստիտուտ
+                      {t('yerevanStateInstituteOfTheaterAndCinema')}
                     </MenuItem>
                     <MenuItem
                       value={
                         'Ճարտարապետության և շինարարարության Հայաստանի ազգային համալսարան'
                       }>
-                      Ճարտարապետության և շինարարարության Հայաստանի ազգային
-                      համալսարան
+                      {t(
+                        'armenianNationalUniversityOfArchitectureAndConstruction',
+                      )}
                     </MenuItem>
                     <MenuItem
                       value={'Հայաստանի ազգային ագրարային համալսարան (ՀԱԱՀ)'}>
-                      Հայաստանի ազգային ագրարային համալսարան (ՀԱԱՀ)
+                      {t('armenianNationalAgrarianUniversity(NAAU)')}
                     </MenuItem>
                     <MenuItem
                       value={'Երևանի պետական բժշկական համալսարան (ԵՊԲՀ)'}>
-                      Երևանի պետական բժշկական համալսարան (ԵՊԲՀ)
+                      {t('yerevanStateMedicalUniversity(YSMU)')}
                     </MenuItem>
                     <MenuItem
                       value={
                         'Երևանի Պետական Լեզվաբանական Համալսարան, Վալերի Բրյուսովի անվան, (ԵՊԼՀ)'
                       }>
-                      Երևանի Պետական Լեզվաբանական Համալսարան, Վալերի Բրյուսովի
-                      անվան, (ԵՊԼՀ)
+                      {t(
+                        'yerevanStateLinguisticUniversityNamedAfterValeryBrusov',
+                      )}
                     </MenuItem>
                   </Select>
                 </FormControl>
@@ -428,7 +434,7 @@ const SignUp = () => {
             variant='outlined'
             className={classes.buttonSignUp}
             onClick={register}>
-            Գրանցում
+            {t('register')}
           </Button>
         </form>
       </div>

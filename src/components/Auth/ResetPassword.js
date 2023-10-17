@@ -3,12 +3,13 @@ import { makeStyles, Button, TextField } from '@material-ui/core';
 import { colors, fonts } from '../../constants/variables';
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 import { useState } from 'react';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 
 const ResetPassword = () => {
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [resetText, setResetText] = useState('');
+  const { t } = useTranslation();
 
   const auth = getAuth();
 
@@ -16,13 +17,11 @@ const ResetPassword = () => {
     await sendPasswordResetEmail(auth, email)
       .then((res) => {
         console.log(res);
-        setResetText(
-          'Խնդրում ենք ստուգեք Ձեր էլ․ փոստը, գաղտնաբառի վերականգնումը հաջողությամբ կատարվել է',
-        );
+        setResetText(t('successMessageOfResettingPassword'));
       })
       .catch((err) => {
         setResetText(
-          `Գաղտնաբառի վերականգնումը ձախողվել է. ${err.message.slice(15)}`,
+          `${t('failMessageOfResettingPassword')} ${err.message.slice(15)}`,
         );
       });
   }
@@ -30,14 +29,14 @@ const ResetPassword = () => {
   return (
     <div className={classes.containerOfResetPassword}>
       <div className={classes.wrapperOfEmailInput}>
-        <p className={classes.inputHeader}>Էլ․ փոստ</p>
+        <p className={classes.inputHeader}>{t('email')}</p>
 
         <TextField
           InputProps={{
             inputProps: { maxLength: 40 },
             className: classes.inputOfEmail,
           }}
-          placeholder='Մուտքագրեք Ձեր Էլ․ փոստի հասցեն'
+          placeholder={t('enterEmailAddress')}
           variant='outlined'
           required
           value={email.trim()}
@@ -48,7 +47,7 @@ const ResetPassword = () => {
           variant='outlined'
           className={classes.resetPasswordButton}
           onClick={resetPassword}>
-          Վերականգնել գաղտնաբառը
+          {t('resetPassword')}
         </Button>
         <div className={classes.resetText}>{resetText}</div>
       </div>

@@ -27,6 +27,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, getUserData } from '../../requests/firebase';
 import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const SignIn = () => {
   const classes = useStyles();
@@ -36,6 +37,7 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const wrapperOfEmailAndPasswordRef = useRef();
+  const { t } = useTranslation();
 
   useEffect(() => {
     wrapperOfEmailAndPasswordRef?.current.scrollIntoView({ block: 'center' });
@@ -60,16 +62,16 @@ const SignIn = () => {
 
   function onCheckingValidationOfPassword() {
     if (password.length && password.length < 8) {
-      return 'Գաղտնաբառը պետք է ներառի նվազագույնը 8 նիշ';
+      return t('minCountOfCharsOfPasswordValidation');
     } else if (password.length && !includesUpperCaseAndLowerCase) {
       if (!includesLatinLetters) {
-        return 'գաղտնաբառը պետք է լինի լատինատառ';
+        return t('latinLettersOfCharsOfPasswordValidation');
       }
-      return 'Գաղտնաբառը պետք է ներառի առնվազն մեկ մեծատառ և մեկ փոքրատառ';
+      return t('capitalLetterAndSmallLetterOfCharsOfPasswordValidation');
     } else if (password.length && !includesSpecialSymbols) {
-      return 'Գաղտնաբառը պետք է պարունակի առնվազն մեկ հատուկ սիմվոլ !,@,#,$,%,^,&,*,(),_,+,=,~';
+      return t('specialSymbolOfCharsOfPasswordValidation');
     } else if (password.length && !includesNumber) {
-      return 'գաղտնաբառը պետք է պարունակի առնվազն մեկ թվային արժեք';
+      return t('numberTypeOfCharsOfPasswordValidation');
     } else {
       return '';
     }
@@ -78,7 +80,7 @@ const SignIn = () => {
   function emailValidation() {
     const emailTrimmed = email.trim() || locationEmail?.navigatedEmail.trim();
     if (!emailRegex.test(emailTrimmed) && emailTrimmed?.length > 4) {
-      return 'Խնդրում ենք մուտքագրեք վավեր էլ․ հասցե ';
+      return t('emailValidation');
     }
   }
 
@@ -98,7 +100,7 @@ const SignIn = () => {
           errorCode === 'auth/user-not-found' ||
           errorCode === 'auth/invalid-email'
         ) {
-          alert('Նման օգտատեր չի գտնվել');
+          alert(t('notFoundUser'));
         }
       });
   };
@@ -110,13 +112,13 @@ const SignIn = () => {
           <div
             className={classes.wrapperOfInputFiledAndInputHeader}
             ref={wrapperOfEmailAndPasswordRef}>
-            <p className={classes.inputHeader}>Էլ․ փոստ</p>
+            <p className={classes.inputHeader}>{t('email')}</p>
             <TextField
               InputProps={{
                 inputProps: { maxLength: 40 },
                 className: classes.inputOfEmail,
               }}
-              placeholder='Մուտքագրեք Ձեր Էլ․ փոստի հասցեն'
+              placeholder={t('enterEmailAddress')}
               variant='outlined'
               required
               value={locationEmail?.navigatedEmail || email.trim()}
@@ -125,13 +127,13 @@ const SignIn = () => {
             />
           </div>
           <div className={classes.wrapperOfInputFiledAndInputHeader}>
-            <p className={classes.inputHeader}>Գաղտնաբառ</p>
+            <p className={classes.inputHeader}>{t('password')}</p>
             <FormControl style={{ flex: 1 }} variant='outlined'>
               <TextField
                 variant='outlined'
                 required
                 className={`${classes.passwordInput} `}
-                placeholder='Մուտքագրեք Ձեր գաղտնաբառը'
+                placeholder={t('enterYourPassword')}
                 type={showPassword ? 'text' : 'password'}
                 value={password.trim()}
                 onChange={(e) => setPassword(e.target.value)}
@@ -152,12 +154,14 @@ const SignIn = () => {
             </FormControl>
 
             <NavLink to={RESET_ROUTE} className={classes.resetPassword}>
-              Գաղտնաբառի վերականգնում
+              {t('resetPassword')}
             </NavLink>
             <div className={classes.wrapperOfnavigateToRegisterLink}>
-              <p className={classes.areNotYouSignedUpQuestion}>Գրանցված չե՞ք</p>
+              <p className={classes.areNotYouSignedUpQuestion}>
+                {t('areNotSignedUp?')}
+              </p>
               <NavLink to={SIGNUP_ROUTE} className={classes.linkToSignUp}>
-                Գրանցում
+                {t('register')}
               </NavLink>
             </div>
           </div>
@@ -168,7 +172,7 @@ const SignIn = () => {
               variant='outlined'
               className={classes.buttonSignIn}
               onClick={onLogin}>
-              Մուտք
+              {t('login')}
             </Button>
           </form>
         </div>

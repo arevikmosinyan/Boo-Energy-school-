@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, Typography, Paper, Hidden } from '@material-ui/core';
+import { Container, Typography, Paper } from '@material-ui/core';
 
 import TestSectionImage from '../images/imagesOfAboutUs/TestSectionImage.jpg';
 import ClassesSectionImage from '../images/imagesOfAboutUs/ClassesSectionImage.jpg';

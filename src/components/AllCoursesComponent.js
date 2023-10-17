@@ -9,10 +9,11 @@ import {
   MATHEMATICSCOURSE_ROUTE,
 } from '../constants/routes';
 import allCorsesBackgroundImage from '../images/AllCoursesComponentBackgroundImage.png';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const Courses = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
   return (
     <div className={classes.container}>
       <img

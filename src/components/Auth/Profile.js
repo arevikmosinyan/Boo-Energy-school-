@@ -26,21 +26,23 @@ import {
 import { colors } from '../../constants/variables';
 
 import { writeUserData, auth, database } from '../../requests/firebase';
-import loadingContext from '../../contexts/dataLoadingContext';
+// import loadingContext from '../../contexts/dataLoadingContext';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Profile = () => {
   const classes = useStyles();
   const userData = useContext(userDataContext);
-  const loading = useContext(loadingContext);
+  // const loading = useContext(loadingContext);
   const navigate = useNavigate();
   const [country, setCountry] = useState('');
-  console.log(loading);
+  // console.log(loading);
   const [educationCenter, setEducationCenter] = useState('');
   const [role, setRole] = useState('');
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const { t } = useTranslation();
 
   function changeCountry() {
     writeUserData({
@@ -97,239 +99,233 @@ const Profile = () => {
     <>
       <Card className={classes.container}>
         <Typography variant='h5' className={classes.header}>
-          Անձնական տվյալներ
+          {t('profilePagePersonalInformationHeader')}
         </Typography>
-        {loading ? (
+        {/* {loading ? (
           <Loading />
-        ) : (
-          <List>
-            <ListItem className={classes.listItem}>
-              <ListItemText
-                primary={`Անուն: ${userData?.name}`}
-                className={classes.prevName}
-              />
-              <TextField
-                placeholder='Մուտքագրեք Ձեր անունը'
-                variant='outlined'
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className={classes.formControl}
-              />
+        ) : ( */}
+        <List>
+          <ListItem className={classes.listItem}>
+            <ListItemText
+              primary={`${t('name')}: ${userData?.name}`}
+              className={classes.prevName}
+            />
+            <TextField
+              placeholder={t('enterName')}
+              variant='outlined'
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className={classes.formControl}
+            />
 
-              <form className={classes.wrapperOfAcceptChangesButton}>
-                <Button
-                  type='submit'
-                  variant='outlined'
-                  className={classes.acceptChangesButton}
-                  onClick={changeName}>
-                  Հաստատել փոփոխությունը
-                </Button>
-              </form>
-            </ListItem>
-            <ListItem className={classes.listItem}>
-              <ListItemText
-                primary={`Ազգանուն: ${userData?.surname}`}
-                className={classes.prevName}
-              />
-              <TextField
-                placeholder='Մուտքագրեք Ձեր ազգանունը'
-                variant='outlined'
-                required
-                value={surname}
-                onChange={(e) => setSurname(e.target.value)}
-                className={classes.formControl}
-              />
-
-              <form className={classes.wrapperOfAcceptChangesButton}>
-                <Button
-                  type='submit'
-                  variant='outlined'
-                  className={classes.acceptChangesButton}
-                  onClick={changeSurname}>
-                  Հաստատել փոփոխությունը
-                </Button>
-              </form>
-            </ListItem>
-            <ListItem className={classes.listItem}>
-              <ListItemText
-                primary={`Դերը պորտալում: ${userData?.role}`}
-                className={classes.prevName}
-              />
-              <FormControl variant='outlined' className={classes.formControl}>
-                <Select
-                  className={classes.formControl}
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  displayEmpty
-                  inputProps={{ 'aria-label': 'Select country' }}>
-                  <MenuItem value='Նախադպրոցական'>
-                    <em>Նախադպրոցական</em>
-                  </MenuItem>
-                  <MenuItem value={'Դպրոցական'}>Դպրոցական</MenuItem>
-                  <MenuItem value={'Ուսանող'}>Ուսանող</MenuItem>
-                  <MenuItem value={'Դասախոս'}>Դասախոս</MenuItem>
-                  <MenuItem value={'Ծնող'}>Ծնող</MenuItem>
-                  <MenuItem value={'Հյուր'}>Հյուր</MenuItem>
-                </Select>
-              </FormControl>
-              <form className={classes.wrapperOfAcceptChangesButton}>
-                <Button
-                  type='submit'
-                  variant='outlined'
-                  className={classes.acceptChangesButton}
-                  onClick={changeTheRole}>
-                  Հաստատել փոփոխությունը
-                </Button>
-              </form>
-            </ListItem>
-            <ListItem className={classes.listItem}>
-              <ListItemText
-                primary={`Երկիր: ${userData?.country}`}
-                className={classes.prevName}
-              />
-              <FormControl variant='outlined' className={classes.formControl}>
-                <Select
-                  className={classes.formControl}
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
-                  displayEmpty
-                  inputProps={{ 'aria-label': 'Select country' }}>
-                  <MenuItem value='Հայաստան'>
-                    <em>Հայաստան</em>
-                  </MenuItem>
-                  <MenuItem value={'Ռուսաստան'}>Ռուսաստան</MenuItem>
-                  <MenuItem value={'Վրաստան'}>Վրաստան</MenuItem>
-                  <MenuItem value={'Իրան'}>Իրան</MenuItem>
-                  <MenuItem value={'Կանադա'}>Կանադա</MenuItem>
-                  <MenuItem value={'Գերմանիա'}>Գերմանիա</MenuItem>
-                  <MenuItem value={'ԱՄՆ'}>ԱՄՆ</MenuItem>
-                  <MenuItem value={'Սիրիա'}>Սիրիա</MenuItem>
-                  <MenuItem value={'Դանիա'}>Դանիա</MenuItem>
-                </Select>
-              </FormControl>
-              <form className={classes.wrapperOfAcceptChangesButton}>
-                <Button
-                  type='submit'
-                  variant='outlined'
-                  className={classes.acceptChangesButton}
-                  onClick={changeCountry}>
-                  Հաստատել փոփոխությունը
-                </Button>
-              </form>
-            </ListItem>
-            <ListItem className={classes.listItem}>
-              <div className={classes.prevName}>
-                <ListItemText primary={`Ուսումնական հաստատության անվանում: `} />
-                <div>{userData?.educationCenter}</div>
-              </div>
-
-              <FormControl variant='outlined' className={classes.formControl}>
-                <Select
-                  className={classes.select}
-                  value={educationCenter}
-                  onChange={(e) => setEducationCenter(e.target.value)}
-                  placeholder='Մուտքագրիր ուսումնական հաստատության հասցեն և ․․․'>
-                  <MenuItem value='Երևանի պետական համալսարան (ԵՊՀ)'>
-                    <em> Երևանի պետական համալսարան (ԵՊՀ)</em>
-                  </MenuItem>
-
-                  <MenuItem
-                    value={'Հայաստանի պետական տնտեսագիտական համալսարան (ՀՊՏՀ)'}>
-                    Հայաստանի պետական տնտեսագիտական համալսարան (ՀՊՏՀ)
-                  </MenuItem>
-                  <MenuItem value={'Հայաստանի գեղարվեստի պետական ակադեմիա'}>
-                    Հայաստանի գեղարվեստի պետական ակադեմիա
-                  </MenuItem>
-                  <MenuItem value={'Երևանի թատրոնի և կինոյի պետական ինստիտուտ'}>
-                    Երևանի թատրոնի և կինոյի պետական ինստիտուտ
-                  </MenuItem>
-                  <MenuItem
-                    value={
-                      'Ճարտարապետության և շինարարարության Հայաստանի ազգային համալսարան'
-                    }>
-                    Ճարտարապետության և շինարարարության Հայաստանի ազգային
-                    համալսարան
-                  </MenuItem>
-                  <MenuItem
-                    value={'Հայաստանի ազգային ագրարային համալսարան (ՀԱԱՀ)'}>
-                    Հայաստանի ազգային ագրարային համալսարան (ՀԱԱՀ)
-                  </MenuItem>
-                  <MenuItem value={'Երևանի պետական բժշկական համալսարան (ԵՊԲՀ)'}>
-                    Երևանի պետական բժշկական համալսարան (ԵՊԲՀ)
-                  </MenuItem>
-                  <MenuItem
-                    value={
-                      'Երևանի Պետական Լեզվաբանական Համալսարան, Վալերի Բրյուսովի անվան, (ԵՊԼՀ)'
-                    }>
-                    Երևանի Պետական Լեզվաբանական Համալսարան, Վալերի Բրյուսովի
-                    անվան, (ԵՊԼՀ)
-                  </MenuItem>
-                </Select>
-              </FormControl>
-              <form className={classes.wrapperOfAcceptChangesButton}>
-                <Button
-                  type='submit'
-                  variant='outlined'
-                  className={classes.acceptChangesButton}
-                  onClick={changeEducationalCenter}>
-                  Հաստատել փոփոխությունը
-                </Button>
-              </form>
-            </ListItem>
-            <ListItem className={classes.listItem}>
-              <ListItemText
-                primary={`Ընթերցանության վարկանիշ: ${userData?.scoreForReading}`}
-              />
-            </ListItem>
-            <ListItem className={classes.listItem}>
-              <ListItemText
-                primary={`կարդացած դասերի համարներ: ${
-                  String(userData?.alreadyReadClassesIds) ||
-                  'Դուք դեռևս չունեք ընթերցած դասեր'
-                }`}
-              />
-            </ListItem>
-            <ListItem className={classes.listItem}>
-              <ListItemText
-                primary={`կարդացած դասերի վերնագրեր: ${
-                  String(userData?.alreadyReadClassesTitles) ||
-                  'Դուք դեռևս չունեք ընթերցած դասեր'
-                }`}
-              />
-            </ListItem>
-            <ListItem className={classes.listItem}>
+            <form className={classes.wrapperOfAcceptChangesButton}>
               <Button
+                type='submit'
                 variant='outlined'
-                className={classes.deleteButton}
-                onClick={() => setDeleteDialogOpen(true)}>
-                Այլեվս չեմ ցանկանում լինել օգտատեր
+                className={classes.acceptChangesButton}
+                onClick={changeName}>
+                {t('confirmChanges')}
               </Button>
-              <Dialog
-                open={deleteDialogOpen}
-                onClose={() => setDeleteDialogOpen(false)}>
-                <DialogContent>
-                  <DialogContentText>
-                    Համոզվա՞ծ եք, որ այլևս չեք ցանկանում լինել օգտատեր
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button
-                    onClick={() => setDeleteDialogOpen(false)}
-                    color='primary'>
-                    Չեղարկել
-                  </Button>
-                  <Button
-                    onClick={onDeleteAccount}
-                    color='primary'
-                    type='submit'>
-                    Հաստատել
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </ListItem>
-          </List>
-        )}
+            </form>
+          </ListItem>
+          <ListItem className={classes.listItem}>
+            <ListItemText
+              primary={`${t('surname')}: ${userData?.surname}`}
+              className={classes.prevName}
+            />
+            <TextField
+              placeholder={t('enterSurname')}
+              variant='outlined'
+              required
+              value={surname}
+              onChange={(e) => setSurname(e.target.value)}
+              className={classes.formControl}
+            />
+
+            <form className={classes.wrapperOfAcceptChangesButton}>
+              <Button
+                type='submit'
+                variant='outlined'
+                className={classes.acceptChangesButton}
+                onClick={changeSurname}>
+                {t('confirmChanges')}
+              </Button>
+            </form>
+          </ListItem>
+          <ListItem className={classes.listItem}>
+            <ListItemText
+              primary={`${t('role')}: ${userData?.role}`}
+              className={classes.prevName}
+            />
+            <FormControl variant='outlined' className={classes.formControl}>
+              <Select
+                className={classes.formControl}
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                displayEmpty
+                inputProps={{ 'aria-label': 'Select country' }}>
+                <MenuItem value='Նախադպրոցական'>
+                  <em>{t('preSchool')}</em>
+                </MenuItem>
+                <MenuItem value={'Դպրոցական'}>{t('school')}</MenuItem>
+                <MenuItem value={'Ուսանող'}>{t('student')}</MenuItem>
+                <MenuItem value={'Դասախոս'}>{t('lecturer')}</MenuItem>
+                <MenuItem value={'Ծնող'}>{t('parent')}</MenuItem>
+                <MenuItem value={'Հյուր'}>{t('guest')}</MenuItem>
+              </Select>
+            </FormControl>
+            <form className={classes.wrapperOfAcceptChangesButton}>
+              <Button
+                type='submit'
+                variant='outlined'
+                className={classes.acceptChangesButton}
+                onClick={changeTheRole}>
+                {t('confirmChanges')}
+              </Button>
+            </form>
+          </ListItem>
+          <ListItem className={classes.listItem}>
+            <ListItemText
+              primary={`${t('country')}: ${userData?.country}`}
+              className={classes.prevName}
+            />
+            <FormControl variant='outlined' className={classes.formControl}>
+              <Select
+                className={classes.formControl}
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                displayEmpty
+                inputProps={{ 'aria-label': 'Select country' }}>
+                <MenuItem value='Հայաստան'>
+                  <em>{t('armenia')}</em>
+                </MenuItem>
+                <MenuItem value={'Ռուսաստան'}>{t('russia')}</MenuItem>
+                <MenuItem value={'Վրաստան'}>{t('georgia')}</MenuItem>
+                <MenuItem value={'Իրան'}>{t('iran')}</MenuItem>
+                <MenuItem value={'Կանադա'}>{t('canada')}</MenuItem>
+                <MenuItem value={'Գերմանիա'}>{t('germany')}</MenuItem>
+                <MenuItem value={'ԱՄՆ'}>{t('US')}</MenuItem>
+                <MenuItem value={'Սիրիա'}>{t('syria')}</MenuItem>
+                <MenuItem value={'Դանիա'}>{t('denmark')}</MenuItem>
+              </Select>
+            </FormControl>
+            <form className={classes.wrapperOfAcceptChangesButton}>
+              <Button
+                type='submit'
+                variant='outlined'
+                className={classes.acceptChangesButton}
+                onClick={changeCountry}>
+                {t('confirmChanges')}
+              </Button>
+            </form>
+          </ListItem>
+          <ListItem className={classes.listItem}>
+            <div className={classes.prevName}>
+              <ListItemText primary={t('educationalInstitution')} />
+              <div>{userData?.educationCenter}</div>
+            </div>
+
+            <FormControl variant='outlined' className={classes.formControl}>
+              <Select
+                className={classes.select}
+                value={educationCenter}
+                onChange={(e) => setEducationCenter(e.target.value)}
+                placeholder='Մուտքագրիր ուսումնական հաստատության հասցեն և ․․․'>
+                <MenuItem value='Երևանի պետական համալսարան (ԵՊՀ)'>
+                  <em>{t('yerevanStateUniversity(YSU)')} </em>
+                </MenuItem>
+
+                <MenuItem
+                  value={'Հայաստանի պետական տնտեսագիտական համալսարան (ՀՊՏՀ)'}>
+                  {t('armenianStateUniversityOfEconomics')}
+                </MenuItem>
+                <MenuItem value={'Հայաստանի գեղարվեստի պետական ակադեմիա'}>
+                  {t('armenianStateAcademyOfFineArts')}
+                </MenuItem>
+                <MenuItem value={'Երևանի թատրոնի և կինոյի պետական ինստիտուտ'}>
+                  {t('yerevanStateInstituteOfTheaterAndCinema')}
+                </MenuItem>
+                <MenuItem
+                  value={
+                    'Ճարտարապետության և շինարարարության Հայաստանի ազգային համալսարան'
+                  }>
+                  {t('armenianNationalUniversityOfArchitectureAndConstruction')}
+                </MenuItem>
+                <MenuItem
+                  value={'Հայաստանի ազգային ագրարային համալսարան (ՀԱԱՀ)'}>
+                  {t('armenianNationalAgrarianUniversity(NAAU)')}
+                </MenuItem>
+                <MenuItem value={'Երևանի պետական բժշկական համալսարան (ԵՊԲՀ)'}>
+                  {t('yerevanStateMedicalUniversity(YSMU)')}
+                </MenuItem>
+                <MenuItem
+                  value={
+                    'Երևանի Պետական Լեզվաբանական Համալսարան, Վալերի Բրյուսովի անվան, (ԵՊԼՀ)'
+                  }>
+                  {t('yerevanStateLinguisticUniversityNamedAfterValeryBrusov')}
+                </MenuItem>
+              </Select>
+            </FormControl>
+            <form className={classes.wrapperOfAcceptChangesButton}>
+              <Button
+                type='submit'
+                variant='outlined'
+                className={classes.acceptChangesButton}
+                onClick={changeEducationalCenter}>
+                {t('confirmChanges')}
+              </Button>
+            </form>
+          </ListItem>
+          <ListItem className={classes.listItem}>
+            <ListItemText
+              primary={`${t('ratingForReading')}: ${userData?.scoreForReading}`}
+            />
+          </ListItem>
+          <ListItem className={classes.listItem}>
+            <ListItemText
+              primary={`կարդացած դասերի համարներ: ${
+                String(userData?.alreadyReadClassesIds) ||
+                'Դուք դեռևս չունեք ընթերցած դասեր'
+              }`}
+            />
+          </ListItem>
+          <ListItem className={classes.listItem}>
+            <ListItemText
+              primary={`${t('titlesOfLessonsRead')}: ${
+                String(userData?.alreadyReadClassesTitles) ||
+                t('youHaveNoLessonsReadYet')
+              }`}
+            />
+          </ListItem>
+          <ListItem className={classes.listItem}>
+            <Button
+              variant='outlined'
+              className={classes.deleteButton}
+              onClick={() => setDeleteDialogOpen(true)}>
+              {t('IDoNotWantToBeAUserAnymore')}
+            </Button>
+            <Dialog
+              open={deleteDialogOpen}
+              onClose={() => setDeleteDialogOpen(false)}>
+              <DialogContent>
+                <DialogContentText>
+                  {t('areYouSureYouDoNotWantToBeAUserAnyMore')}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={() => setDeleteDialogOpen(false)}
+                  color='primary'>
+                  {t('cancel')}
+                </Button>
+                <Button onClick={onDeleteAccount} color='primary' type='submit'>
+                  {t('confirm')}
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </ListItem>
+        </List>
       </Card>
     </>
   );

@@ -2,7 +2,6 @@ import React from 'react';
 import IconButton from '@mui/material/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link, NavLink } from 'react-router-dom';
-
 import { colors, fonts } from '../../constants/variables';
 import Facebook from './Facebook';
 import Instagram from './Instagram';
@@ -11,28 +10,27 @@ import Form from './Form';
 import userContext from '../../contexts/userContext';
 import { useContext } from 'react';
 import {
-  HOME_ROUTE,
   RATING_ROUTE,
-  COMMUNITY_ROUTE,
   ABOUT_ROUTE,
-  CALENDAR_ROUTE,
-  SIGNIN_ROUTE,
-  SIGNUP_ROUTE,
   COURSES_ROUTE,
-  PROFILE_ROUTE,
   QUIZZES_ROUTE,
   IQTests_ROUTE,
 } from '../../constants/routes';
 import { useTranslation } from 'react-i18next';
 
-const Footer = () => {
+const Footer = (props) => {
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
   const user = useContext(userContext);
   const { t } = useTranslation();
 
   return (
-    <footer className={`${classes.footer} ${classesForMediaQueries.footer}`}>
+    <footer
+      className={`${classes.footer} ${classesForMediaQueries.footer}`}
+      style={{
+        position: props.positionForLoading,
+        bottom: props.bottomPositionForLoading,
+      }}>
       <div
         className={`${classes.containerOfLogo} ${classesForMediaQueries.containerOfLogo}`}>
         <Logo />
@@ -50,60 +48,74 @@ const Footer = () => {
             <NavLink
               to={ABOUT_ROUTE}
               className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
-              Մեր մասին
+              {t('aboutus')}
             </NavLink>
             <NavLink className={classes.subLinkOfNavLink}>
-              Ինչ է իրենից ներկայացնում Թեստեր բաժինը
+              {t('whatIsTestsSection')}
             </NavLink>
             <NavLink className={classes.subLinkOfNavLink}>
-              Ինչ է իրենից ներկայացնում Դասընթացներ բաժինը
+              {t('whatIsCoursesSection')}
             </NavLink>
             <NavLink className={classes.subLinkOfNavLink}>
-              Ինչ է իրենից ներկայացնում Վարկանիշ բաժինը
+              {t('whatIsRatingSection')}
             </NavLink>
-            <NavLink className={classes.subLinkOfNavLink}>Կապը մեզ հետ</NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>
+              {t('contactUs')}
+            </NavLink>
           </div>
 
           <div className={classes.wrapperOfLinkAndSubLinks}>
             <NavLink
               to={COURSES_ROUTE}
               className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
-              Դասընթացներ
+              {t('courses')}
             </NavLink>
-            <NavLink className={classes.subLinkOfNavLink}>Մաթեմատիկա</NavLink>
-            <NavLink className={classes.subLinkOfNavLink}>Ծրագրավորում</NavLink>
-            <NavLink className={classes.subLinkOfNavLink}>Անգլերեն</NavLink>
             <NavLink className={classes.subLinkOfNavLink}>
-              Գրաֆիկ դիզայն
+              {t('mathematics')}
             </NavLink>
-            <NavLink className={classes.subLinkOfNavLink}>UI/UX դիզայն</NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>
+              {t('programming')}
+            </NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>
+              {t('english')}
+            </NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>
+              {t('graphicDesign')}
+            </NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>{t('UX/UI')}</NavLink>
           </div>
 
           <div className={classes.wrapperOfLinkAndSubLinks}>
             <NavLink
               to={QUIZZES_ROUTE}
               className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
-              Թեստեր
+              {t('tests')}
             </NavLink>
-            <NavLink className={classes.subLinkOfNavLink}>Մաթեմատիկա</NavLink>
-            <NavLink className={classes.subLinkOfNavLink}>Ծրագրավորում</NavLink>
-            <NavLink className={classes.subLinkOfNavLink}>Անգլերեն</NavLink>
             <NavLink className={classes.subLinkOfNavLink}>
-              Գրաֆիկ դիզայն
+              {t('mathematics')}
             </NavLink>
-            <NavLink className={classes.subLinkOfNavLink}>UI/UX դիզայն</NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>
+              {t('programming')}
+            </NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>
+              {t('english')}
+            </NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>
+              {t('graphicDesign')}
+            </NavLink>
+            <NavLink className={classes.subLinkOfNavLink}>{t('UX/UI')}</NavLink>
           </div>
           <div className={classes.wrapperOfLinkAndSubLinks}>
             <NavLink
               to={RATING_ROUTE}
               className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
-              Վարկանիշ
+              {t('rating')}
             </NavLink>
 
             <NavLink
               to={IQTests_ROUTE}
               className={`${classes.navLinkStyle} ${classesForMediaQueries.navLinkStyle}`}>
-              IQ թեստեր
+              {t('IQTests')}
             </NavLink>
           </div>
         </div>
@@ -159,6 +171,8 @@ const useStyles = makeStyles({
     backgroundColor: colors.darkGreen,
     display: 'flex',
     justifyContent: 'space-around',
+    // position: 'fixed',
+    // bottom: 0,
   },
   containerOfLogo: {
     // width: 250,
