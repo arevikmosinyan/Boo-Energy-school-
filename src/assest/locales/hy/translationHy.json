@@ -17,6 +17,8 @@
   "email": "Էլ․ փոստ",
   "password": "Գաղտնաբառ",
   "enterEmailAddress": "Մուտքագրեք Ձեր Էլ․ փոստի հասցեն",
+  "enterSurname": "Մուտքագրեք Ձեր ազգանունը",
+  "enterName": "Մուտքագրեք Ձեր անունը",
   "minCountOfCharsOfPasswordValidation": "Գաղտնաբառը պետք է ներառի նվազագույնը 8 նիշ",
   "emailValidation": "Խնդրում ենք մուտքագրեք վավեր էլ․ հասցե",
   "requiredFields": "Խնդրում ենք նշել բոլոր պարտադիր դաշտերը",
