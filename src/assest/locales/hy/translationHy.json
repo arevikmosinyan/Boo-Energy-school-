@@ -108,5 +108,9 @@
   "IDoNotWantToBeAUserAnymore": "Այլեվս չեմ ցանկանում լինել օգտատեր",
   "areYouSureYouDoNotWantToBeAUserAnyMore": "Համոզվա՞ծ եք, որ այլևս չեք ցանկանում լինել օգտատեր",
   "confirm": "Հաստատել",
-  "cancel": "Չեղարկել"
+  "cancel": "Չեղարկել",
+  "dialogForNonRegisteredUserInTopicComponent": "Ուշադրությու՛ն, դուք կարող եք վաստակել միավորներ՝ ընթերցելով  դասընթացը, եթե դառնաք գրանցված օգտատեր։",
+  "ok": "Լավ",
+  "submitGainedScoresForReading": "Պահպանել հավաքած միավորները",
+  "dialogForRegisteredUserForDoubleReadingTheSameLesson": "Դուք արդեն կարդացել եք այս դասը և վաստակել համապատասխան  միավոր։ Կրկնակի ընթերցանությունից լրացուցիչ միավորներ չեն  ավելանում:"
 }

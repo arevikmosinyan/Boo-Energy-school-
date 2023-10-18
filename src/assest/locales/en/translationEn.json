@@ -108,5 +108,9 @@
   "IDoNotWantToBeAUserAnymore": "I don't want to be a user any more",
   "areYouSureYouDoNotWantToBeAUserAnyMore": "Are you sure you no longer want to be a user?",
   "confirm": "Confirm",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "dialogForNonRegisteredUserInTopicComponent": "Attention, you can earn points by reading the course if you become a registered user.",
+  "ok": "Ok",
+  "submitGainedScoresForReading": "Save gained scores for reading",
+  "dialogForRegisteredUserForDoubleReadingTheSameLesson": "You have already read this lesson and gained your points. No points are added for double reading"
 }

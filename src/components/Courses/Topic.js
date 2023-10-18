@@ -14,12 +14,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 // import loadingContext from '../../contexts/dataLoadingContext';
 import Loading from '../Loading';
 import userContext from '../../contexts/userContext';
+import { useTranslation } from 'react-i18next';
 
 const Topic = () => {
   const classes = useStyles();
   const location = useLocation();
   const userData = useContext(userDataContext);
   const user = useContext(userContext);
+
   // const loading = useContext(loadingContext);
   const [alreadyRead, setAlreadyRead] = useState(false);
   const [scoreForReading, setScoreForReading] = useState(
@@ -32,6 +34,7 @@ const Topic = () => {
   const { selectedClassId } = location.state || {};
   let selectedClass = null;
 
+  const { t } = useTranslation();
   // console.log(loading);
 
   /*-------------------------------------setting new score to real-time database while clicking----------------*/
@@ -134,8 +137,7 @@ const Topic = () => {
           onClose={() => setDialogForNonRegisteredUsers(false)}>
           <DialogContent>
             <DialogContentText>
-              Ուշադրությու՛ն, դուք կարող եք վաստակել միավորներ՝ ընթերցելով
-              դասընթացը, եթե դառնաք գրանցված օգտատեր։
+              {t('dialogForNonRegisteredUserInTopicComponent')}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -143,7 +145,7 @@ const Topic = () => {
               onClick={() => setDialogForNonRegisteredUsers(false)}
               color='primary'
               autoFocus>
-              Լավ
+              {t('ok')}
             </Button>
           </DialogActions>
         </Dialog>
@@ -168,15 +170,13 @@ const Topic = () => {
               variant='outlined'
               className={classes.submitButtonOfGainedScoresForReading}
               onClick={submitGainedScoresForReading}>
-              Պահպանել հավաքած միավորները
+              {t('submitGainedScoresForReading')}
             </Button>
             {openTheDialog ? (
               <Dialog open={true} onClose={() => setOpenTheDialog(false)}>
                 <DialogContent>
                   <DialogContentText>
-                    Դուք արդեն կարդացել եք այս դասը և վաստակել համապատասխան
-                    միավոր։ Կրկնակի ընթերցանությունից լրացուցիչ միավորներ չեն
-                    ավելանում:
+                    {t('dialogForRegisteredUserForDoubleReadingTheSameLesson')}
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -184,7 +184,7 @@ const Topic = () => {
                     onClick={() => setOpenTheDialog(false)}
                     color='primary'
                     autoFocus>
-                    Լավ
+                    {t('ok')}
                   </Button>
                 </DialogActions>
               </Dialog>
