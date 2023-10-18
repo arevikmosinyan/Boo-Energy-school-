@@ -112,5 +112,5 @@
   "dialogForNonRegisteredUserInTopicComponent": "Attention, you can earn points by reading the course if you become a registered user.",
   "ok": "Ok",
   "submitGainedScoresForReading": "Save gained scores for reading",
-  "dialogForRegisteredUserForDoubleReadingTheSameLesson": "You have already read this lesson and gained your points. No points are added for double reading"
+  "dialogForRegisteredUserForDoubleReadingTheSameLesson": "You have already read this lesson and gained your points. No points are added for double reading."
 }
