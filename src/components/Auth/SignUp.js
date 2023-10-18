@@ -290,7 +290,7 @@ const SignUp = () => {
               <div className={classes.wrapperOfInputFiledAndInputHeader}>
                 <p className={classes.inputHeader}>{t('name')}*</p>
                 <TextField
-                  placeholder='Մուտքագրեք Ձեր անունը'
+                  placeholder={t('enterName')}
                   variant='outlined'
                   required
                   className={classes.input}
