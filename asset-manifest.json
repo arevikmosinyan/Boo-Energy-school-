@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Boo-Energy-school-React-JS-/static/css/main.74ed7547.css",
-    "main.js": "/Boo-Energy-school-React-JS-/static/js/main.2e685eb1.js",
+    "main.js": "/Boo-Energy-school-React-JS-/static/js/main.e1c8d7e8.js",
     "static/js/787.28cb0dcd.chunk.js": "/Boo-Energy-school-React-JS-/static/js/787.28cb0dcd.chunk.js",
     "static/media/ourPlatformImage1.png": "/Boo-Energy-school-React-JS-/static/media/ourPlatformImage1.db3e7f399a1ac679a80a.png",
     "static/media/mathematicsBackground.png": "/Boo-Energy-school-React-JS-/static/media/mathematicsBackground.598127fb528949f6a2d7.png",
@@ -34,11 +34,11 @@
     "static/media/arrow_left.svg": "/Boo-Energy-school-React-JS-/static/media/arrow_left.db6e2d88c7c35a775ce4.svg",
     "static/media/arrow_right.svg": "/Boo-Energy-school-React-JS-/static/media/arrow_right.f7c6ac6d310d3b82f0a0.svg",
     "main.74ed7547.css.map": "/Boo-Energy-school-React-JS-/static/css/main.74ed7547.css.map",
-    "main.2e685eb1.js.map": "/Boo-Energy-school-React-JS-/static/js/main.2e685eb1.js.map",
+    "main.e1c8d7e8.js.map": "/Boo-Energy-school-React-JS-/static/js/main.e1c8d7e8.js.map",
     "787.28cb0dcd.chunk.js.map": "/Boo-Energy-school-React-JS-/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.74ed7547.css",
-    "static/js/main.2e685eb1.js"
+    "static/js/main.e1c8d7e8.js"
   ]
 }
