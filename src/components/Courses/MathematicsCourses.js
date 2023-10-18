@@ -13,12 +13,14 @@ import SearchIcon from '@material-ui/icons/Search';
 import { useNavigate } from 'react-router-dom';
 import { TOPIC_ROUTE } from '../../constants/routes';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const MathematicsCourses = () => {
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState('');
+  const { t } = useTranslation();
 
   function filteringClasses() {
     let filteredClasses = [];
@@ -54,7 +56,7 @@ const MathematicsCourses = () => {
           className={`${classes.wrapperOfCourseNameAnalyzeAndSearchbar} ${classesForMediaQueries.wrapperOfCourseNameAnalyzeAndSearchbar} `}>
           <p
             className={`${classes.courseName} ${classesForMediaQueries.courseName} `}>
-            Մաթեմատիկա
+            {t('mathematics')}
           </p>
           {/* <p
             className={`${classes.examined} ${classesForMediaQueries.examined} `}>
@@ -65,7 +67,7 @@ const MathematicsCourses = () => {
             className={`${classes.search} ${classesForMediaQueries.search} `}>
             <InputBase
               className={`${classes.input} ${classesForMediaQueries.input} `}
-              placeholder='Որոնել նախընտրելի թեման․․․'
+              placeholder={t('searchForAPreferredTopic')}
               onChange={(e) => setSearchText(e.target.value)}
             />
 
