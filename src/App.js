@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Redirect } from 'react-router-dom';
+
 import {
   HOME_ROUTE,
   QUIZZES_ROUTE,
@@ -121,7 +122,8 @@ function App() {
               <Route path={PROGRAMMING_ROUTE} element={<Programming />} />
               <Route path={UIUXDESIGN_ROUTE} element={<UIUXDesign />} />
               <Route path={TOPIC_ROUTE} element={<Topic />} />
-              <Route path='*' element={<Navigate to={HOME_ROUTE} />} />
+              {/* <Route path='*' element={<Navigate to={HOME_ROUTE} />} /> */}
+              <Redirect to='/' />
             </Routes>
             <Footer />
           </div>
