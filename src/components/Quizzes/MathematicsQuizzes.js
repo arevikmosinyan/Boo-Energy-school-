@@ -12,10 +12,12 @@ import math3 from '../../images/imagesOfMathQuizzes/math3.png';
 import Card from '@material-ui/core/Card';
 import { divisions } from '../Categories';
 import { v4 as uuid } from 'uuid';
+import { useTranslation } from 'react-i18next';
 
 const MathematicsQuizzes = () => {
   const classes = useStyles();
   const classesForMediaQueries = mediaQueries();
+  const { t } = useTranslation();
   return (
     <>
       <div className={classes.containerOfMathematics}>
@@ -36,7 +38,7 @@ const MathematicsQuizzes = () => {
             className={`${classes.wrapperOfCourseNameAnalyzeAndSearchbar} ${classesForMediaQueries.wrapperOfCourseNameAnalyzeAndSearchbar} `}>
             <p
               className={`${classes.courseName} ${classesForMediaQueries.courseName} `}>
-              Մաթեմատիկա
+              {t('mathematics')}
             </p>
             {/* <p
               className={`${classes.examined} ${classesForMediaQueries.examined} `}>
@@ -47,7 +49,7 @@ const MathematicsQuizzes = () => {
               className={`${classes.searchBar} ${classesForMediaQueries.searchBar} `}>
               <InputBase
                 className={classes.inputForSearch}
-                placeholder='Որոնել նախընտրելի թեման․․․'
+                placeholder={t('searchForAPreferredTopic')}
               />
               <IconButton
                 type='submit'
