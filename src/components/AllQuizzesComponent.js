@@ -15,49 +15,41 @@ import { useTranslation } from 'react-i18next';
 
 const AllQuizzesComponent = () => {
   const classes = useStyles();
+  const classesForMediaQueries = mediaQueries();
   const { t } = useTranslation();
 
   return (
     <div className={classes.container}>
-      <Paper
-        className={classes.paper}
-        style={{
-          backgroundImage: `url(${allQuizzesComponentBackgroundImage})`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
+      <Paper className={`${classes.paper} ${classesForMediaQueries.paper}`}>
+        <img
+          src={allQuizzesComponentBackgroundImage}
+          alt='all courses'
+          className={`${classes.image} ${classesForMediaQueries.image}`}
+        />
 
-          width: '80%',
-          height: '90%',
-
-          display: 'flex',
-          justifyContent: 'start',
-          alignItems: 'center',
-          marginTop: 40,
-          marginBottom: 40,
-          borderRadius: 30,
-        }}>
-        {/* <img
-        src={allQuizzesComponentBackgroundImage}
-        alt='all courses'
-        className={classes.image}
-      /> */}
-
-        <div className={classes.coursesWrapper}>
+        <div
+          className={`${classes.coursesWrapper} ${classesForMediaQueries.coursesWrapper}`}>
           <MenuItem>
             <NavLink
               exact
               to={MATHEMATICSCOURSE_ROUTE}
-              className={classes.menuItem}>
+              className={`${classes.menuItem} ${classesForMediaQueries.menuItem}`}>
               {t('mathematics')}
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink exact to={ENGLISH_ROUTE} className={classes.menuItem}>
+            <NavLink
+              exact
+              to={ENGLISH_ROUTE}
+              className={`${classes.menuItem} ${classesForMediaQueries.menuItem}`}>
               {t('english')}
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink exact to={PROGRAMMING_ROUTE} className={classes.menuItem}>
+            <NavLink
+              exact
+              to={PROGRAMMING_ROUTE}
+              className={`${classes.menuItem} ${classesForMediaQueries.menuItem}`}>
               {t('programming')}
             </NavLink>
           </MenuItem>
@@ -65,12 +57,15 @@ const AllQuizzesComponent = () => {
             <NavLink
               exact
               to={GRAPHICDESIGN_ROUTE}
-              className={classes.menuItem}>
+              className={`${classes.menuItem} ${classesForMediaQueries.menuItem}`}>
               {t('graphicDesign')}
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink exact to={UIUXDESIGN_ROUTE} className={classes.menuItem}>
+            <NavLink
+              exact
+              to={UIUXDESIGN_ROUTE}
+              className={`${classes.menuItem} ${classesForMediaQueries.menuItem}`}>
               {t('UX/UI')}
             </NavLink>
           </MenuItem>
@@ -82,7 +77,7 @@ const AllQuizzesComponent = () => {
 
 export default AllQuizzesComponent;
 
-/*-------------------------------------------------Styes-------------------------------*/
+/*------------------------------------------------- Mobile-firstStyes-------------------------------*/
 
 const useStyles = makeStyles({
   container: {
@@ -94,36 +89,111 @@ const useStyles = makeStyles({
     background:
       'linear-gradient(to right,rgba(128, 128, 128, 0.5), rgba(255, 222, 89, 0.5), rgba(128, 128, 128, 0.5))',
   },
+
   paper: {
-    padding: 10,
-    width: '80%',
-    height: '80%',
+    // width: '80%',
+    // height: '70%',
+    display: 'flex',
+    justifyContent: 'start',
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    borderRadius: 10,
   },
   image: {
     objectFit: 'cover',
     width: '100%',
     height: '100%',
+    borderRadius: 10,
   },
   coursesWrapper: {
     position: 'absolute',
-    // top: 50,
-    // left: '6%',
+    left: '6%',
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
-
-    width: '22%',
+    width: '50%',
     borderRadius: 10,
   },
   menuItem: {
-    margin: '10px 0px 10px 0px',
+    margin: '5px 0px 5px 0px',
     backgroundColor: 'rgba(100, 100, 100, 1)',
-    padding: 10,
+    padding: 5,
     width: '90%',
-    // color: 'rgba(0, 0, 0, 0.7)',
     color: colors.yellow,
     textDecoration: 'none',
     borderRadius: 10,
+    fontSize: 'clamp(7px, 7vw, 18px)',
     '&:hover': {
       color: 'black',
+    },
+  },
+});
+
+/*----------------------------------------------media queries---------------------------------------------*/
+const mediaQueries = makeStyles({
+  '@media (min-width:601px) and (max-width:992px)': {
+    paper: {
+      width: '80%',
+      height: '80%',
+      marginTop: 15,
+      marginBottom: 15,
+      borderRadius: 15,
+    },
+    image: {
+      borderRadius: 15,
+    },
+    coursesWrapper: {
+      left: '18%',
+      width: '70%',
+      borderRadius: 15,
+    },
+    menuItem: {
+      margin: '8px 0px 8px 0px',
+      padding: 8,
+      width: '80%',
+      borderRadius: 15,
+    },
+  },
+  '@media (min-width:993px) and (max-width:1200px)': {
+    paper: {
+      width: '50%',
+      height: '50%',
+      marginTop: 25,
+      marginBottom: 25,
+      borderRadius: 20,
+    },
+    image: {
+      borderRadius: 25,
+    },
+    coursesWrapper: {
+      left: '10%',
+      width: '60%',
+      borderRadius: 20,
+    },
+    menuItem: {
+      margin: '12px 0px 12px 0px',
+      padding: 15,
+      width: '40%',
+      borderRadius: 20,
+    },
+  },
+  '@media (min-width:1201px) ': {
+    paper: {
+      width: '50%',
+      margin: 0,
+      borderRadius: 20,
+    },
+    image: {
+      borderRadius: 20,
+    },
+    coursesWrapper: {
+      left: '10%',
+      width: '42%',
+      borderRadius: 20,
+    },
+    menuItem: {
+      margin: '15px 0px 15px 0px',
+      padding: 25,
+      borderRadius: 20,
     },
   },
 });

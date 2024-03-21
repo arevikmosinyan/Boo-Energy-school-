@@ -10,23 +10,32 @@ import { useTranslation } from 'react-i18next';
 
 const AboutUs = () => {
   const classes = useStyles();
+  const classesForMediaQueries = mediaQueries();
+
   const { t } = useTranslation();
 
   return (
     <Container className={classes.container}>
       <Paper className={classes.paper}>
         <h1 className={classes.header}>{t('aboutus')}</h1>
-        <Typography paragraph className={classes.aboutUsTypography}>
+        <Typography
+          paragraph
+          className={`${classes.aboutUsTypography} ${classesForMediaQueries.aboutUsTypography}`}>
           {t('aboutUsTypographyText1')}
         </Typography>
-        <Typography paragraph className={classes.aboutUsTypography}>
+        <Typography
+          paragraph
+          className={`${classes.aboutUsTypography} ${classesForMediaQueries.aboutUsTypography}`}>
           {t('aboutUsTypographyText2')}
         </Typography>
-        <Typography paragraph className={classes.aboutUsTypography}>
+        <Typography
+          paragraph
+          className={`${classes.aboutUsTypography} ${classesForMediaQueries.aboutUsTypography}`}>
           {t('aboutUsTypographyText3')}
         </Typography>
 
-        <div className={classes.wrapperOfSections}>
+        <div
+          className={`${classes.wrapperOfSections} ${classesForMediaQueries.wrapperOfSections}`}>
           <div className={classes.containerofImageAndTypography}>
             <div className={classes.containerOfImage}>
               <img
@@ -97,26 +106,23 @@ const AboutUs = () => {
 
 export default AboutUs;
 
-/*-----------------------------------------Styles---------------------------------------------------------*/
+/*-----------------------------------------Mobile firstStyles---------------------------------------------------------*/
 
 const useStyles = makeStyles({
   container: {
     paddingTop: 50,
     paddingBottom: 50,
   },
-  wrapperOfSections: {
-    '& > div:nth-child(even)': {
-      flexDirection: 'row-reverse',
-    },
-  },
   paper: {
     padding: 50,
   },
   aboutUsTypography: {
     color: colors.darkGreen,
+    textAlign: 'center',
   },
   containerofImageAndTypography: {
     display: 'flex',
+    flexDirection: 'column',
     margin: '70px 40px',
     alignItems: 'center',
   },
@@ -125,11 +131,7 @@ const useStyles = makeStyles({
     borderRadius: 10,
     overflow: 'hidden',
   },
-  imageWrapper: {
-    // width: '100%',
-    // height: '100%',
-    // border: `2px solid ${colors.yellow}`,
-  },
+
   image: {
     width: '100%',
     height: '100%',
@@ -141,6 +143,7 @@ const useStyles = makeStyles({
     flex: 1,
     padding: 25,
     fontSize: 25,
+    textAlign: 'center',
   },
 
   header: {
@@ -167,5 +170,22 @@ const useStyles = makeStyles({
   },
   typographyOfContactUs: {
     color: colors.darkGreen,
+  },
+});
+/*----------------------------------------------media queries---------------------------------------------*/
+const mediaQueries = makeStyles({
+  '@media (min-width:993px)': {
+    wrapperOfSections: {
+      '& > div:nth-child(odd)': {
+        flexDirection: 'row',
+      },
+      '& > div:nth-child(even)': {
+        flexDirection: 'row-reverse',
+      },
+    },
+    aboutUsTypography: {
+      textAlign: 'justify',
+      textIndent: '2ch',
+    },
   },
 });

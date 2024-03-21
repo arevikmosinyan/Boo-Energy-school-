@@ -22,6 +22,8 @@ import { useTranslation } from 'react-i18next';
 
 const Rating = () => {
   const classes = useStyles();
+  const classesForMediaQueries = mediaQueries();
+
   const [subject, setSubject] = useState('');
   const [quiz, setQuiz] = useState('');
   const [participant, setParticipant] = useState('');
@@ -89,113 +91,129 @@ const Rating = () => {
       {user ? (
         <div className={classes.wrapperOfCourseQuizzessParticipant}>
           <p className={classes.label}>{t('ratingHeaderForRegisteredUser')} </p>
-          <div className={classes.wrapperOfRatingSchedule}>
+          <div
+            className={`${classes.wrapperOfRatingSchedule} ${classesForMediaQueries.wrapperOfRatingSchedule}`}>
             <div className={classes.nameAndSurnameBar}>
               {userData?.name} {userData?.surname}
             </div>
-            <div className={classes.valueOfRatingBar}>
+            <div
+              className={`${classes.valueOfRatingBar} ${classesForMediaQueries.valueOfRatingBar}`}>
               {userData?.scoreForReading} + միավոր թեստերից
             </div>
           </div>
           <p className={classes.label}>{t('ofWhich')}</p>
-
-          <div className={classes.wrapperOfLabelAndSelect}>
-            <p className={classes.label}>{t('courses')}</p>
-            <FormControl variant='outlined' className={classes.formControl}>
-              <Select
-                className={classes.select}
-                value={subject}
-                onChange={handleChangeOfSubject}
-                displayEmpty
-                inputProps={{
-                  name: 'subject',
-                  id: 'subject-select-placeholder',
-                }}>
-                <MenuItem
-                  value=''
-                  disabled
-                  selected
-                  hidden
-                  className={classes.menuItem}>
-                  {t('select')}
-                </MenuItem>
-                <MenuItem
-                  value={10}
-                  id='math'
-                  onClick={handleId}
-                  className={classes.menuItem}>
-                  {t('mathematics')}
-                </MenuItem>
-                <MenuItem
-                  value={20}
-                  id='english'
-                  onClick={handleId}
-                  className={classes.menuItem}>
-                  {t('english')}
-                </MenuItem>
-                <MenuItem
-                  value={30}
-                  id='programming'
-                  onClick={handleId}
-                  className={classes.menuItem}>
-                  {t('programming')}
-                </MenuItem>
-                <MenuItem
-                  value={40}
-                  id='graphicDesign'
-                  onClick={handleId}
-                  className={classes.menuItem}>
-                  {t('graphicDesign')}
-                </MenuItem>
-                <MenuItem
-                  value={50}
-                  id='UI/UXDesign'
-                  onClick={handleId}
-                  className={classes.menuItem}>
-                  {t('UX/UI')}
-                </MenuItem>
-              </Select>
-            </FormControl>
+          <div
+            className={`${classes.wrapperOfLabelAndSelectAndValueOfRatingBar} ${classesForMediaQueries.wrapperOfLabelAndSelectAndValueOfRatingBar}`}>
+            <div
+              className={`${classes.wrapperOfLabelAndSelect} ${classesForMediaQueries.wrapperOfLabelAndSelect}`}>
+              <p className={`${classes.label} ${classesForMediaQueries.label}`}>
+                {t('courses')}
+              </p>
+              <FormControl variant='outlined' className={classes.formControl}>
+                <Select
+                  className={classes.select}
+                  value={subject}
+                  onChange={handleChangeOfSubject}
+                  displayEmpty
+                  inputProps={{
+                    name: 'subject',
+                    id: 'subject-select-placeholder',
+                  }}>
+                  <MenuItem
+                    value=''
+                    disabled
+                    selected
+                    hidden
+                    className={classes.menuItem}>
+                    {t('select')}
+                  </MenuItem>
+                  <MenuItem
+                    value={10}
+                    id='math'
+                    onClick={handleId}
+                    className={classes.menuItem}>
+                    {t('mathematics')}
+                  </MenuItem>
+                  <MenuItem
+                    value={20}
+                    id='english'
+                    onClick={handleId}
+                    className={classes.menuItem}>
+                    {t('english')}
+                  </MenuItem>
+                  <MenuItem
+                    value={30}
+                    id='programming'
+                    onClick={handleId}
+                    className={classes.menuItem}>
+                    {t('programming')}
+                  </MenuItem>
+                  <MenuItem
+                    value={40}
+                    id='graphicDesign'
+                    onClick={handleId}
+                    className={classes.menuItem}>
+                    {t('graphicDesign')}
+                  </MenuItem>
+                  <MenuItem
+                    value={50}
+                    id='UI/UXDesign'
+                    onClick={handleId}
+                    className={classes.menuItem}>
+                    {t('UX/UI')}
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div
+              className={`${classes.valueOfRatingBar} ${classesForMediaQueries.valueOfRatingBar}`}>
+              {renderScoreBasedOnId()}
+            </div>
           </div>
-          <div className={classes.valueOfRatingBar}>
-            {renderScoreBasedOnId()}
+          <div
+            className={`${classes.wrapperOfLabelAndSelectAndValueOfRatingBar} ${classesForMediaQueries.wrapperOfLabelAndSelectAndValueOfRatingBar}`}>
+            <div
+              className={`${classes.wrapperOfLabelAndSelect} ${classesForMediaQueries.wrapperOfLabelAndSelect}`}>
+              <p className={`${classes.label} ${classesForMediaQueries.label}`}>
+                {t('tests')}
+              </p>
+              <FormControl variant='outlined' className={classes.formControl}>
+                <Select
+                  className={classes.select}
+                  value={quiz}
+                  onChange={handleChangeOfQuiz}
+                  displayEmpty>
+                  <MenuItem
+                    value=''
+                    disabled
+                    selected
+                    hidden
+                    className={classes.menuItem}>
+                    {t('select')}
+                  </MenuItem>
+                  <MenuItem value={10} className={classes.menuItem}>
+                    {t('mathematics')}
+                  </MenuItem>
+                  <MenuItem value={20} className={classes.menuItem}>
+                    {t('english')}
+                  </MenuItem>
+                  <MenuItem value={30} className={classes.menuItem}>
+                    {t('programming')}
+                  </MenuItem>
+                  <MenuItem value={40} className={classes.menuItem}>
+                    {t('graphicDesign')}
+                  </MenuItem>
+                  <MenuItem value={50} className={classes.menuItem}>
+                    {t('UX/UI')}
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div
+              className={`${classes.valueOfRatingBar} ${classesForMediaQueries.valueOfRatingBar}`}>
+              Դեռ պատրաստ չէ
+            </div>
           </div>
-
-          <div className={classes.wrapperOfLabelAndSelect}>
-            <p className={classes.label}>{t('tests')}</p>
-            <FormControl variant='outlined' className={classes.formControl}>
-              <Select
-                className={classes.select}
-                value={quiz}
-                onChange={handleChangeOfQuiz}
-                displayEmpty>
-                <MenuItem
-                  value=''
-                  disabled
-                  selected
-                  hidden
-                  className={classes.menuItem}>
-                  {t('select')}
-                </MenuItem>
-                <MenuItem value={10} className={classes.menuItem}>
-                  {t('mathematics')}
-                </MenuItem>
-                <MenuItem value={20} className={classes.menuItem}>
-                  {t('english')}
-                </MenuItem>
-                <MenuItem value={30} className={classes.menuItem}>
-                  {t('programming')}
-                </MenuItem>
-                <MenuItem value={40} className={classes.menuItem}>
-                  {t('graphicDesign')}
-                </MenuItem>
-                <MenuItem value={50} className={classes.menuItem}>
-                  {t('UX/UI')}
-                </MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-          <div className={classes.valueOfRatingBar}>Դեռ պատրաստ չէ</div>
         </div>
       ) : (
         <Container
@@ -227,18 +245,14 @@ const Rating = () => {
 };
 
 export default Rating;
-/*-----------------------------------------Styles--------------------------------------------*/
+/*-----------------------------------------Mobile-firstStyles--------------------------------------------*/
 const useStyles = makeStyles({
   containerOfRating: {
     margin: 80,
   },
-  // wrapperOfCourseQuizzessParticipant: {
-  //   display: 'flex',
-  //   justifyContent: 'space-between',
-  //   padding: 20,
-  // },
   wrapperOfLabelAndSelect: {
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'start',
   },
@@ -247,6 +261,7 @@ const useStyles = makeStyles({
     fontSize: 32,
     fontFamily: fonts.armenian,
     margin: 20,
+    textAlign: 'center',
   },
   select: {
     backgroundColor: colors.lightGreen,
@@ -259,9 +274,11 @@ const useStyles = makeStyles({
   },
   nameAndSurnameBar: {
     backgroundColor: colors.lightGreen,
-    flex: 2,
+    flex: 1,
     height: 60,
-    margin: 20,
+    margin: 3,
+    padding: '10px 0',
+    fontSize: 'clamp(7px, 8vw, 18px)',
     color: colors.white,
     display: 'flex',
     alignItems: 'center',
@@ -272,17 +289,20 @@ const useStyles = makeStyles({
     backgroundColor: colors.veryLightGreen,
     flex: 4,
     height: 60,
-    margin: 20,
+    margin: 3,
+    padding: '10px 0',
+    fontSize: 'clamp(7px, 8vw, 18px)',
     color: colors.white,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'end',
-    paddingRight: 40,
+    justifyContent: 'center',
+    // paddingRight: 40,
     borderRadius: 10,
   },
   wrapperOfRatingSchedule: {
     marginTop: 50,
     display: 'flex',
+    flexDirection: 'column',
   },
   containerpaperForNotRegisteredUserOfRatingSection: {
     paddingTop: 50,
@@ -302,5 +322,29 @@ const useStyles = makeStyles({
   },
   firstWordOfInfoForNotRegisteredUserOfRatingSection: {
     paddingLeft: 15,
+  },
+});
+/*----------------------------------------------media queries---------------------------------------------*/
+const mediaQueries = makeStyles({
+  '@media (min-width:993px) ': {
+    wrapperOfLabelAndSelect: {
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      flex: 1,
+    },
+    wrapperOfRatingSchedule: {
+      flexDirection: 'row',
+    },
+    wrapperOfLabelAndSelectAndValueOfRatingBar: {
+      display: 'flex',
+      alignItems: 'center',
+      flex: 1,
+    },
+    valueOfRatingBar: {
+      flex: 1,
+    },
+    label: {
+      margin: 3,
+    },
   },
 });

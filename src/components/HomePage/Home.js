@@ -27,14 +27,6 @@ const Home = () => {
           style={{ alignItems: window.innerWidth < 600 && 'center' }}>
           <Typography
             className={`${classes.typographyStyle} ${classesForMediaQueries.typographyStyle}`}>
-            {/* Այստեղ դու կգտնես ցանկացած <br />
-            ոլորտ որով հետաքրքրված ես,
-            <br /> բայց սկզբի համար․․․ */}
-            {/* Գիտելիքի յուրաքանչյուր կտոր <br /> արժեք և հստակություն է հաղորդում
-            Ձեր մտածողության փազլին։*/}
-            {/* <br /> Ձեռք բեր նոր մտածողություն՝ <br />
-            համալրելով գիտելիքներդ արդի ոլորտներում՝ մեր կայքի միջոցով։ <br />
-            բայց սկզբի համար․․․ */}
             {t('homePageTypographyText1')}
           </Typography>
           <NavLink
@@ -88,7 +80,6 @@ const useStyles = makeStyles({
     fontSize: 45,
     lineHeight: 1,
     maxWidth: 721,
-    // margin: 30,
   },
   IQTestsButton: {
     color: colors.white,
@@ -110,24 +101,28 @@ const mediaQueries = makeStyles({
   '@media (max-width: 600px)': {
     IQTestsDivOfHomePage: {
       flexDirection: 'column',
+      height: 'auto',
     },
     wrapperOfTypographyAndIQTestButton: {
       flexDirection: 'column',
-      // alignItems: 'center',
+      alignItems: 'center',
     },
     typographyStyle: {
-      fontSize: 20,
+      fontSize: '1.5rem',
       lineHeight: 1,
-      maxWidth: 321,
+      maxWidth: '80%',
       paddingTop: 20,
+      margin: '20px 0',
       textAlign: 'center',
     },
     IQTestsButton: {
       margin: 20,
     },
-    // ImageOfIQTestsDivOfHomePage: {
-    //   height: '20% !important',
-    // },
+    ImageOfIQTestsDivOfHomePage: {
+      height: 'auto',
+      width: '100%',
+      margin: '20px 0',
+    },
   },
   '@media (min-width:601px) and (max-width:992px)': {
     IQTestsDivOfHomePage: {
