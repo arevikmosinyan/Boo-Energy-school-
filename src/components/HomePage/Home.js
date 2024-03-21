@@ -23,8 +23,7 @@ const Home = () => {
       <div
         className={`${classes.IQTestsDivOfHomePage} ${classesForMediaQueries.IQTestsDivOfHomePage}`}>
         <div
-          className={classes.wrapperOfTypographyAndIQTestButton}
-          style={{ alignItems: window.innerWidth < 600 && 'center' }}>
+          className={`${classes.wrapperOfTypographyAndIQTestButton} ${classesForMediaQueries.wrapperOfTypographyAndIQTestButton}`}>
           <Typography
             className={`${classes.typographyStyle} ${classesForMediaQueries.typographyStyle}`}>
             {t('homePageTypographyText1')}
@@ -42,9 +41,12 @@ const Home = () => {
         </div>
 
         <div
-          className={classes.ImageOfIQTestsDivOfHomePage}
-          style={{ height: window.innerWidth <= 600 && '40%' }}>
-          <img src={image1} alt='hire' className={classes.Image} />
+          className={`${classes.ImageOfIQTestsDivOfHomePage} ${classesForMediaQueries.ImageOfIQTestsDivOfHomePage}`}>
+          <img
+            src={image1}
+            alt='hire'
+            className={`${classes.Image} ${classesForMediaQueries.Image}`}
+          />
         </div>
       </div>
       <SuggestedCoursesCarousel />
@@ -58,77 +60,60 @@ const Home = () => {
 };
 
 export default Home;
-/*-----------------------------------------------------Styles--------------------------------*/
+
+/*-----------------------------------------------------Mobile-firstStyles--------------------------------*/
 
 const useStyles = makeStyles({
   IQTestsDivOfHomePage: {
-    height: 500,
     backgroundColor: colors.lightGreen,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-around',
     padding: '0px 16px',
     margin: '0px auto',
+    flexDirection: 'column',
+    height: 'auto',
   },
   wrapperOfTypographyAndIQTestButton: {
     display: 'flex',
+    flex: 1,
     flexDirection: 'column',
+    alignItems: 'center',
   },
   typographyStyle: {
     color: colors.white,
     fontFamily: fonts.dejavu,
-    fontSize: 45,
+    fontSize: '1.5rem',
     lineHeight: 1,
-    maxWidth: 721,
+    maxWidth: '80%',
+    textAlign: 'center',
+    paddingTop: 20,
+    margin: '20px 0',
   },
   IQTestsButton: {
     color: colors.white,
     backgroundColor: colors.darkGreen,
     marginTop: 15,
+    margin: 20,
   },
   ImageOfIQTestsDivOfHomePage: {
-    height: '80%',
+    height: 'auto',
+    width: '100%',
+    flex: 1,
   },
   Image: {
-    width: '100%',
+    maxWidth: '80%',
     height: '100%',
     objectFit: 'cover',
     borderRadius: 20,
+    margin: 50,
   },
 });
 /*----------------------------------------------media queries---------------------------------------------*/
 const mediaQueries = makeStyles({
-  '@media (max-width: 600px)': {
-    IQTestsDivOfHomePage: {
-      flexDirection: 'column',
-      height: 'auto',
-    },
-    wrapperOfTypographyAndIQTestButton: {
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    typographyStyle: {
-      fontSize: '1.5rem',
-      lineHeight: 1,
-      maxWidth: '80%',
-      paddingTop: 20,
-      margin: '20px 0',
-      textAlign: 'center',
-    },
-    IQTestsButton: {
-      margin: 20,
-    },
-    ImageOfIQTestsDivOfHomePage: {
-      height: 'auto',
-      width: '100%',
-      margin: '20px 0',
-    },
-  },
   '@media (min-width:601px) and (max-width:992px)': {
     IQTestsDivOfHomePage: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: 250,
+      flexDirection: 'row',
     },
     wrapperOfTypographyAndIQTestButton: {
       marginLeft: 35,
@@ -140,35 +125,36 @@ const mediaQueries = makeStyles({
       paddingRight: 20,
       marginBottom: 25,
     },
-
     ImageOfIQTestsDivOfHomePage: {
       height: '50%',
     },
   },
-  '@media (min-width:993px) and (max-width:1200px)': {
+  '@media (min-width:993px) ': {
     IQTestsDivOfHomePage: {
-      height: 400,
+      flexDirection: 'row',
       backgroundColor: colors.lightGreen,
-      display: 'flex',
-      alignItems: 'center',
       justifyContent: 'center',
     },
     wrapperOfTypographyAndIQTestButton: {
       marginLeft: 35,
+      marginRight: 15,
+      flex: 1,
     },
     typographyStyle: {
       color: colors.white,
       fontFamily: fonts.dejavu,
       fontSize: 33,
-      lineHeight: 1,
       maxWidth: 521,
+      lineHeight: 1,
       paddingRight: 20,
     },
-
     ImageOfIQTestsDivOfHomePage: {
-      marginRight: 50,
-      width: '50%',
-      height: 200,
+      width: '100%',
+      flex: 1,
+      height: 'auto',
+    },
+    Image: {
+      width: '70%',
     },
   },
 });
