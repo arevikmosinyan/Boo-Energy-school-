@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 const ResetPassword = () => {
   const classes = useStyles();
+  const classesForMediaQueries = mediaQueries();
   const [email, setEmail] = useState('');
   const [resetText, setResetText] = useState('');
   const { t } = useTranslation();
@@ -27,14 +28,16 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className={classes.containerOfResetPassword}>
-      <div className={classes.wrapperOfEmailInput}>
+    <div
+      className={`${classes.containerOfResetPassword} ${classesForMediaQueries.containerOfResetPassword}`}>
+      <div
+        className={`${classes.wrapperOfEmailInput} ${classesForMediaQueries.wrapperOfEmailInput}`}>
         <p className={classes.inputHeader}>{t('email')}</p>
 
         <TextField
           InputProps={{
             inputProps: { maxLength: 40 },
-            className: classes.inputOfEmail,
+            className: classes.placeholderStyles,
           }}
           placeholder={t('enterEmailAddress')}
           variant='outlined'
@@ -42,6 +45,7 @@ const ResetPassword = () => {
           value={email.trim()}
           onChange={(e) => setEmail(e.target.value)}
           //   helperText={emailValidation()}
+          className={classes.input}
         />
         <Button
           variant='outlined'
@@ -57,7 +61,7 @@ const ResetPassword = () => {
 
 export default ResetPassword;
 
-/*-----------------------------------------Styles--------------------------------------------*/
+/*-----------------------------------------Mobile-firstStyles--------------------------------------------*/
 
 const useStyles = makeStyles((theme) => ({
   containerOfResetPassword: {
@@ -65,23 +69,23 @@ const useStyles = makeStyles((theme) => ({
     padding: 25,
     borderRadius: 15,
     border: `2px solid ${colors.yellow}`,
+    minHeight: '60vh',
   },
   wrapperOfEmailInput: {
     display: 'flex',
     flexDirection: 'column',
-    maxWidth: '60%',
     margin: 'auto',
   },
-
   inputHeader: {
     color: colors.darkGreen,
+    textAlign: 'center',
     paddingBottom: 10,
-    fontSize: '5px', // Default font size for smaller viewports
+    fontSize: '20px', // default
     [theme.breakpoints.up('sm')]: {
-      fontSize: 'calc(2vw + 8px)', // Adjust font size for larger viewports
+      fontSize: 'calc(2vw + 8px)', // small screen
     },
     [theme.breakpoints.up('md')]: {
-      fontSize: '24px', // Maximum font size for even larger viewports
+      fontSize: '24px', // medium screen
     },
     fontWeight: 400,
     fontFamily: fonts.armenian,
@@ -100,4 +104,24 @@ const useStyles = makeStyles((theme) => ({
     color: colors.darkGreen,
     textAlign: 'center',
   },
+  placeholderStyles: {
+    fontSize: 'clamp(5px, 3vw,17px)',
+  },
 }));
+/*----------------------------------------------media queries---------------------------------------------*/
+const mediaQueries = makeStyles({
+  '@media (min-width:993px)': {
+    containerOfResetPassword: {
+      maxWidth: '60%',
+      minHeight: '70vh',
+      margin: '60px auto',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    wrapperOfEmailInput: {
+      width: '80%',
+      // margin: 'auto 25px',
+    },
+  },
+});

@@ -100,6 +100,9 @@ const useStyles = makeStyles({
     height: 'auto',
     width: '100%',
     flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   Image: {
     maxWidth: '80%',

@@ -4,6 +4,7 @@ import { useContext, useState } from 'react';
 import Loading from '../Loading';
 import { ref, remove } from 'firebase/database';
 import { HOME_ROUTE } from '../../constants/routes';
+import '../../assest/styles/customMUI.css';
 
 import {
   makeStyles,
@@ -26,14 +27,16 @@ import {
 import { colors } from '../../constants/variables';
 
 import { writeUserData, auth, database } from '../../requests/firebase';
-// import loadingContext from '../../contexts/dataLoadingContext';
+import loadingContext from '../../contexts/dataLoadingContext';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 const Profile = () => {
   const classes = useStyles();
+  const classesForMediaQueries = mediaQueries();
+
   const userData = useContext(userDataContext);
-  // const loading = useContext(loadingContext);
+  const loading = useContext(loadingContext);
   const navigate = useNavigate();
   const [country, setCountry] = useState('');
   // console.log(loading);
@@ -101,243 +104,279 @@ const Profile = () => {
         <Typography variant='h5' className={classes.header}>
           {t('profilePagePersonalInformationHeader')}
         </Typography>
-        {/* {loading ? (
+        {loading ? (
           <Loading />
-        ) : ( */}
-        <List>
-          <ListItem className={classes.listItem}>
-            <ListItemText
-              primary={`${t('name')}: ${userData?.name}`}
-              className={classes.prevName}
-            />
-            <TextField
-              placeholder={t('enterName')}
-              variant='outlined'
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className={classes.formControl}
-            />
+        ) : (
+          <List className={`${classes.list} ${classesForMediaQueries.list}`}>
+            <ListItem
+              className={`${classes.listItem} ${classesForMediaQueries.listItem}`}>
+              <ListItemText
+                primary={`${t('name')}: ${userData?.name}`}
+                className={`${classes.prevName} ${classesForMediaQueries.prevName}`}
+              />
+              <TextField
+                placeholder={t('enterName')}
+                InputProps={{
+                  className: classes.placeholderStyle,
+                }}
+                variant='outlined'
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className={`${classes.formControl} ${classesForMediaQueries.formControl}`}
+              />
 
-            <form className={classes.wrapperOfAcceptChangesButton}>
-              <Button
-                type='submit'
-                variant='outlined'
-                className={classes.acceptChangesButton}
-                onClick={changeName}>
-                {t('confirmChanges')}
-              </Button>
-            </form>
-          </ListItem>
-          <ListItem className={classes.listItem}>
-            <ListItemText
-              primary={`${t('surname')}: ${userData?.surname}`}
-              className={classes.prevName}
-            />
-            <TextField
-              placeholder={t('enterSurname')}
-              variant='outlined'
-              required
-              value={surname}
-              onChange={(e) => setSurname(e.target.value)}
-              className={classes.formControl}
-            />
-
-            <form className={classes.wrapperOfAcceptChangesButton}>
-              <Button
-                type='submit'
-                variant='outlined'
-                className={classes.acceptChangesButton}
-                onClick={changeSurname}>
-                {t('confirmChanges')}
-              </Button>
-            </form>
-          </ListItem>
-          <ListItem className={classes.listItem}>
-            <ListItemText
-              primary={`${t('role')}: ${userData?.role}`}
-              className={classes.prevName}
-            />
-            <FormControl variant='outlined' className={classes.formControl}>
-              <Select
-                className={classes.formControl}
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                displayEmpty
-                inputProps={{ 'aria-label': 'Select country' }}>
-                <MenuItem value='Նախադպրոցական'>
-                  <em>{t('preSchool')}</em>
-                </MenuItem>
-                <MenuItem value={'Դպրոցական'}>{t('school')}</MenuItem>
-                <MenuItem value={'Ուսանող'}>{t('student')}</MenuItem>
-                <MenuItem value={'Դասախոս'}>{t('lecturer')}</MenuItem>
-                <MenuItem value={'Ծնող'}>{t('parent')}</MenuItem>
-                <MenuItem value={'Հյուր'}>{t('guest')}</MenuItem>
-              </Select>
-            </FormControl>
-            <form className={classes.wrapperOfAcceptChangesButton}>
-              <Button
-                type='submit'
-                variant='outlined'
-                className={classes.acceptChangesButton}
-                onClick={changeTheRole}>
-                {t('confirmChanges')}
-              </Button>
-            </form>
-          </ListItem>
-          <ListItem className={classes.listItem}>
-            <ListItemText
-              primary={`${t('country')}: ${userData?.country}`}
-              className={classes.prevName}
-            />
-            <FormControl variant='outlined' className={classes.formControl}>
-              <Select
-                className={classes.formControl}
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                displayEmpty
-                inputProps={{ 'aria-label': 'Select country' }}>
-                <MenuItem value='Հայաստան'>
-                  <em>{t('armenia')}</em>
-                </MenuItem>
-                <MenuItem value={'Ռուսաստան'}>{t('russia')}</MenuItem>
-                <MenuItem value={'Վրաստան'}>{t('georgia')}</MenuItem>
-                <MenuItem value={'Իրան'}>{t('iran')}</MenuItem>
-                <MenuItem value={'Կանադա'}>{t('canada')}</MenuItem>
-                <MenuItem value={'Գերմանիա'}>{t('germany')}</MenuItem>
-                <MenuItem value={'ԱՄՆ'}>{t('US')}</MenuItem>
-                <MenuItem value={'Սիրիա'}>{t('syria')}</MenuItem>
-                <MenuItem value={'Դանիա'}>{t('denmark')}</MenuItem>
-              </Select>
-            </FormControl>
-            <form className={classes.wrapperOfAcceptChangesButton}>
-              <Button
-                type='submit'
-                variant='outlined'
-                className={classes.acceptChangesButton}
-                onClick={changeCountry}>
-                {t('confirmChanges')}
-              </Button>
-            </form>
-          </ListItem>
-          <ListItem className={classes.listItem}>
-            <div className={classes.prevName}>
-              <ListItemText primary={t('educationalInstitution')} />
-              <div>{userData?.educationCenter}</div>
-            </div>
-
-            <FormControl variant='outlined' className={classes.formControl}>
-              <Select
-                className={classes.select}
-                value={educationCenter}
-                onChange={(e) => setEducationCenter(e.target.value)}
-                placeholder='Մուտքագրիր ուսումնական հաստատության հասցեն և ․․․'>
-                <MenuItem value='Երևանի պետական համալսարան (ԵՊՀ)'>
-                  <em>{t('yerevanStateUniversity(YSU)')} </em>
-                </MenuItem>
-
-                <MenuItem
-                  value={'Հայաստանի պետական տնտեսագիտական համալսարան (ՀՊՏՀ)'}>
-                  {t('armenianStateUniversityOfEconomics')}
-                </MenuItem>
-                <MenuItem value={'Հայաստանի գեղարվեստի պետական ակադեմիա'}>
-                  {t('armenianStateAcademyOfFineArts')}
-                </MenuItem>
-                <MenuItem value={'Երևանի թատրոնի և կինոյի պետական ինստիտուտ'}>
-                  {t('yerevanStateInstituteOfTheaterAndCinema')}
-                </MenuItem>
-                <MenuItem
-                  value={
-                    'Ճարտարապետության և շինարարարության Հայաստանի ազգային համալսարան'
-                  }>
-                  {t('armenianNationalUniversityOfArchitectureAndConstruction')}
-                </MenuItem>
-                <MenuItem
-                  value={'Հայաստանի ազգային ագրարային համալսարան (ՀԱԱՀ)'}>
-                  {t('armenianNationalAgrarianUniversity(NAAU)')}
-                </MenuItem>
-                <MenuItem value={'Երևանի պետական բժշկական համալսարան (ԵՊԲՀ)'}>
-                  {t('yerevanStateMedicalUniversity(YSMU)')}
-                </MenuItem>
-                <MenuItem
-                  value={
-                    'Երևանի Պետական Լեզվաբանական Համալսարան, Վալերի Բրյուսովի անվան, (ԵՊԼՀ)'
-                  }>
-                  {t('yerevanStateLinguisticUniversityNamedAfterValeryBrusov')}
-                </MenuItem>
-              </Select>
-            </FormControl>
-            <form className={classes.wrapperOfAcceptChangesButton}>
-              <Button
-                type='submit'
-                variant='outlined'
-                className={classes.acceptChangesButton}
-                onClick={changeEducationalCenter}>
-                {t('confirmChanges')}
-              </Button>
-            </form>
-          </ListItem>
-          <ListItem className={classes.listItem}>
-            <ListItemText
-              primary={`${t('ratingForReading')}: ${userData?.scoreForReading}`}
-            />
-          </ListItem>
-          <ListItem className={classes.listItem}>
-            <ListItemText
-              primary={`կարդացած դասերի համարներ: ${
-                String(userData?.alreadyReadClassesIds) ||
-                'Դուք դեռևս չունեք ընթերցած դասեր'
-              }`}
-            />
-          </ListItem>
-          <ListItem className={classes.listItem}>
-            <ListItemText
-              primary={`${t('titlesOfLessonsRead')}: ${
-                String(userData?.alreadyReadClassesTitles) ||
-                t('youHaveNoLessonsReadYet')
-              }`}
-            />
-          </ListItem>
-          <ListItem className={classes.listItem}>
-            <Button
-              variant='outlined'
-              className={classes.deleteButton}
-              onClick={() => setDeleteDialogOpen(true)}>
-              {t('IDoNotWantToBeAUserAnymore')}
-            </Button>
-            <Dialog
-              open={deleteDialogOpen}
-              onClose={() => setDeleteDialogOpen(false)}>
-              <DialogContent>
-                <DialogContentText>
-                  {t('areYouSureYouDoNotWantToBeAUserAnyMore')}
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
+              <form className={classes.wrapperOfAcceptChangesButton}>
                 <Button
-                  onClick={() => setDeleteDialogOpen(false)}
-                  color='primary'>
-                  {t('cancel')}
+                  type='submit'
+                  variant='outlined'
+                  className={classes.acceptChangesButton}
+                  onClick={changeName}>
+                  {t('confirmChanges')}
                 </Button>
-                <Button onClick={onDeleteAccount} color='primary' type='submit'>
-                  {t('confirm')}
+              </form>
+            </ListItem>
+            <ListItem
+              className={`${classes.listItem} ${classesForMediaQueries.listItem}`}>
+              <ListItemText
+                primary={`${t('surname')}: ${userData?.surname}`}
+                className={`${classes.prevName} ${classesForMediaQueries.prevName}`}
+              />
+              <TextField
+                placeholder={t('enterSurname')}
+                InputProps={{
+                  className: classes.placeholderStyle,
+                }}
+                variant='outlined'
+                required
+                value={surname}
+                onChange={(e) => setSurname(e.target.value)}
+                className={`${classes.formControl} ${classesForMediaQueries.formControl}`}
+              />
+
+              <form className={classes.wrapperOfAcceptChangesButton}>
+                <Button
+                  type='submit'
+                  variant='outlined'
+                  className={classes.acceptChangesButton}
+                  onClick={changeSurname}>
+                  {t('confirmChanges')}
                 </Button>
-              </DialogActions>
-            </Dialog>
-          </ListItem>
-        </List>
+              </form>
+            </ListItem>
+            <ListItem
+              className={`${classes.listItem} ${classesForMediaQueries.listItem}`}>
+              <ListItemText
+                primary={`${t('role')}: ${userData?.role}`}
+                className={`${classes.prevName} ${classesForMediaQueries.prevName}`}
+              />
+              <FormControl
+                variant='outlined'
+                className={`${classes.formControl} ${classesForMediaQueries.formControl}`}>
+                <Select
+                  className={classes.select}
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  displayEmpty
+                  inputProps={{ 'aria-label': 'Select country' }}>
+                  <MenuItem value={t('preSchool')}>
+                    <em>{t('preSchool')}</em>
+                  </MenuItem>
+                  <MenuItem value={t('school')}>{t('school')}</MenuItem>
+                  <MenuItem value={t('student')}>{t('student')}</MenuItem>
+                  <MenuItem value={t('lecturer')}>{t('lecturer')}</MenuItem>
+                  <MenuItem value={t('parent')}>{t('parent')}</MenuItem>
+                  <MenuItem value={t('guest')}>{t('guest')}</MenuItem>
+                </Select>
+              </FormControl>
+              <form className={classes.wrapperOfAcceptChangesButton}>
+                <Button
+                  type='submit'
+                  variant='outlined'
+                  className={classes.acceptChangesButton}
+                  onClick={changeTheRole}>
+                  {t('confirmChanges')}
+                </Button>
+              </form>
+            </ListItem>
+            <ListItem
+              className={`${classes.listItem} ${classesForMediaQueries.listItem}`}>
+              <ListItemText
+                primary={`${t('country')}: ${userData?.country}`}
+                className={`${classes.prevName} ${classesForMediaQueries.prevName}`}
+              />
+              <FormControl
+                variant='outlined'
+                className={`${classes.formControl} ${classesForMediaQueries.formControl}`}>
+                <Select
+                  className={classes.select}
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                  displayEmpty
+                  inputProps={{ 'aria-label': 'Select country' }}>
+                  <MenuItem value={t('armenia')}>
+                    <em>{t('armenia')}</em>
+                  </MenuItem>
+                  <MenuItem value={t('russia')}>{t('russia')}</MenuItem>
+                  <MenuItem value={t('georgia')}>{t('georgia')}</MenuItem>
+                  <MenuItem value={t('iran')}>{t('iran')}</MenuItem>
+                  <MenuItem value={t('canada')}>{t('canada')}</MenuItem>
+                  <MenuItem value={t('germany')}>{t('germany')}</MenuItem>
+                  <MenuItem value={t('US')}>{t('US')}</MenuItem>
+                  <MenuItem value={t('syria')}>{t('syria')}</MenuItem>
+                  <MenuItem value={t('denmark')}>{t('denmark')}</MenuItem>
+                </Select>
+              </FormControl>
+              <form className={classes.wrapperOfAcceptChangesButton}>
+                <Button
+                  type='submit'
+                  variant='outlined'
+                  className={classes.acceptChangesButton}
+                  onClick={changeCountry}>
+                  {t('confirmChanges')}
+                </Button>
+              </form>
+            </ListItem>
+            <ListItem
+              className={`${classes.listItem} ${classesForMediaQueries.listItem}`}>
+              <div
+                className={`${classes.prevName} ${classesForMediaQueries.prevName}`}>
+                <ListItemText primary={t('educationalInstitution')} />
+                <div>{userData?.educationCenter}</div>
+              </div>
+
+              <FormControl
+                variant='outlined'
+                className={`${classes.formControl} ${classesForMediaQueries.formControl}`}>
+                <Select
+                  className={classes.select}
+                  value={educationCenter}
+                  onChange={(e) => setEducationCenter(e.target.value)}
+                  placeholder='Մուտքագրիր ուսումնական հաստատության հասցեն և ․․․'>
+                  <MenuItem value={t('yerevanStateUniversity(YSU)')}>
+                    <em>{t('yerevanStateUniversity(YSU)')} </em>
+                  </MenuItem>
+
+                  <MenuItem value={t('armenianStateUniversityOfEconomics')}>
+                    {t('armenianStateUniversityOfEconomics')}
+                  </MenuItem>
+                  <MenuItem value={t('armenianStateAcademyOfFineArts')}>
+                    {t('armenianStateAcademyOfFineArts')}
+                  </MenuItem>
+                  <MenuItem
+                    value={t('yerevanStateInstituteOfTheaterAndCinema')}>
+                    {t('yerevanStateInstituteOfTheaterAndCinema')}
+                  </MenuItem>
+                  <MenuItem
+                    value={t(
+                      'armenianNationalUniversityOfArchitectureAndConstruction',
+                    )}>
+                    {t(
+                      'armenianNationalUniversityOfArchitectureAndConstruction',
+                    )}
+                  </MenuItem>
+                  <MenuItem
+                    value={t('armenianNationalAgrarianUniversity(NAAU)')}>
+                    {t('armenianNationalAgrarianUniversity(NAAU)')}
+                  </MenuItem>
+                  <MenuItem value={t('yerevanStateMedicalUniversity(YSMU)')}>
+                    {t('yerevanStateMedicalUniversity(YSMU)')}
+                  </MenuItem>
+                  <MenuItem
+                    value={t(
+                      'yerevanStateLinguisticUniversityNamedAfterValeryBrusov',
+                    )}>
+                    {t(
+                      'yerevanStateLinguisticUniversityNamedAfterValeryBrusov',
+                    )}
+                  </MenuItem>
+                </Select>
+              </FormControl>
+              <form className={classes.wrapperOfAcceptChangesButton}>
+                <Button
+                  type='submit'
+                  variant='outlined'
+                  className={classes.acceptChangesButton}
+                  onClick={changeEducationalCenter}>
+                  {t('confirmChanges')}
+                </Button>
+              </form>
+            </ListItem>
+            <ListItem
+              className={`${classes.listItem} ${classesForMediaQueries.listItem}`}>
+              <ListItemText
+                primary={`${t('ratingForReading')}: ${
+                  userData?.scoreForReading
+                }`}
+              />
+            </ListItem>
+            <ListItem
+              className={`${classes.listItem} ${classesForMediaQueries.listItem}`}>
+              <ListItemText
+                primary={`կարդացած դասերի համարներ: ${
+                  String(userData?.alreadyReadClassesIds) ||
+                  'Դուք դեռևս չունեք ընթերցած դասեր'
+                }`}
+              />
+            </ListItem>
+            <ListItem
+              className={`${classes.listItem} ${classesForMediaQueries.listItem}`}>
+              <ListItemText
+                primary={`${t('titlesOfLessonsRead')}: ${
+                  String(userData?.alreadyReadClassesTitles) ||
+                  t('youHaveNoLessonsReadYet')
+                }`}
+              />
+            </ListItem>
+            <ListItem
+              className={`${classes.listItem} ${classesForMediaQueries.listItem}`}>
+              <Button
+                variant='outlined'
+                className={classes.deleteButton}
+                onClick={() => setDeleteDialogOpen(true)}>
+                {t('IDoNotWantToBeAUserAnymore')}
+              </Button>
+              <Dialog
+                open={deleteDialogOpen}
+                onClose={() => setDeleteDialogOpen(false)}>
+                <DialogContent>
+                  <DialogContentText>
+                    {t('areYouSureYouDoNotWantToBeAUserAnyMore')}
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    onClick={() => setDeleteDialogOpen(false)}
+                    color='primary'>
+                    {t('cancel')}
+                  </Button>
+                  <Button
+                    onClick={onDeleteAccount}
+                    color='primary'
+                    type='submit'>
+                    {t('confirm')}
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </ListItem>
+          </List>
+        )}
       </Card>
     </>
   );
 };
 
 export default Profile;
-/*-----------------------------------------Styles--------------------------------------------*/
+/*-----------------------------------------Mobile-firstStyles--------------------------------------------*/
 
 const useStyles = makeStyles((theme) => ({
   header: {
     color: colors.darkGreen,
     textAlign: 'center',
+  },
+  list: {
+    margin: 5,
+    padding: 5,
   },
   container: {
     margin: 50,
@@ -351,14 +390,18 @@ const useStyles = makeStyles((theme) => ({
     margin: 10,
     color: colors.darkGreen,
     display: 'flex',
+    flexDirection: 'column',
   },
   prevName: {
-    flex: 1,
     margin: 5,
+    textAlign: 'center',
   },
   formControl: {
-    flex: 1,
     margin: 5,
+    width: '70%',
+  },
+  placeholderStyle: {
+    fontSize: 'clamp(8px, 3vw,17px)',
   },
   acceptChangesButton: {
     color: colors.white,
@@ -379,3 +422,27 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+/*----------------------------------------------media queries---------------------------------------------*/
+const mediaQueries = makeStyles({
+  '@media (min-width:601px) and (max-width:992px)': {
+    formControl: {
+      width: '50%',
+    },
+  },
+  '@media (min-width:993px)': {
+    listItem: {
+      flexDirection: 'row',
+    },
+    formControl: {
+      flex: 1,
+      fontSize: '4rem',
+    },
+    prevName: {
+      flex: 1,
+      textAlign: 'left',
+    },
+    acceptChangesButton: {
+      flex: 1,
+    },
+  },
+});
