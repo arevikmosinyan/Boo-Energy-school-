@@ -82,7 +82,9 @@ const useStyles = makeStyles({
     objectFit: 'cover',
     width: '100%',
     height: '100%',
+    display: 'block',
   },
+
   coursesWrapper: {
     position: 'absolute',
     top: '3%',
@@ -121,15 +123,13 @@ const mediaQueries = makeStyles({
   '@media (min-width:993px) and (max-width:1200px)': {
     coursesWrapper: {
       top: '10%',
-      // backgroundColor: 'rgba(255, 255, 255, 0.5)',
-      backgroundColor: 'red',
+      backgroundColor: 'rgba(255, 255, 255, 0.5)',
       width: '50%',
       borderRadius: 8,
     },
     menuItem: {
       margin: '8px 0px 8px 0px',
-      // backgroundColor: 'rgba(100, 100, 100, 0.5)',
-      backgroundColor: 'blue',
+      backgroundColor: 'rgba(100, 100, 100, 0.5)',
       padding: 7,
       width: '50%',
       borderRadius: 10,
@@ -138,13 +138,13 @@ const mediaQueries = makeStyles({
   '@media (min-width:1201px)': {
     coursesWrapper: {
       top: '20%',
-      //backgroundColor: 'rgba(255, 255, 255, 0.5)',
+      backgroundColor: 'rgba(255, 255, 255, 0.5)',
       width: '40%',
       borderRadius: 10,
     },
     menuItem: {
       margin: '10px 0px 10px 0px',
-      //backgroundColor: 'rgba(100, 100, 100, 0.5)',
+      backgroundColor: 'rgba(100, 100, 100, 0.5)',
       padding: 10,
       width: '40%',
     },

@@ -309,16 +309,20 @@ const useStyles = makeStyles({
     paddingBottom: 50,
   },
   paperForNotRegisteredUserOfRatingSection: {
-    padding: 50,
+    padding: 10,
   },
   infoForNotRegisteredUserOfRatingSection: {
-    textIndent: 1,
+    textIndent: 5,
     color: colors.darkGreen,
+    textAlign: 'center',
   },
   headerOfNonRegisterdUserRatingSection: {
     textAlign: 'center',
     margin: 20,
     color: colors.darkGreen,
+    padding: 10,
+    wordWrap: 'break-word',
+    hyphens: 'auto',
   },
   firstWordOfInfoForNotRegisteredUserOfRatingSection: {
     paddingLeft: 15,
